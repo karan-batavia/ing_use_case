@@ -1,0 +1,61 @@
+[
+  {
+    "text": "Draft a short LinkedIn post promoting the 2024 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "total_entities": 0,
+      "c4_count": 0,
+      "c3_count": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0
+    }
+  },
+  {
+    "text": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "total_entities": 0,
+      "c4_count": 0,
+      "c3_count": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0
+    }
+  },
+  {
+    "text": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "entities": [
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "total_entities": 2,
+      "c4_count": 0,
+      "c3_count": 2,
+      "regex_detected": 2,
+      "spacy_detected": 0
+    }
+  }
+]
