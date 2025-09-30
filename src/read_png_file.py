@@ -3,16 +3,13 @@ import pytesseract
 import os
 import cv2
 
-# === Optional: specify Tesseract path if not in PATH ===
-# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 # === Input image ===
-image_path = r"image2.png"  # 🔹 change this path
+image_path = r"image2.png"  # this is the path of the upload file. to be modify when create application
 
 if not os.path.exists(image_path):
     raise FileNotFoundError(f"❌ Image not found: {image_path}")
 
-# === Preprocess image (optional but improves accuracy) ===
 # Load image using OpenCV
 img = cv2.imread(image_path)
 
@@ -22,7 +19,6 @@ gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 # Apply thresholding (binarization)
 bw = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
 
-# === Extract text using multiple languages ===
 # Combine multiple languages with '+' (supported by Tesseract)
 LANGS = "eng+fra+nld"  # English + French + Dutch
 

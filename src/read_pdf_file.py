@@ -1,6 +1,6 @@
 import pdfplumber
 
-pdf_path = r"kbo_project.pdf"
+pdf_path = r"kbo_project.pdf" # this is the path of the upload file. to be modify when create application
 
 with pdfplumber.open(pdf_path) as pdf:
     full_text = ""
