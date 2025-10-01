@@ -5,7 +5,7 @@ from typing import List, Dict, Tuple, Set
 from faker import Faker
 import spacy
 from spacy.tokens import Doc, Span
-
+from regex import extract_c1_and_c2
 # Try to load SpaCy model, fall back to smaller model if needed
 try:
     nlp = spacy.load("en_core_web_lg")
@@ -14,7 +14,7 @@ except OSError:
     nlp = spacy.load("en_core_web_sm")
 
 # Import regex patterns
-from regex_queries import(
+from regex_queries import (
     ALL_PATTERNS, 
     is_likely_year, 
     filter_postal_codes,
@@ -52,6 +52,22 @@ SENSITIVITY_MAP = {
     "employee_id": "C3",
     "contract_number": "C3",
     
+    # C2 - Medium Risk (from regex.py)
+    "vm_name": "C2",
+    "network_interface_id": "C2",
+    "system_name": "C2",
+    "design_document_reference": "C2",
+    "fees": "C2",
+    "version": "C2",
+    "c2_email": "C2",
+    "c2_phone": "C2",
+    
+    # C1 - Low Risk (from regex.py)
+    "link": "C1",
+    "year": "C1",
+    "year_range": "C1",
+    "document_type": "C1",
+    
     # SpaCy detected - contextual
     "religion": "C4",  # Special category
     "ethnicity": "C4",  # Special category
@@ -67,63 +83,40 @@ CONTEXT_WINDOW = 30
 # ==============================================================================
 
 RELIGION_KEYWORDS = {
-    "Religious Beliefs",
-    "Other",
-    "Christian",
-    "Muslim",
-    "None",
-    "Jewish",
-    "Buddhist",
-    "Hindu"
+    'christian', 'christianity', 'muslim', 'islam', 'islamic', 'jewish', 'judaism',
+    'hindu', 'hinduism', 'buddhist', 'buddhism', 'catholic', 'protestant', 
+    'orthodox', 'sikh', 'sikhism', 'atheist', 'agnostic', 'religious'
 }
 
 ETHNICITY_KEYWORDS = {
-    "Philosophical Beliefs",
-    "Agnostic",
-    "Other",
-    "Atheist",
-    "Humanist",
-    "Spiritual",
-    "None"
+    'caucasian', 'african', 'asian', 'hispanic', 'latino', 'latina', 'indigenous',
+    'native', 'middle eastern', 'pacific islander', 'ethnicity', 'ethnic', 'race',
+    'racial', 'ancestry', 'descent', 'heritage'
 }
 
 SEXUAL_ORIENTATION_KEYWORDS = {
-    "Sexual Orientation",
-    "Asexual",
-    "Homosexual",
-    "Heterosexual",
-    "Bisexual",
-    "Other"
+    'gay', 'lesbian', 'bisexual', 'transgender', 'lgbt', 'lgbtq', 'queer',
+    'homosexual', 'heterosexual', 'sexual orientation', 'orientation',
+    'same-sex', 'gender identity', 'non-binary', 'cisgender'
 }
 
 POLITICAL_KEYWORDS = {
-    "Political Opinions",
-    "None",
-    "Liberal",
-    "Other",
-    "Green",
-    "Conservative",
-    "Socialist"
+    'socialist', 'conservative', 'liberal', 'democrat', 'republican',
+    'communist', 'fascist', 'capitalist', 'marxist', 'libertarian',
+    'political party', 'political view', 'political opinion', 'votes for',
+    'supports', 'left-wing', 'right-wing'
 }
 
 HEALTH_KEYWORDS = {
-    "Health",
-    "Other",
-    "Good",
-    "Chronic illness",
-    "Mental health",
-    "Disability"
+    'diabetes', 'cancer', 'hiv', 'aids', 'depression', 'anxiety', 'diagnosis',
+    'diagnosed with', 'suffers from', 'medical condition', 'illness', 'disease',
+    'disorder', 'syndrome', 'mental health', 'physical health', 'treatment for'
 }
 
-ETHNICITY_KEYWORDS = {
-    "Ethnic Origin",
-    "Black",
-    "Arab",
-    "Mixed",
-    "Asian",
-    "White",
-    "Hispanic",
-    "Other"
+# Trade union keywords
+TRADE_UNION_KEYWORDS = {
+    'union member', 'trade union', 'labor union', 'union membership',
+    'union representative', 'collective bargaining', 'union dues'
 }
 
 # ==============================================================================
@@ -205,6 +198,86 @@ def inject_entities(prompt: str) -> Tuple[str, List[Dict]]:
 
 
 # ==============================================================================
+# C1/C2 DETECTION (from regex.py)
+# ==============================================================================
+
+def detect_c1_c2_entities(text: str, data_dir: str = None) -> List[Dict]:
+    """
+    Use the extract_c1_and_c2 function from regex.py to detect C1 and C2 entities.
+    
+    Args:
+        text: The text to analyze
+        data_dir: Optional directory containing Excel/CSV files for C2 extraction
+    
+    Returns:
+        List of detected C1/C2 entities with metadata
+    """
+    # Create a temporary file for the text (required by extract_c1_and_c2)
+    import tempfile
+    detected_entities = []
+    
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False, encoding='utf-8') as tmp:
+        tmp.write(text)
+        tmp_path = tmp.name
+    
+    try:
+        # Extract C1 and C2 using regex.py function
+        # Use empty data_dir if not provided
+        result = extract_c1_and_c2(tmp_path, data_dir or tempfile.gettempdir())
+        
+        # Process C1 entities
+        for key, value in result.get('c1', {}).items():
+            # Find the position of this value in the original text
+            start = text.find(value)
+            if start != -1:
+                end = start + len(value)
+                
+                # Determine entity type from the key
+                entity_type = key.split('_')[0].strip('<>').lower()
+                
+                context_start = max(0, start - CONTEXT_WINDOW)
+                context_end = min(len(text), end + CONTEXT_WINDOW)
+                
+                detected_entities.append({
+                    "entity": value,
+                    "type": entity_type,
+                    "sensitivity": "C1",
+                    "span": [start, end],
+                    "context": text[context_start:context_end],
+                    "detection_method": "c1_regex",
+                    "semantic_key": key
+                })
+        
+        # Process C2 entities
+        for key, value in result.get('c2', {}).items():
+            start = text.find(value)
+            if start != -1:
+                end = start + len(value)
+                
+                # Extract entity type from key
+                entity_type = key.split('_')[0].strip('<>').lower()
+                
+                context_start = max(0, start - CONTEXT_WINDOW)
+                context_end = min(len(text), end + CONTEXT_WINDOW)
+                
+                detected_entities.append({
+                    "entity": value,
+                    "type": entity_type,
+                    "sensitivity": "C2",
+                    "span": [start, end],
+                    "context": text[context_start:context_end],
+                    "detection_method": "c2_regex",
+                    "semantic_key": key
+                })
+    
+    finally:
+        # Clean up temporary file
+        os.unlink(tmp_path)
+    
+    return detected_entities
+
+
+# ==============================================================================
 # REGEX-BASED DETECTION
 # ==============================================================================
 
@@ -282,7 +355,7 @@ def detect_contextual_entities(text: str) -> List[Dict]:
     find_keyword_context(RELIGION_KEYWORDS, "religion")
     
     # Detect ethnicity mentions
-    find_keyword_context(ETHNICITY_KEYWORDS, "philosophical")
+    find_keyword_context(ETHNICITY_KEYWORDS, "ethnicity")
     
     # Detect sexual orientation mentions
     find_keyword_context(SEXUAL_ORIENTATION_KEYWORDS, "sexual_orientation")
@@ -294,7 +367,7 @@ def detect_contextual_entities(text: str) -> List[Dict]:
     find_keyword_context(HEALTH_KEYWORDS, "health_condition")
     
     # Detect trade union membership
-    find_keyword_context(ETHNICITY_KEYWORDS, "Ethnic Origin")
+    find_keyword_context(TRADE_UNION_KEYWORDS, "trade_union")
     
     # Also extract PERSON entities from SpaCy that weren't caught by regex
     for ent in doc.ents:
@@ -356,7 +429,7 @@ def deduplicate_entities(entities: List[Dict]) -> List[Dict]:
 # COMBINED DETECTION
 # ==============================================================================
 
-def label_prompt(prompt: str, inject: bool = False, use_spacy: bool = True) -> Dict:
+def label_prompt(prompt: str, inject: bool = False, use_spacy: bool = True, use_c1_c2: bool = True, data_dir: str = None) -> Dict:
     """
     Label a prompt using both regex and SpaCy detection.
     
@@ -364,6 +437,8 @@ def label_prompt(prompt: str, inject: bool = False, use_spacy: bool = True) -> D
         prompt: The input text to label
         inject: Whether to inject fake entities first
         use_spacy: Whether to use SpaCy for contextual detection
+        use_c1_c2: Whether to use C1/C2 extraction from regex.py
+        data_dir: Directory for Excel/CSV files (C2 extraction)
     
     Returns:
         Dictionary with labeled text and detected entities
@@ -374,8 +449,13 @@ def label_prompt(prompt: str, inject: bool = False, use_spacy: bool = True) -> D
     if inject:
         prompt, injected_info = inject_entities(prompt)
     
-    # Detect all entities using regex
+    # Detect all entities using regex (C3/C4)
     regex_entities = detect_entities_with_regex(prompt)
+    
+    # Detect C1/C2 entities
+    c1_c2_entities = []
+    if use_c1_c2:
+        c1_c2_entities = detect_c1_c2_entities(prompt, data_dir)
     
     # Detect contextual entities using SpaCy
     contextual_entities = []
@@ -383,15 +463,18 @@ def label_prompt(prompt: str, inject: bool = False, use_spacy: bool = True) -> D
         contextual_entities = detect_contextual_entities(prompt)
     
     # Combine and deduplicate
-    all_entities = regex_entities + contextual_entities
+    all_entities = regex_entities + c1_c2_entities + contextual_entities
     deduplicated_entities = deduplicate_entities(all_entities)
     
     # Calculate statistics
     c4_count = sum(1 for e in deduplicated_entities if e["sensitivity"] == "C4")
     c3_count = sum(1 for e in deduplicated_entities if e["sensitivity"] == "C3")
+    c2_count = sum(1 for e in deduplicated_entities if e["sensitivity"] == "C2")
+    c1_count = sum(1 for e in deduplicated_entities if e["sensitivity"] == "C1")
     
     regex_count = sum(1 for e in deduplicated_entities if e["detection_method"] == "regex")
     spacy_count = sum(1 for e in deduplicated_entities if e["detection_method"] in ["spacy_contextual", "spacy_ner"])
+    c1_c2_count = sum(1 for e in deduplicated_entities if e["detection_method"] in ["c1_regex", "c2_regex"])
     
     return {
         "text": prompt,
@@ -401,8 +484,11 @@ def label_prompt(prompt: str, inject: bool = False, use_spacy: bool = True) -> D
             "total_entities": len(deduplicated_entities),
             "c4_count": c4_count,
             "c3_count": c3_count,
+            "c2_count": c2_count,
+            "c1_count": c1_count,
             "regex_detected": regex_count,
-            "spacy_detected": spacy_count
+            "spacy_detected": spacy_count,
+            "c1_c2_detected": c1_c2_count
         }
     }
 
@@ -418,7 +504,7 @@ def load_prompts(file_path: str) -> List[str]:
     return prompts
 
 
-def label_all_prompts(input_file: str, output_file: str, inject: bool = False, use_spacy: bool = True):
+def label_all_prompts(input_file: str, output_file: str, inject: bool = False, use_spacy: bool = True, use_c1_c2: bool = True, data_dir: str = None):
     """
     Process all prompts from input file and save labeled data to output file.
     
@@ -427,6 +513,8 @@ def label_all_prompts(input_file: str, output_file: str, inject: bool = False, u
         output_file: Path to output JSON file
         inject: Whether to inject fake entities into prompts
         use_spacy: Whether to use SpaCy for contextual detection
+        use_c1_c2: Whether to use C1/C2 extraction
+        data_dir: Directory for Excel/CSV files (C2 extraction)
     """
     prompts = load_prompts(input_file)
     labeled_data = []
@@ -435,7 +523,7 @@ def label_all_prompts(input_file: str, output_file: str, inject: bool = False, u
     for i, prompt in enumerate(prompts, 1):
         if i % 10 == 0:
             print(f"  Processed {i}/{len(prompts)} prompts...")
-        labeled_data.append(label_prompt(prompt, inject=inject, use_spacy=use_spacy))
+        labeled_data.append(label_prompt(prompt, inject=inject, use_spacy=use_spacy, use_c1_c2=use_c1_c2, data_dir=data_dir))
     
     # Create output directory if it doesn't exist
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
@@ -448,8 +536,11 @@ def label_all_prompts(input_file: str, output_file: str, inject: bool = False, u
     total_entities = sum(item["statistics"]["total_entities"] for item in labeled_data)
     total_c4 = sum(item["statistics"]["c4_count"] for item in labeled_data)
     total_c3 = sum(item["statistics"]["c3_count"] for item in labeled_data)
+    total_c2 = sum(item["statistics"]["c2_count"] for item in labeled_data)
+    total_c1 = sum(item["statistics"]["c1_count"] for item in labeled_data)
     total_regex = sum(item["statistics"]["regex_detected"] for item in labeled_data)
     total_spacy = sum(item["statistics"]["spacy_detected"] for item in labeled_data)
+    total_c1_c2 = sum(item["statistics"]["c1_c2_detected"] for item in labeled_data)
     
     print(f"\n{'='*60}")
     print(f"[✓] Labeled {len(labeled_data)} prompts → {output_file}")
@@ -457,9 +548,12 @@ def label_all_prompts(input_file: str, output_file: str, inject: bool = False, u
     print(f"Total entities detected: {total_entities}")
     print(f"  - C4 (Critical Risk): {total_c4}")
     print(f"  - C3 (High Risk): {total_c3}")
+    print(f"  - C2 (Medium Risk): {total_c2}")
+    print(f"  - C1 (Low Risk): {total_c1}")
     print(f"\nDetection methods:")
-    print(f"  - Regex patterns: {total_regex}")
+    print(f"  - Regex patterns (C3/C4): {total_regex}")
     print(f"  - SpaCy contextual: {total_spacy}")
+    print(f"  - C1/C2 patterns: {total_c1_c2}")
     
     if inject:
         total_injected = sum(len(item["injected_entities"]) for item in labeled_data)

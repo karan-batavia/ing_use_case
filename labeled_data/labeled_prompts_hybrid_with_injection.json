@@ -1,7 +1,43 @@
 [
   {
-    "text": "Draft a short LinkedIn post promoting the 2024 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Phone: 3268542351.",
+    "text": "Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Phone: 3268542351.",
     "entities": [
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          42,
+          46
+        ],
+        "context": "t LinkedIn post promoting the 2021 Annual Report with this link:",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>"
+      },
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          151
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          210,
+          221
+        ],
+        "context": "nd include a call to read the full report. Phone: 3268542351.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>"
+      },
       {
         "entity": "3268542351",
         "type": "phone",
@@ -23,16 +59,67 @@
       }
     ],
     "statistics": {
-      "total_entities": 1,
+      "total_entities": 4,
       "c4_count": 1,
       "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 3,
       "regex_detected": 1,
-      "spacy_detected": 0
+      "spacy_detected": 0,
+      "c1_c2_detected": 3
     }
   },
   {
     "text": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Dr. Sharon James. Contact email: gabriellecameron@example.org. Phone: 505.964.1395.",
     "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>"
+      },
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Dr. Sharon James",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>"
+      },
       {
         "entity": "Client",
         "type": "customer_number",
@@ -99,16 +186,31 @@
       }
     ],
     "statistics": {
-      "total_entities": 4,
+      "total_entities": 8,
       "c4_count": 1,
       "c3_count": 3,
+      "c2_count": 0,
+      "c1_count": 4,
       "regex_detected": 4,
-      "spacy_detected": 0
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
     }
   },
   {
     "text": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Jennifer Brown. Contact email: williamrodriguez@example.net.",
     "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>"
+      },
       {
         "entity": "customers",
         "type": "customer_number",
@@ -130,6 +232,18 @@
         ],
         "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
         "detection_method": "regex"
+      },
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Jennifer Brown. ",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>"
       },
       {
         "entity": "Client",
@@ -180,11 +294,54 @@
       }
     ],
     "statistics": {
-      "total_entities": 5,
+      "total_entities": 7,
       "c4_count": 0,
       "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
       "regex_detected": 4,
-      "spacy_detected": 1
+      "spacy_detected": 1,
+      "c1_c2_detected": 2
+    }
+  },
+  {
+    "text": "Write all report 2021.",
+    "entities": [
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "total_entities": 2,
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
     }
   }
 ]
