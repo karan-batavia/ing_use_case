@@ -1,6 +1,8 @@
 import json
 import random
 import os
+from collections import defaultdict
+import re
 from typing import List, Dict, Tuple, Set
 from faker import Faker
 import spacy
@@ -127,6 +129,7 @@ def inject_entities(prompt: str) -> Tuple[str, List[Dict]]:
     """
     Inject fake sensitive entities into a raw prompt.
     Return modified text and entity annotations.
+    FIX: Ensure 'span' key is calculated and included.
     """
     modified_prompt = prompt
     injected_entities = []
@@ -139,63 +142,49 @@ def inject_entities(prompt: str) -> Tuple[str, List[Dict]]:
     address = fake.address().replace("\n", ", ")
     ssn = fake.ssn()
     
-    # Inject entities based on context or randomly
-    if "client" in prompt.lower() or "customer" in prompt.lower() or random.random() > 0.7:
-        modified_prompt += f" Client name: {name}."
+    # Injection logic (Updated to include span calculation)
+    
+    # Helper to inject and record span
+    def inject_and_record(current_text, entity_text, entity_type, sensitivity_level, entity_label):
+        # Calculate start position based on current text length
+        start = len(current_text) + 1 # +1 for the space separator added below
+        
+        # Append to text
+        new_text = current_text + f" {entity_label}: {entity_text}."
+        
+        # Calculate end position
+        end = start + len(entity_label) + 2 + len(entity_text) # +2 for ": "
+        
         injected_entities.append({
-            "entity": name,
-            "type": "name",
-            "sensitivity": "C3",
-            "injected": True
+            "entity": entity_text,
+            "type": entity_type,
+            "sensitivity": sensitivity_level,
+            "injected": True,
+            "span": [start + len(entity_label) + 2, end], # Span of the entity value only
+            "detection_method": "injection"
         })
+        return new_text.strip()
+
+
+    if "client" in prompt.lower() or "customer" in prompt.lower() or random.random() > 0.7:
+        modified_prompt = inject_and_record(modified_prompt, name, "name", "C3", "Client name")
     
     if "transfer" in prompt.lower() or "payment" in prompt.lower() or "account" in prompt.lower():
-        modified_prompt += f" IBAN: {iban}."
-        injected_entities.append({
-            "entity": iban,
-            "type": "iban",
-            "sensitivity": "C4",
-            "injected": True
-        })
+        modified_prompt = inject_and_record(modified_prompt, iban, "iban", "C4", "IBAN")
     
     if "email" in prompt.lower() or "contact" in prompt.lower() or random.random() > 0.6:
-        modified_prompt += f" Contact email: {email}."
-        injected_entities.append({
-            "entity": email,
-            "type": "email",
-            "sensitivity": "C3",
-            "injected": True
-        })
+        modified_prompt = inject_and_record(modified_prompt, email, "email", "C3", "Contact email")
     
     if "phone" in prompt.lower() or "call" in prompt.lower() or random.random() > 0.7:
-        modified_prompt += f" Phone: {phone}."
-        injected_entities.append({
-            "entity": phone,
-            "type": "phone",
-            "sensitivity": "C4",
-            "injected": True
-        })
+        modified_prompt = inject_and_record(modified_prompt, phone, "phone", "C4", "Phone")
     
     if "address" in prompt.lower() or "location" in prompt.lower() or random.random() > 0.8:
-        modified_prompt += f" Address: {address}."
-        injected_entities.append({
-            "entity": address,
-            "type": "address",
-            "sensitivity": "C3",
-            "injected": True
-        })
+        modified_prompt = inject_and_record(modified_prompt, address, "address", "C3", "Address")
     
     if "social security" in prompt.lower() or "ssn" in prompt.lower() or random.random() > 0.9:
-        modified_prompt += f" SSN: {ssn}."
-        injected_entities.append({
-            "entity": ssn,
-            "type": "social_security",
-            "sensitivity": "C4",
-            "injected": True
-        })
+        modified_prompt = inject_and_record(modified_prompt, ssn, "social_security", "C4", "SSN")
     
     return modified_prompt.strip(), injected_entities
-
 
 # ==============================================================================
 # C1/C2 DETECTION (from regex.py)
@@ -284,7 +273,7 @@ def detect_c1_c2_entities(text: str, data_dir: str = None) -> List[Dict]:
 def detect_entities_with_regex(text: str) -> List[Dict]:
     """
     Use regex patterns to detect and label all entities in the text.
-    Returns a list of detected entities with their positions and context.
+    FIX: Include 'span' key.
     """
     detected_entities = []
     
@@ -297,7 +286,7 @@ def detect_entities_with_regex(text: str) -> List[Dict]:
         
         for match in matches:
             match_text = match.group()
-            start, end = match.span()
+            start, end = match.span() # <-- Span calculated here
             
             # Extract context around the match
             context_start = max(0, start - CONTEXT_WINDOW)
@@ -308,13 +297,12 @@ def detect_entities_with_regex(text: str) -> List[Dict]:
                 "entity": match_text,
                 "type": entity_type,
                 "sensitivity": SENSITIVITY_MAP.get(entity_type, "UNKNOWN"),
-                "span": [start, end],
+                "span": [start, end], # <-- FIX: 'span' added here
                 "context": context,
                 "detection_method": "regex"
             })
     
     return detected_entities
-
 
 # ==============================================================================
 # SPACY-BASED CONTEXTUAL DETECTION
@@ -429,69 +417,125 @@ def deduplicate_entities(entities: List[Dict]) -> List[Dict]:
 # COMBINED DETECTION
 # ==============================================================================
 
-def label_prompt(prompt: str, inject: bool = False, use_spacy: bool = True, use_c1_c2: bool = True, data_dir: str = None) -> Dict:
-    """
-    Label a prompt using both regex and SpaCy detection.
+def label_prompt(
+    text: str, 
+    data_dir: str = "data", 
+    inject: bool = False, 
+    use_spacy: bool = True, 
+    use_c1_c2: bool = False
+) -> Dict:
     
-    Args:
-        prompt: The input text to label
-        inject: Whether to inject fake entities first
-        use_spacy: Whether to use SpaCy for contextual detection
-        use_c1_c2: Whether to use C1/C2 extraction from regex.py
-        data_dir: Directory for Excel/CSV files (C2 extraction)
+    # Store original prompt before any modifications
+    original_prompt = text
     
-    Returns:
-        Dictionary with labeled text and detected entities
-    """
-    injected_info = []
-    
-    # Inject entities if requested
-    if inject:
-        prompt, injected_info = inject_entities(prompt)
-    
-    # Detect all entities using regex (C3/C4)
-    regex_entities = detect_entities_with_regex(prompt)
-    
-    # Detect C1/C2 entities
+    # Initialize lists to store all detected and injected entities
+    injected_entities = []
     c1_c2_entities = []
+    
+    # ----------------------------------------------------------------------
+    # 1. ENTITY INJECTION
+    # ----------------------------------------------------------------------
+    if inject:
+        text, injected_entities = inject_entities(text)
+
+    # ----------------------------------------------------------------------
+    # 2. ENTITY DETECTION
+    # ----------------------------------------------------------------------
+    
+    # a) C3/C4 Regex Detection (Populates regex_entities)
+    regex_entities = detect_entities_with_regex(text)
+
+    # b) C1/C2 File-based and General Regex Detection
     if use_c1_c2:
-        c1_c2_entities = detect_c1_c2_entities(prompt, data_dir)
+        c1_c2_entities = detect_c1_c2_entities(text, data_dir)
     
-    # Detect contextual entities using SpaCy
-    contextual_entities = []
+    # c) SpaCy NER and Contextual Keyword Detection (Populates spacy_entities)
+    # Renaming the output variable to 'spacy_entities' to match your combination line.
+    spacy_entities = []
     if use_spacy:
-        contextual_entities = detect_contextual_entities(prompt)
+        spacy_entities = detect_contextual_entities(text)
     
-    # Combine and deduplicate
-    all_entities = regex_entities + c1_c2_entities + contextual_entities
-    deduplicated_entities = deduplicate_entities(all_entities)
+    # ----------------------------------------------------------------------
+    # 3. COMBINATION AND DEDUPLICATION
+    # ----------------------------------------------------------------------
     
-    # Calculate statistics
-    c4_count = sum(1 for e in deduplicated_entities if e["sensitivity"] == "C4")
-    c3_count = sum(1 for e in deduplicated_entities if e["sensitivity"] == "C3")
-    c2_count = sum(1 for e in deduplicated_entities if e["sensitivity"] == "C2")
-    c1_count = sum(1 for e in deduplicated_entities if e["sensitivity"] == "C1")
+    # Combine ALL entities (Injected, Regex, C1/C2, SpaCy)
+    all_entities = (
+        injected_entities +
+        regex_entities +
+        c1_c2_entities +
+        spacy_entities
+    )
+
+    # Deduplicate entities, prioritizing regex/injected over spacy where spans overlap
+    final_entities = deduplicate_entities(all_entities)
     
-    regex_count = sum(1 for e in deduplicated_entities if e["detection_method"] == "regex")
-    spacy_count = sum(1 for e in deduplicated_entities if e["detection_method"] in ["spacy_contextual", "spacy_ner"])
-    c1_c2_count = sum(1 for e in deduplicated_entities if e["detection_method"] in ["c1_regex", "c2_regex"])
-    
-    return {
-        "text": prompt,
-        "entities": deduplicated_entities,
-        "injected_entities": injected_info if inject else [],
-        "statistics": {
-            "total_entities": len(deduplicated_entities),
-            "c4_count": c4_count,
-            "c3_count": c3_count,
-            "c2_count": c2_count,
-            "c1_count": c1_count,
-            "regex_detected": regex_count,
-            "spacy_detected": spacy_count,
-            "c1_c2_detected": c1_c2_count
-        }
+    # ----------------------------------------------------------------------
+    # 4. STATISTICAL CALCULATION
+    # ----------------------------------------------------------------------
+    # Calculate statistics based on final_entities (required by the return block)
+    stats = {
+        "c4_count": sum(1 for e in final_entities if e["sensitivity"] == "C4"),
+        "c3_count": sum(1 for e in final_entities if e["sensitivity"] == "C3"),
+        "c2_count": sum(1 for e in final_entities if e["sensitivity"] == "C2"),
+        "c1_count": sum(1 for e in final_entities if e["sensitivity"] == "C1"),
+        "total_entities": len(final_entities),
+        "regex_detected": sum(1 for e in final_entities if e.get("detection_method") == "regex"),
+        "spacy_detected": sum(1 for e in final_entities if "spacy" in e.get("detection_method", "")),
+        "c1_c2_detected": sum(1 for e in final_entities if e.get("detection_method") in ("c1_regex", "c2_regex")),
     }
 
+
+    # ----------------------------------------------------------------------
+    # 5. REDACTION AND MAPPING (Your provided logic follows here)
+    # ----------------------------------------------------------------------
+    
+    # Sort entities by length (longest first) to prevent partial word replacement
+    final_entities.sort(key=lambda e: len(e['entity']), reverse=True)
+
+    redacted_text = text
+    redaction_map = {}
+    
+    # Use defaultdict to manage unique index per entity type (e.g., IBAN_001, IBAN_002)
+    type_counter = defaultdict(int) 
+
+    for entity in final_entities:
+        original_value = entity['entity']
+        entity_type = entity['type'].upper() # Use uppercase type for tag
+
+        # 1. Check if the original value is still present in the text
+        if original_value in redacted_text:
+            
+            # 2. Generate unique placeholder tag
+            type_counter[entity_type] += 1
+            placeholder_tag = f"[{entity_type}_{type_counter[entity_type]:03d}]"
+            
+            # 3. Perform Redaction
+            redacted_text = re.sub(
+                re.escape(original_value), 
+                placeholder_tag, 
+                redacted_text, 
+                count=1 # Replace only the first occurrence for clean mapping
+            )
+            
+            # 4. Maintain Mapping Table
+            redaction_map[placeholder_tag] = original_value
+            
+            # Update the entity dictionary with the new redacted value
+            entity['redacted_value'] = placeholder_tag
+    
+    # ----------------------------------------------------------------------
+    
+    # Return the complete result
+    return {
+        "original_prompt": original_prompt,
+        "processed_prompt": text, # Prompt after injection, before redaction
+        "redacted_prompt": redacted_text,
+        "entities": final_entities,
+        "injected_entities": injected_entities, # Now included in the output
+        "statistics": stats,
+        "redaction_map": redaction_map
+    }
 
 # ==============================================================================
 # FILE PROCESSING
