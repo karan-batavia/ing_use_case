@@ -3,6 +3,7 @@ from torch import nn
 from torch.utils.data import Dataset, DataLoader, random_split
 from transformers import BertTokenizer, BertModel
 from torch.optim import AdamW
+import json
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 
@@ -88,30 +89,47 @@ class BertHybridClassifier(nn.Module):
         return x
 
 # -------------------------
-# Prepare Dataset
+# Prepare Dataset - Corrected Label Generation
 # -------------------------
 def prepare_dataset(data):
-    texts = [d["text"] for d in data]
-    features = np.array([extract_features_for_ml(t) for t in texts])
-    scaler = StandardScaler()
-    features_scaled = scaler.fit_transform(features)
-    
-    # Compute max risk level per sample using entity sensitivities
+    texts = []
+    features_to_scale = []
     labels = []
-    for d in data:
-        levels = [e.get("sensitivity", "C0") for e in d.get("entities", [])]
-        if "C4" in levels: labels.append(4)
-        elif "C3" in levels: labels.append(3)
-        elif "C2" in levels: labels.append(2)
-        elif "C1" in levels: labels.append(1)
-        else: labels.append(0)
     
-    return texts, features_scaled, np.array(labels), scaler
+    # Filter and process data
+    for d in data:
+        if "text" not in d or "statistics" not in d:
+            continue
+        text = d["text"]
+        stats = d["statistics"]
 
+        # Extract features
+        features = extract_features_for_ml(text)
+        features_to_scale.append(features)
+
+        # Determine risk level
+        risk_level = max(
+            int(stats.get("c4_count", 0) > 0) * 4,
+            int(stats.get("c3_count", 0) > 0) * 3,
+            int(stats.get("c2_count", 0) > 0) * 2,
+            int(stats.get("c1_count", 0) > 0) * 1,
+            0  # Default to C0
+        )
+
+        texts.append(text)
+        labels.append(risk_level)
+        
+    # Even if no data, return empty arrays
+    if not texts:
+        print("⚠ Warning: No valid labeled data found. Returning empty dataset.")
+        return [], np.array([]), np.array([]), StandardScaler()
+
+    features_scaled = StandardScaler().fit_transform(np.array(features_to_scale))
+    return texts, features_scaled, np.array(labels), StandardScaler()
 # -------------------------
 # Training Loop with Early Stopping
 # -------------------------
-def train_model(model, train_loader, val_loader=None, epochs=5, lr=2e-5, device='cpu', patience=2):
+def train_model(model, train_loader, val_loader=None, epochs=5, lr=2e-5, device='cpu', patience=2, weights=None):
     model.to(device)
     optimizer = AdamW(model.parameters(), lr=lr)
     criterion = nn.CrossEntropyLoss()
@@ -137,6 +155,12 @@ def train_model(model, train_loader, val_loader=None, epochs=5, lr=2e-5, device=
         avg_train_loss = total_loss / len(train_loader)
         print(f"Epoch {epoch+1}/{epochs}, Train Loss: {avg_train_loss:.4f}")
         
+        # Modify the criterion line:
+        if weights is not None:
+            criterion = nn.CrossEntropyLoss(weight=weights.to(device))
+        else:
+            criterion = nn.CrossEntropyLoss()
+
         # Validation
         if val_loader:
             model.eval()
@@ -172,18 +196,34 @@ def train_model(model, train_loader, val_loader=None, epochs=5, lr=2e-5, device=
     model.load_state_dict(torch.load("best_model.pt"))
 
 # -------------------------
-# MAIN
+# MAIN - Updated Data Loading
 # -------------------------
 if __name__ == "__main__":
-    # Load raw prompts
-    raw_texts = load_prompts("raw_prompts.txt")
-    labeled_data = []
-    for text in raw_texts:
-        labeled_result = label_prompt(text, inject=False, use_spacy=True, use_c1_c2=False)
-        labeled_data.append({
-            "text": text,
-            "entities": labeled_result["entities"]
-        })
+    # Use the file that was created earlier with the most comprehensive labeling (e.g., hybrid + injection)
+    # The file should contain 'text' and 'statistics' keys for each item.
+    LABELED_DATA_FILE = "labeled_data/labeled_prompts_hybrid_with_injection.json"
+    
+    try:
+        with open(LABELED_DATA_FILE, 'r') as f:
+            labeled_data = json.load(f)
+        print(f"Loaded {len(labeled_data)} labeled samples from {LABELED_DATA_FILE}.")
+    except FileNotFoundError:
+        print(f"Error: Labeled data file not found at {LABELED_DATA_FILE}.")
+        print("Please run ml_setup.py first to generate the labeled data.")
+        labeled_data = []
+
+    if not labeled_data:
+        # Fallback to generating some data if file not found, but this is less ideal
+        print("Using simplified data generation as fallback...")
+        raw_texts = load_prompts("raw_prompts.txt")
+        labeled_data = []
+        for text in raw_texts:
+            # Running with injection for better features
+            labeled_result = label_prompt(text, inject=True, use_spacy=True, use_c1_c2=False)
+            labeled_data.append({
+                "text": text,
+                "statistics": labeled_result["statistics"] # MUST include statistics
+            })
     
     # Prepare dataset
     texts, features, labels, scaler = prepare_dataset(labeled_data)
@@ -202,8 +242,20 @@ if __name__ == "__main__":
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f"Using device: {device}")
     
+    unique_labels, counts = np.unique(labels, return_counts=True)
+    total_samples = len(labels)
+    num_classes = 5
+
+    # Calculate weights: inverse of frequency (higher weight for less frequent classes)
+    class_weights = torch.zeros(num_classes, dtype=torch.float)
+    for label, count in zip(unique_labels, counts):
+        # Weight = total_samples / (num_classes * count)
+        class_weights[label] = total_samples / (num_classes * count)
+
+    # Pass the weights to the training function
+
     model = BertHybridClassifier(numeric_dim=features.shape[1], num_classes=5)
-    train_model(model, train_loader, val_loader, epochs=5, lr=2e-5, device=device, patience=2)
+    train_model(model, train_loader, val_loader, epochs=5, lr=2e-5, device=device, patience=2, weights=class_weights)
     
     # Predict on new prompt
     new_prompt = "Hello, my name is Jane Smith and my social security is 901231-123.45. I support the democrat party."
@@ -216,7 +268,7 @@ if __name__ == "__main__":
     print(f"\nPredicted risk level for new prompt: C{pred_class}")
     
     # Show entities and features
-    result = label_prompt(new_prompt, inject=False, use_spacy=True, use_c1_c2=False)
+    result = label_prompt(new_prompt, inject=False, use_spacy=True, use_c1_c2=True)
     print("\nDetected Entities:")
     for e in result['entities']:
         print(f"{e['entity']} ({e['type']}, {e['sensitivity']})")

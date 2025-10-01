@@ -1,0 +1,2689 @@
+[
+  {
+    "original_prompt": "Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "redacted_prompt": "Draft a short LinkedIn post promoting the [YEAR_001] Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          151
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          210,
+          221
+        ],
+        "context": "nd include a call to read the full report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          42,
+          46
+        ],
+        "context": "t LinkedIn post promoting the 2021 Annual Report with this link:",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 3,
+      "total_entities": 3,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 3
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 4,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 4,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 4,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 4,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 4,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 4,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 4,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 4,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 4,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 4,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 4,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.",
+    "processed_prompt": "Write all report 2021.",
+    "redacted_prompt": "Write [DOCUMENT_001] [YEAR_001].",
+    "entities": [
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[DOCUMENT_001]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Hello, my name is Jane Smith and my social security is 901231-123.45. I support the democrat party.\"",
+    "processed_prompt": "Hello, my name is Jane Smith and my social security is 901231-123.45. I support the democrat party.\"",
+    "redacted_prompt": "Hello, my name is Jane Smith and my social security is [SOCIAL_SECURITY_001]. I support the democrat party.\"",
+    "entities": [
+      {
+        "entity": "901231-123.45",
+        "type": "social_security",
+        "sensitivity": "C4",
+        "span": [
+          55,
+          68
+        ],
+        "context": "ith and my social security is 901231-123.45. I support the democrat party",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: SOCIAL_SECURITY.",
+        "redacted_value": "[SOCIAL_SECURITY_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[SOCIAL_SECURITY_001]": "901231-123.45"
+    }
+  }
+]

@@ -1,0 +1,4932 @@
+[
+  {
+    "original_prompt": "Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Phone: 3268542351.",
+    "redacted_prompt": "Draft a short LinkedIn post promoting the [YEAR_001] Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001]. Phone: [PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          151
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          210,
+          221
+        ],
+        "context": "nd include a call to read the full report. Phone: 3268542351.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "3268542351",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          230,
+          240
+        ],
+        "context": " read the full report. Phone: 3268542351.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          42,
+          46
+        ],
+        "context": "t LinkedIn post promoting the 2021 Annual Report with this link:",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "3268542351",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          230,
+          240
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 3,
+      "total_entities": 4,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 3
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[PHONE_001]": "3268542351",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Dr. Sharon James. Contact email: gabriellecameron@example.org. Phone: 505.964.1395.",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001] [CUSTOMER_NUMBER_001] name: [NAME_001]. Contact email: [EMAIL_001]. Phone: [PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Dr. Sharon James",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "gabriellecameron@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          357,
+          385
+        ],
+        "context": " Sharon James. Contact email: gabriellecameron@example.org. Phone: 505.964.1395.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "Dr. Sharon James",
+        "type": "name",
+        "sensitivity": "C3",
+        "span": [
+          324,
+          340
+        ],
+        "context": "eport-2024.pdf). Client name: Dr. Sharon James. Contact email: gabriellecame",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: NAME.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "505.964.1395",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          394,
+          406
+        ],
+        "context": "lecameron@example.org. Phone: 505.964.1395.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          311,
+          317
+        ],
+        "context": "-Pillar-III-Report-2024.pdf). Client name: Dr. Sharon James. Conta",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Dr. Sharon James",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          324,
+          340
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "gabriellecameron@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          357,
+          385
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "505.964.1395",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          394,
+          406
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 3,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 8,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[EMAIL_001]": "gabriellecameron@example.org",
+      "[NAME_001]": "Dr. Sharon James",
+      "[PHONE_001]": "505.964.1395",
+      "[DOCUMENT_001]": "III report",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Jennifer Brown. Contact email: williamrodriguez@example.net.",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001] [CUSTOMER_NUMBER_002] name: [NAME_001]. Contact email: [EMAIL_001].",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Jennifer Brown. ",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "williamrodriguez@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          379,
+          407
+        ],
+        "context": "ennifer Brown. Contact email: williamrodriguez@example.net.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "Jennifer Brown",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          362
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          335,
+          341
+        ],
+        "context": "it-after-first-half-of-2024). Client name: Jennifer Brown. Contact",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Jennifer Brown",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          362
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "williamrodriguez@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          379,
+          407
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 7,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[EMAIL_001]": "williamrodriguez@example.net",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[NAME_001]": "Jennifer Brown",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[CUSTOMER_NUMBER_002]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Phone: 309-583-9301x03105.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001]. Phone: [PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "309-583-9301x03105",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          252,
+          270
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report. Phone: 309-583-9301x03105.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "309-583-9301x03105",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          252,
+          270
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 5,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[PHONE_001]": "309-583-9301x03105",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Phone: (267)873-6026.",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001] Phone: ([PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Phone: (267)873-6026.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "267)873-6026",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          319,
+          331
+        ],
+        "context": "III-Report-2024.pdf). Phone: (267)873-6026.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "(267)873-6026",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          318,
+          331
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 5,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[PHONE_001]": "267)873-6026",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Barry Hensley. Contact email: randy47@example.com.",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001] [CUSTOMER_NUMBER_002] name: [NAME_001]. Contact email: [EMAIL_001].",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Barry Hensley. C",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "randy47@example.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          378,
+          397
+        ],
+        "context": "Barry Hensley. Contact email: randy47@example.com.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "Barry Hensley",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          361
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          335,
+          341
+        ],
+        "context": "it-after-first-half-of-2024). Client name: Barry Hensley. Contact ",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Barry Hensley",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          361
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "randy47@example.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          378,
+          397
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 7,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[EMAIL_001]": "randy47@example.com",
+      "[NAME_001]": "Barry Hensley",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[CUSTOMER_NUMBER_002]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Client name: Brittney Campbell. Phone: 4118280598.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001]. [CUSTOMER_NUMBER_001] name: [NAME_001]. Phone: [PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "Brittney Campbell",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          275
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report. Client name: Brittney Campbe",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "4118280598",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          284,
+          294
+        ],
+        "context": "me: Brittney Campbell. Phone: 4118280598.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          245,
+          251
+        ],
+        "context": "call to read the full report. Client name: Brittney Campbell. Phon",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Brittney Campbell",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          275
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "4118280598",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          284,
+          294
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 7,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[NAME_001]": "Brittney Campbell",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[PHONE_001]": "4118280598",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Jennifer Santiago. Contact email: emurphy@example.com. Phone: (386)885-0142x940.",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001] [CUSTOMER_NUMBER_001] name: [NAME_001]. Contact email: [EMAIL_001]. Phone: [PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Jennifer Santiag",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "emurphy@example.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          358,
+          377
+        ],
+        "context": "ifer Santiago. Contact email: emurphy@example.com. Phone: (386)885-0142x940.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "Jennifer Santiago",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          324,
+          341
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "(386)885-0142x940",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          386,
+          403
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          311,
+          317
+        ],
+        "context": "-Pillar-III-Report-2024.pdf). Client name: Jennifer Santiago. Cont",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Jennifer Santiago",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          324,
+          341
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "emurphy@example.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          358,
+          377
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "(386)885-0142x940",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          386,
+          403
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 3,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 8,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[EMAIL_001]": "emurphy@example.com",
+      "[NAME_001]": "Jennifer Santiago",
+      "[PHONE_001]": "(386)885-0142x940",
+      "[DOCUMENT_001]": "III report",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Elizabeth Parker. Contact email: jason99@example.net. Phone: 577-673-8721x48951.",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001] [CUSTOMER_NUMBER_002] name: [NAME_001]. Contact email: [EMAIL_001]. Phone: [PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Elizabeth Parker",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "jason99@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          381,
+          400
+        ],
+        "context": "zabeth Parker. Contact email: jason99@example.net. Phone: 577-673-8721x48951.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "577-673-8721x48951",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          409,
+          427
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "Elizabeth Parker",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          364
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          335,
+          341
+        ],
+        "context": "it-after-first-half-of-2024). Client name: Elizabeth Parker. Conta",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Elizabeth Parker",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          364
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "jason99@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          381,
+          400
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "577-673-8721x48951",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          409,
+          427
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 8,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[EMAIL_001]": "jason99@example.net",
+      "[PHONE_001]": "577-673-8721x48951",
+      "[NAME_001]": "Elizabeth Parker",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[CUSTOMER_NUMBER_002]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Client name: Shannon Mcclure. Contact email: jrivas@example.com. Phone: (677)943-4873. Address: 45581 Edward Lights Apt. 316, Riveramouth, MT 08662.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001]. [CUSTOMER_NUMBER_001] name: [NAME_001]. Contact email: [EMAIL_001]. Phone: ([PHONE_001]. Address: [ADDRESS_001] Lights Apt. 316, Riveramouth, MT 08662.",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "jrivas@example.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          290,
+          308
+        ],
+        "context": "annon Mcclure. Contact email: jrivas@example.com. Phone: (677)943-4873. Addres",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "Shannon Mcclure",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          273
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "677)943-4873",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          318,
+          330
+        ],
+        "context": ": jrivas@example.com. Phone: (677)943-4873. Address: 45581 Edward Lights",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "45581 Edward",
+        "type": "address",
+        "sensitivity": "C3",
+        "span": [
+          341,
+          353
+        ],
+        "context": "hone: (677)943-4873. Address: 45581 Edward Lights Apt. 316, Riveramouth,",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: ADDRESS.",
+        "redacted_value": "[ADDRESS_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report. Client name: Shannon Mcclure",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          245,
+          251
+        ],
+        "context": "call to read the full report. Client name: Shannon Mcclure. Contac",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Shannon Mcclure",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          273
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "jrivas@example.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          290,
+          308
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "(677)943-4873",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          317,
+          330
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "45581 Edward Lights Apt. 316, Riveramouth, MT 08662",
+        "type": "address",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          341,
+          392
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 4,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 9,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[EMAIL_001]": "jrivas@example.com",
+      "[NAME_001]": "Shannon Mcclure",
+      "[PHONE_001]": "677)943-4873",
+      "[ADDRESS_001]": "45581 Edward",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Lauren Dominguez.",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001] [CUSTOMER_NUMBER_001] name: [NAME_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Lauren Dominguez",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "Lauren Dominguez",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          324,
+          340
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          311,
+          317
+        ],
+        "context": "-Pillar-III-Report-2024.pdf). Client name: Lauren Dominguez.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Lauren Dominguez",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          324,
+          340
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 6,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[NAME_001]": "Lauren Dominguez",
+      "[DOCUMENT_001]": "III report",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Marissa Webster. Contact email: tamirodriguez@example.org.",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001] [CUSTOMER_NUMBER_002] name: [NAME_001]. Contact email: [EMAIL_001].",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Marissa Webster.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "tamirodriguez@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          380,
+          405
+        ],
+        "context": "rissa Webster. Contact email: tamirodriguez@example.org.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "Marissa Webster",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          363
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          335,
+          341
+        ],
+        "context": "it-after-first-half-of-2024). Client name: Marissa Webster. Contac",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Marissa Webster",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          363
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "tamirodriguez@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          380,
+          405
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 7,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[EMAIL_001]": "tamirodriguez@example.org",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[NAME_001]": "Marissa Webster",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[CUSTOMER_NUMBER_002]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Phone: 531.836.7837x77014.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001]. Phone: [PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "531.836.7837x77014",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          252,
+          270
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report. Phone: 531.836.7837x77014.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "531.836.7837x77014",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          252,
+          270
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 5,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[PHONE_001]": "531.836.7837x77014",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Contact email: brandon08@example.com.",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001] Contact email: [EMAIL_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Contact email: brandon08@exam",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "brandon08@example.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          326,
+          347
+        ],
+        "context": "ort-2024.pdf). Contact email: brandon08@example.com.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "brandon08@example.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          326,
+          347
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 5,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[EMAIL_001]": "brandon08@example.com",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Amy Hernandez. Contact email: ashley09@example.net. Phone: 333-441-2328.",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001] [CUSTOMER_NUMBER_002] name: [NAME_001]. Contact email: [EMAIL_001]. Phone: [PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Amy Hernandez. C",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "ashley09@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          378,
+          398
+        ],
+        "context": "Amy Hernandez. Contact email: ashley09@example.net. Phone: 333-441-2328.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "Amy Hernandez",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          361
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "333-441-2328",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          407,
+          419
+        ],
+        "context": " ashley09@example.net. Phone: 333-441-2328.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          335,
+          341
+        ],
+        "context": "it-after-first-half-of-2024). Client name: Amy Hernandez. Contact ",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Amy Hernandez",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          361
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "ashley09@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          378,
+          398
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "333-441-2328",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          407,
+          419
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 8,
+      "regex_detected": 5,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[EMAIL_001]": "ashley09@example.net",
+      "[NAME_001]": "Amy Hernandez",
+      "[PHONE_001]": "333-441-2328",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[CUSTOMER_NUMBER_002]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Client name: Chase Baker. Contact email: georgepamela@example.net. Phone: 994-601-3990x49027.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001]. [CUSTOMER_NUMBER_001] name: [NAME_001]. Contact email: [EMAIL_001]. Phone: [PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "georgepamela@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          286,
+          310
+        ],
+        "context": ": Chase Baker. Contact email: georgepamela@example.net. Phone: 994-601-3990x49027.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "994-601-3990x49027",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          319,
+          337
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report. Client name: Chase Baker. Co",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "Chase Baker",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          269
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          245,
+          251
+        ],
+        "context": "call to read the full report. Client name: Chase Baker. Contact em",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Chase Baker",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          269
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "georgepamela@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          286,
+          310
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "994-601-3990x49027",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          319,
+          337
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 3,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 8,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[EMAIL_001]": "georgepamela@example.net",
+      "[PHONE_001]": "994-601-3990x49027",
+      "[DOCUMENT_001]": "full report",
+      "[NAME_001]": "Chase Baker",
+      "[DOCUMENT_002]": "all report",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Frank Cordova. Contact email: sarakim@example.net.",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001] [CUSTOMER_NUMBER_001] name: [NAME_001]. Contact email: [EMAIL_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Frank Cordova. C",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "sarakim@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          354,
+          373
+        ],
+        "context": "Frank Cordova. Contact email: sarakim@example.net.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "Frank Cordova",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          324,
+          337
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          311,
+          317
+        ],
+        "context": "-Pillar-III-Report-2024.pdf). Client name: Frank Cordova. Contact ",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Frank Cordova",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          324,
+          337
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "sarakim@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          354,
+          373
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 3,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 7,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[EMAIL_001]": "sarakim@example.net",
+      "[NAME_001]": "Frank Cordova",
+      "[DOCUMENT_001]": "III report",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: John Kennedy. Contact email: cgrimes@example.net. SSN: 159-10-7693.",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001] [CUSTOMER_NUMBER_002] name: [NAME_001]. Contact email: [EMAIL_001]. SSN: [SOCIAL_SECURITY_001].",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: John Kennedy. Co",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "cgrimes@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          377,
+          396
+        ],
+        "context": " John Kennedy. Contact email: cgrimes@example.net. SSN: 159-10-7693.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "John Kennedy",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          360
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "159-10-7693",
+        "type": "social_security",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          403,
+          414
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[SOCIAL_SECURITY_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          335,
+          341
+        ],
+        "context": "it-after-first-half-of-2024). Client name: John Kennedy. Contact e",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "John Kennedy",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          360
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "cgrimes@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          377,
+          396
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "159-10-7693",
+        "type": "social_security",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          403,
+          414
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[SOCIAL_SECURITY_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 8,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[EMAIL_001]": "cgrimes@example.net",
+      "[NAME_001]": "John Kennedy",
+      "[SOCIAL_SECURITY_001]": "159-10-7693",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[CUSTOMER_NUMBER_002]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Client name: Deborah Hanson. Phone: 8504455623.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001]. [CUSTOMER_NUMBER_001] name: [NAME_001]. Phone: [PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "Deborah Hanson",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          272
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report. Client name: Deborah Hanson.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "8504455623",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          281,
+          291
+        ],
+        "context": " name: Deborah Hanson. Phone: 8504455623.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          245,
+          251
+        ],
+        "context": "call to read the full report. Client name: Deborah Hanson. Phone: ",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Deborah Hanson",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          272
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "8504455623",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          281,
+          291
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 7,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[NAME_001]": "Deborah Hanson",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[PHONE_001]": "8504455623",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Megan Moore.",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001] [CUSTOMER_NUMBER_001] name: [NAME_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Megan Moore.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "Megan Moore",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          324,
+          335
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          311,
+          317
+        ],
+        "context": "-Pillar-III-Report-2024.pdf). Client name: Megan Moore.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Megan Moore",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          324,
+          335
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 6,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[NAME_001]": "Megan Moore",
+      "[DOCUMENT_001]": "III report",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Joshua Mata. Contact email: bakerdavid@example.com.",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001] [CUSTOMER_NUMBER_002] name: [NAME_001]. Contact email: [EMAIL_001].",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Joshua Mata. Con",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "bakerdavid@example.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          376,
+          398
+        ],
+        "context": ": Joshua Mata. Contact email: bakerdavid@example.com.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "Joshua Mata",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          359
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          335,
+          341
+        ],
+        "context": "it-after-first-half-of-2024). Client name: Joshua Mata. Contact em",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Joshua Mata",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          359
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "bakerdavid@example.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          376,
+          398
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 7,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[EMAIL_001]": "bakerdavid@example.com",
+      "[NAME_001]": "Joshua Mata",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[CUSTOMER_NUMBER_002]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Phone: (706)543-1713x900. Address: Unit 9318 Box 3933, DPO AA 19841.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001]. Phone: [PHONE_001]. Address: Unit [POSTAL_CODE_001] 3933, DPO AA 19841.",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "(706)543-1713x900",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          252,
+          269
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report. Phone: (706)543-1713x900. Ad",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "9318 Box",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          285,
+          293
+        ],
+        "context": "6)543-1713x900. Address: Unit 9318 Box 3933, DPO AA 19841.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "(706)543-1713x900",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          252,
+          269
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "Unit 9318 Box 3933, DPO AA 19841",
+        "type": "address",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          280,
+          312
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 6,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[PHONE_001]": "(706)543-1713x900",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[POSTAL_CODE_001]": "9318 Box",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 4,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Michael Farrell. Contact email: stephanie71@example.org.",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001] [CUSTOMER_NUMBER_002] name: [NAME_001]. Contact email: [EMAIL_001].",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Michael Farrell.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "stephanie71@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          380,
+          403
+        ],
+        "context": "chael Farrell. Contact email: stephanie71@example.org.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "Michael Farrell",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          363
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          335,
+          341
+        ],
+        "context": "it-after-first-half-of-2024). Client name: Michael Farrell. Contac",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Michael Farrell",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          363
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "stephanie71@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          380,
+          403
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 7,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[EMAIL_001]": "stephanie71@example.org",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[NAME_001]": "Michael Farrell",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[CUSTOMER_NUMBER_002]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Client name: Vanessa Cardenas. Phone: 683-766-7525. Address: 22901 Ramos Manors, Lawsonchester, KY 28756.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001]. [CUSTOMER_NUMBER_001] name: [NAME_001]. Phone: [PHONE_001]. Address: [ADDRESS_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "22901 Ramos Manors, Lawsonchester, KY 28756",
+        "type": "address",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          306,
+          349
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[ADDRESS_001]"
+      },
+      {
+        "entity": "Vanessa Cardenas",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          274
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "683-766-7525",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          283,
+          295
+        ],
+        "context": "ame: Vanessa Cardenas. Phone: 683-766-7525. Address: 22901 Ramos Manors,",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report. Client name: Vanessa Cardena",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          245,
+          251
+        ],
+        "context": "call to read the full report. Client name: Vanessa Cardenas. Phone",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Vanessa Cardenas",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          274
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "683-766-7525",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          283,
+          295
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "22901 Ramos Manors, Lawsonchester, KY 28756",
+        "type": "address",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          306,
+          349
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[ADDRESS_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 3,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 8,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[ADDRESS_001]": "22901 Ramos Manors, Lawsonchester, KY 28756",
+      "[NAME_001]": "Vanessa Cardenas",
+      "[PHONE_001]": "683-766-7525",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Contact email: smithjulie@example.org.",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001] Contact email: [EMAIL_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Contact email: smithjulie@exa",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "smithjulie@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          326,
+          348
+        ],
+        "context": "ort-2024.pdf). Contact email: smithjulie@example.org.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "smithjulie@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          326,
+          348
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 5,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[EMAIL_001]": "smithjulie@example.org",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Dana Chapman. Contact email: thomasjames@example.net.",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001] [CUSTOMER_NUMBER_002] name: [NAME_001]. Contact email: [EMAIL_001].",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Dana Chapman. Co",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "thomasjames@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          377,
+          400
+        ],
+        "context": " Dana Chapman. Contact email: thomasjames@example.net.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "Dana Chapman",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          360
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          335,
+          341
+        ],
+        "context": "it-after-first-half-of-2024). Client name: Dana Chapman. Contact e",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Dana Chapman",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          360
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "thomasjames@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          377,
+          400
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 7,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[EMAIL_001]": "thomasjames@example.net",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[NAME_001]": "Dana Chapman",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[CUSTOMER_NUMBER_002]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Contact email: toni18@example.net. Phone: (703)777-8892. Address: PSC 6659, Box 0515, APO AE 73634.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001]. Contact email: [EMAIL_001]. Phone: ([PHONE_001]. Address: [ADDRESS_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "PSC 6659, Box 0515, APO AE 73634",
+        "type": "address",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          311,
+          343
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[ADDRESS_001]"
+      },
+      {
+        "entity": "toni18@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          260,
+          278
+        ],
+        "context": "e full report. Contact email: toni18@example.net. Phone: (703)777-8892. Addres",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "703)777-8892",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          288,
+          300
+        ],
+        "context": ": toni18@example.net. Phone: (703)777-8892. Address: PSC 6659, Box 0515,",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report. Contact email: toni18@exampl",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "toni18@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          260,
+          278
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "(703)777-8892",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          287,
+          300
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "PSC 6659, Box 0515, APO AE 73634",
+        "type": "address",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          311,
+          343
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[ADDRESS_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 7,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[ADDRESS_001]": "PSC 6659, Box 0515, APO AE 73634",
+      "[EMAIL_001]": "toni18@example.net",
+      "[PHONE_001]": "703)777-8892",
+      "[DOCUMENT_001]": "full report",
+      "[DOCUMENT_002]": "all report",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Phone: 4544235733. Address: 880 Walter River, New Nicholas, GA 24204.",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001] Phone: [PHONE_001]. Address: [ADDRESS_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Phone: 4544235733. Address: 8",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "880 Walter River, New Nicholas, GA 24204",
+        "type": "address",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          339,
+          379
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[ADDRESS_001]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "4544235733",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          318,
+          328
+        ],
+        "context": "-III-Report-2024.pdf). Phone: 4544235733. Address: 880 Walter River, N",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "4544235733",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          318,
+          328
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "880 Walter River, New Nicholas, GA 24204",
+        "type": "address",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          339,
+          379
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[ADDRESS_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 6,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[ADDRESS_001]": "880 Walter River, New Nicholas, GA 24204",
+      "[DOCUMENT_001]": "III report",
+      "[PHONE_001]": "4544235733",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Amanda Diaz. Contact email: mburch@example.net.",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001] [CUSTOMER_NUMBER_002] name: [NAME_001]. Contact email: [EMAIL_001].",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Amanda Diaz. Con",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "mburch@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          376,
+          394
+        ],
+        "context": ": Amanda Diaz. Contact email: mburch@example.net.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "Amanda Diaz",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          359
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          335,
+          341
+        ],
+        "context": "it-after-first-half-of-2024). Client name: Amanda Diaz. Contact em",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Amanda Diaz",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          359
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "mburch@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          376,
+          394
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 7,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[EMAIL_001]": "mburch@example.net",
+      "[NAME_001]": "Amanda Diaz",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[CUSTOMER_NUMBER_002]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report.",
+    "processed_prompt": "Write all report 2021.Draft a short LinkedIn post promoting the 2021 Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional and include a call to read the full report. Client name: Marie Moody. Phone: 2365971179.",
+    "redacted_prompt": "Write [DOCUMENT_002] [YEAR_001].Draft a short LinkedIn post promoting the 2021 Annual Report with this link: [LINK_001] Keep the tone professional and include a call to read the [DOCUMENT_001]. [CUSTOMER_NUMBER_001] name: [NAME_001]. Phone: [PHONE_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          99,
+          173
+        ],
+        "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "full report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          232,
+          243
+        ],
+        "context": "nd include a call to read the full report. Client name: Marie Moody. Ph",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "Marie Moody",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          269
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_002]"
+      },
+      {
+        "entity": "2365971179",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          278,
+          288
+        ],
+        "context": "ent name: Marie Moody. Phone: 2365971179.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          245,
+          251
+        ],
+        "context": "call to read the full report. Client name: Marie Moody. Phone: 236",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021.Draft a short LinkedIn post p",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Marie Moody",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          258,
+          269
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "2365971179",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          278,
+          288
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 7,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[DOCUMENT_001]": "full report",
+      "[NAME_001]": "Marie Moody",
+      "[DOCUMENT_002]": "all report",
+      "[PHONE_001]": "2365971179",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+    "processed_prompt": "Prepare a one-paragraph investor brief linking to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Address: 541 Kim Locks, Klinefurt, MA 24987.",
+    "redacted_prompt": "Prepare a one-paragraph investor brief linking to [YEAR_001] Pillar 3 Disclosures ([LINK_002] and the Additional Pillar [DOCUMENT_001] ([LINK_001] Address: [ADDRESS_001].",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          208,
+          310
+        ],
+        "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Address: 541 Kim Locks, Kline",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          77,
+          169
+        ],
+        "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "541 Kim Locks, Klinefurt, MA 24987",
+        "type": "address",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          320,
+          354
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[ADDRESS_001]"
+      },
+      {
+        "entity": "III report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          196,
+          206
+        ],
+        "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          50,
+          54
+        ],
+        "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "541 Kim Locks, Klinefurt, MA 24987",
+        "type": "address",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          320,
+          354
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[ADDRESS_001]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 4,
+      "total_entities": 5,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 4
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf).",
+      "[LINK_002]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx)",
+      "[ADDRESS_001]": "541 Kim Locks, Klinefurt, MA 24987",
+      "[DOCUMENT_001]": "III report",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+    "processed_prompt": "Write a newsroom email that indexes two links: 2024 Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Robert Adams. Contact email: hannahbell@example.org. Phone: 001-959-264-0165x8202.",
+    "redacted_prompt": "Write a newsroom email that indexes two links: [YEAR_001] Full Year Results (https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society) and [POSTAL_CODE_001] ([LINK_001] [CUSTOMER_NUMBER_002] name: [NAME_001]. Contact email: [EMAIL_001]. Phone: [PHONE_001]-0165x8202.",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          223,
+          334
+        ],
+        "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Robert Adams. Co",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024 Half Year Results",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          199,
+          221
+        ],
+        "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      },
+      {
+        "entity": "hannahbell@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          377,
+          399
+        ],
+        "context": " Robert Adams. Contact email: hannahbell@example.org. Phone: 001-959-264-0165x8202",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "Robert Adams",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          360
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "001-959-264",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          408,
+          419
+        ],
+        "context": "annahbell@example.org. Phone: 001-959-264-0165x8202.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          172,
+          181
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          335,
+          341
+        ],
+        "context": "it-after-first-half-of-2024). Client name: Robert Adams. Contact e",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": "email that indexes two links: 2024 Full Year Results (https://ne",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Robert Adams",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          348,
+          360
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "hannahbell@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          377,
+          399
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "001-959-264-0165x8202",
+        "type": "phone",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          408,
+          429
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 5,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 8,
+      "regex_detected": 5,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024).",
+      "[POSTAL_CODE_001]": "2024 Half Year Results",
+      "[EMAIL_001]": "hannahbell@example.org",
+      "[NAME_001]": "Robert Adams",
+      "[PHONE_001]": "001-959-264",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[CUSTOMER_NUMBER_002]": "Client",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write all report 2021.",
+    "processed_prompt": "Write all report 2021. Client name: Ernest Ramirez. Contact email: melissahayes@example.net.",
+    "redacted_prompt": "Write [DOCUMENT_001] [YEAR_001]. [CUSTOMER_NUMBER_001] name: [NAME_001]. Contact email: [EMAIL_001].",
+    "entities": [
+      {
+        "entity": "melissahayes@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          67,
+          91
+        ],
+        "context": "rnest Ramirez. Contact email: melissahayes@example.net.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "Ernest Ramirez",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          36,
+          50
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "all report",
+        "type": "document",
+        "sensitivity": "C1",
+        "span": [
+          6,
+          16
+        ],
+        "context": "Write all report 2021. Client name: Ernest Ram",
+        "detection_method": "c1_regex",
+        "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
+        "redacted_value": "[DOCUMENT_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          23,
+          29
+        ],
+        "context": "Write all report 2021. Client name: Ernest Ramirez. Contact",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          17,
+          21
+        ],
+        "context": "Write all report 2021. Client name: Ernest Ramirez.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "Ernest Ramirez",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          36,
+          50
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "melissahayes@example.net",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          67,
+          91
+        ],
+        "detection_method": "injection"
+      }
+    ],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 3,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 5,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[EMAIL_001]": "melissahayes@example.net",
+      "[NAME_001]": "Ernest Ramirez",
+      "[DOCUMENT_001]": "all report",
+      "[CUSTOMER_NUMBER_001]": "Client",
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "Hello, my name is Jane Smith and my social security is 901231-123.45. I support the democrat party.\"",
+    "processed_prompt": "Hello, my name is Jane Smith and my social security is 901231-123.45. I support the democrat party.\" Client name: James Love. Contact email: ryanbartlett@example.org. SSN: 084-06-9450.",
+    "redacted_prompt": "Hello, my name is [PERSON_SPACY_001] and my social security is [SOCIAL_SECURITY_001]. I support the [POLITICAL_OPINION_001] party.\" [CUSTOMER_NUMBER_001] name: [NAME_001]. Contact email: [EMAIL_001]. SSN: [SOCIAL_SECURITY_002].",
+    "entities": [
+      {
+        "entity": "ryanbartlett@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          141,
+          165
+        ],
+        "context": "e: James Love. Contact email: ryanbartlett@example.org. SSN: 084-06-9450.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "901231-123.45",
+        "type": "social_security",
+        "sensitivity": "C4",
+        "span": [
+          55,
+          68
+        ],
+        "context": "ith and my social security is 901231-123.45. I support the democrat party",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: SOCIAL_SECURITY.",
+        "redacted_value": "[SOCIAL_SECURITY_001]"
+      },
+      {
+        "entity": "084-06-9450",
+        "type": "social_security",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          172,
+          183
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[SOCIAL_SECURITY_002]"
+      },
+      {
+        "entity": "Jane Smith",
+        "type": "person_spacy",
+        "sensitivity": "C3",
+        "span": [
+          18,
+          28
+        ],
+        "context": "Hello, my name is Jane Smith and my social security is 901",
+        "detection_method": "spacy_ner",
+        "explanation": "Detected as a C3 (Medium Risk) general entity (SpaCy NER PERSON_SPACY) using contextual analysis.",
+        "redacted_value": "[PERSON_SPACY_001]"
+      },
+      {
+        "entity": "James Love",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          114,
+          124
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "democrat",
+        "type": "political_opinion",
+        "sensitivity": "C4",
+        "span": [
+          84,
+          92
+        ],
+        "context": " 901231-123.45. I support the democrat party.\" Client name: James Lo",
+        "detection_method": "spacy_contextual",
+        "explanation": "Flagged as a C4 (Critical Risk) contextual entity based on the mention of a political_opinion keyword.",
+        "redacted_value": "[POLITICAL_OPINION_001]"
+      },
+      {
+        "entity": "Client",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          101,
+          107
+        ],
+        "context": " support the democrat party.\" Client name: James Love. Contact ema",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      }
+    ],
+    "injected_entities": [
+      {
+        "entity": "James Love",
+        "type": "name",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          114,
+          124
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[NAME_001]"
+      },
+      {
+        "entity": "ryanbartlett@example.org",
+        "type": "email",
+        "sensitivity": "C3",
+        "injected": true,
+        "span": [
+          141,
+          165
+        ],
+        "detection_method": "injection"
+      },
+      {
+        "entity": "084-06-9450",
+        "type": "social_security",
+        "sensitivity": "C4",
+        "injected": true,
+        "span": [
+          172,
+          183
+        ],
+        "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
+        "redacted_value": "[SOCIAL_SECURITY_002]"
+      }
+    ],
+    "statistics": {
+      "c4_count": 3,
+      "c3_count": 4,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 7,
+      "regex_detected": 3,
+      "spacy_detected": 2,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[EMAIL_001]": "ryanbartlett@example.org",
+      "[SOCIAL_SECURITY_001]": "901231-123.45",
+      "[SOCIAL_SECURITY_002]": "084-06-9450",
+      "[PERSON_SPACY_001]": "Jane Smith",
+      "[NAME_001]": "James Love",
+      "[POLITICAL_OPINION_001]": "democrat",
+      "[CUSTOMER_NUMBER_001]": "Client"
+    }
+  }
+]
