@@ -1,5 +1,7 @@
 import streamlit as st
 from src.prompt_scrubber import PromptScrubber
+from src.file_handler.docx_to_txt import DOCXToTextConverter
+import io
 
 
 def login_page():
@@ -105,16 +107,10 @@ def main_app():
 
         with tab2:
             st.subheader("File Upload")
-
-            # Admin gets more file type options
-            if st.session_state.user_role == "admin":
-                file_types = ["pdf", "docx", "txt", "html", "xml", "json"]
-                help_text = (
-                    "Supported formats: PDF, DOCX, TXT, HTML, XML, JSON (Admin access)"
-                )
-            else:
-                file_types = ["txt", "html"]
-                help_text = "Supported formats: TXT, HTML (User access)"
+            file_types = ["pdf", "docx", "txt", "html", "xml", "json"]
+            help_text = (
+                "Supported formats: PDF, DOCX, TXT, HTML, XML, JSON (Admin access)"
+            )
 
             uploaded_file = st.file_uploader(
                 "Choose a file",
@@ -132,13 +128,68 @@ def main_app():
 
                 if file_submitted:
                     with st.spinner("Extracting text from file..."):
-                        # For now, just read text files
-                        if uploaded_file.type == "text/plain":
-                            text_content = str(uploaded_file.read(), "utf-8")
-                        else:
-                            st.warning(
-                                "File processing not fully implemented yet. Please use text input."
-                            )
+                        try:
+                            # Process based on file type
+                            if uploaded_file.type == "text/plain":
+                                text_content = str(uploaded_file.read(), "utf-8")
+                            elif (
+                                uploaded_file.type
+                                == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                            ):
+
+                                converter = DOCXToTextConverter()
+
+                                # Save uploaded file temporarily with unique name
+                                import uuid
+
+                                unique_id = str(uuid.uuid4())[:8]
+                                temp_file_path = (
+                                    f"temp_{unique_id}_{uploaded_file.name}"
+                                )
+                                temp_txt_path = temp_file_path.replace(".docx", ".txt")
+
+                                try:
+                                    with open(temp_file_path, "wb") as f:
+                                        f.write(uploaded_file.getbuffer())
+
+                                    # Convert DOCX to text
+                                    success = converter.convert_docx_to_txt(
+                                        temp_file_path, temp_txt_path
+                                    )
+
+                                    if success:
+                                        with open(
+                                            temp_txt_path, "r", encoding="utf-8"
+                                        ) as f:
+                                            text_content = f.read()
+
+                                        st.success(
+                                            "✅ DOCX file processed successfully!"
+                                        )
+
+                                    else:
+                                        st.error("❌ Failed to process DOCX file")
+
+                                finally:
+                                    # Clean up temporary files
+                                    import os
+
+                                    for temp_file in [temp_file_path, temp_txt_path]:
+                                        if os.path.exists(temp_file):
+                                            try:
+                                                os.remove(temp_file)
+                                            except:
+                                                pass  # Ignore cleanup errors
+
+                            else:
+                                st.warning(
+                                    f"File type '{uploaded_file.type}' not fully supported yet. "
+                                    "Please use TXT, DOCX, or HTML files."
+                                )
+
+                        except Exception as e:
+                            st.error(f"Error processing file: {str(e)}")
+                            st.info("Please try a different file or contact support.")
 
     with col2:
         st.header("Scrubbing Results")

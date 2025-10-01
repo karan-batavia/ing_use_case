@@ -1,0 +1,10 @@
+Sample Test Document
+This is a sample DOCX document created for testing the DOCX to text converter.
+Banking Risk Assessment
+Log a risk that Credit Scoring is Under Review (owner Customer Support, Fully Automated, On Demand, last run 2025-09-03). Note potential impact on downstream Loan Origination (Weekly, Semi-Automated, last run 2025-08-18, status Active).
+Sample Table
+[TABLE]
+Process | Status | Last Run
+Credit Scoring | Under Review | 2025-09-03
+Loan Origination | Active | 2025-08-18
+[/TABLE]
