@@ -51,9 +51,9 @@ PIN_REGEX = re.compile(
     re.IGNORECASE
 )
 
-# 5. CVV/CVC Numbers: Identifies CVV/CVC security codes by searching for related keywords ("CVV", "CVC", "code", "security") followed by 3-4 digits.
+# 5. CVV/CVC Numbers: Identifies CVV/CVC security codes by searching for related keywords ("CVV", "CVC") followed by 3-4 digits.
 CVV_REGEX = re.compile(
-    r"\b(?:CVV|CVC|code|security)[\s:]*\d{3,4}\b",
+    r"\b(?:CVV|CVC)[\s:]*\d{3,4}\b",
     re.IGNORECASE
 )
 
@@ -63,11 +63,10 @@ TRANSACTION_REGEX = re.compile(
     re.IGNORECASE
 )
 
-# 7. Phone Numbers (for Belgian & international formats)
+# 7. Phone Numbers (for Belgian formats)
 PHONE_REGEX = re.compile(
-    r"\b(?:\+32|0032|0)[1-9](?:[-.\s]?\d{2,3}){2,3}[-.\s]?\d{2,4}\b|\b(?:\+\d{1,3}[-.\s]?)?\(?\d{2,4}\)?[-.\s]?\d{3,4}[-.\s]?\d{3,4}\b"
+    r"\b(?:\+\d{1,3}[-.\s]?)?\(?\d{2,4}\)?[-.\s]?\d{3,4}[-.\s]?\d{3,4}\b"
 )
-
 
 
 # C3 risk level
@@ -78,7 +77,7 @@ EMAIL_REGEX = re.compile(
     r"\b[A-Za-z0-9][A-Za-z0-9._%+-]*@[A-Za-z0-9][A-Za-z0-9.-]*\.[A-Za-z]{2,}\b"
 )
 
-# 9. Customer Numbers (improved for various formats)
+# 9. Customer Numbers -- Needs to be adapted to ING's format for the exact match (couldn't find an format example online)
 CUSTOMER_NUMBER_REGEX = re.compile(
     r"\b(?:CUST|CL|CLIENT|ID)[-:\s]*[A-Z0-9]{4,15}\b|CLIENT\s+\d{6,12}\b",
     re.IGNORECASE
@@ -105,7 +104,7 @@ ADDRESS_REGEX = re.compile(
 
 # 13. Names (improved pattern for full names)
 NAME_REGEX = re.compile(
-    r"\b(?:Mr\.?|Mrs\.?|Ms\.?|Dr\.?)?\s*([A-Z][a-z]+(?:[-\s][A-Z][a-z]+)*)\s+([A-Z][a-z]+(?:[-\s][A-Z][a-z]+)*)\b"
+    r"\b(?:Mr\.?|Mrs\.?|Mlle\.?|Mv\.?|Ms\.?|Dr\.?)?\s*([A-Z][a-z]+(?:[-\s][A-Z][a-z]+)*)\s+([A-Z][a-z]+(?:[-\s][A-Z][a-z]+)*)\b"
 )
 
 # 14. Postal Codes (Belgian format: 4 digits)
@@ -118,7 +117,7 @@ POSTAL_CODE_REGEX = re.compile(
 
 # 15. Citizenship/Nationality
 CITIZENSHIP_REGEX = re.compile(
-    r"\b(?:nationality|citizenship|citizen|national)[\s:]*[A-Z][a-z]+\b",
+    r"\b(?:nationality|nationalieteit|nationalite|citizenship|citizen|national)[\s:]*[A-Z][a-z]+\b",
     re.IGNORECASE
 )
 
