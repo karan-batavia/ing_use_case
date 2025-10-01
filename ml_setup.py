@@ -442,14 +442,14 @@ def label_prompt(
     # 2. ENTITY DETECTION
     # ----------------------------------------------------------------------
     
-    # a) C3/C4 Regex Detection (Populates regex_entities)
+    # C3/C4 Regex Detection (Populates regex_entities)
     regex_entities = detect_entities_with_regex(text)
 
-    # b) C1/C2 File-based and General Regex Detection
+    # C1/C2 File-based and General Regex Detection
     if use_c1_c2:
         c1_c2_entities = detect_c1_c2_entities(text, data_dir)
     
-    # c) SpaCy NER and Contextual Keyword Detection (Populates spacy_entities)
+    # SpaCy NER and Contextual Keyword Detection (Populates spacy_entities)
     # Renaming the output variable to 'spacy_entities' to match your combination line.
     spacy_entities = []
     if use_spacy:
@@ -467,8 +467,12 @@ def label_prompt(
         spacy_entities
     )
 
-    # Deduplicate entities, prioritizing regex/injected over spacy where spans overlap
+    # Deduplicate entities
     final_entities = deduplicate_entities(all_entities)
+
+    # NEW STEP: Add explanation to each entity
+    for entity in final_entities:
+        entity['explanation'] = get_entity_explanation(entity)
     
     # ----------------------------------------------------------------------
     # 4. STATISTICAL CALCULATION
@@ -614,6 +618,33 @@ def label_all_prompts(input_file: str, output_file: str, inject: bool = False, u
     for entity_type, count in sorted(entity_type_counts.items(), key=lambda x: x[1], reverse=True):
         print(f"  - {entity_type}: {count}")
 
+
+# ==============================================================================
+# EXPLANATION GENERATION
+# ==============================================================================
+
+def get_entity_explanation(entity: Dict) -> str:
+    """Generates a human-readable explanation for a detected entity."""
+    
+    detection_method = entity.get("detection_method", "unknown")
+    entity_type = entity.get("type", "entity")
+    sensitivity = entity.get("sensitivity", "C0")
+    
+    if detection_method == "regex":
+        return f"Detected as a {sensitivity} (Critical/High Risk) entity by a pattern match for: {entity_type.upper()}."
+    
+    if detection_method in ("spacy_contextual", "spacy_ner"):
+        if entity_type in SENSITIVITY_MAP and SENSITIVITY_MAP[entity_type] == "C4":
+            return f"Flagged as a {sensitivity} (Critical Risk) contextual entity based on the mention of a {entity_type} keyword."
+        return f"Detected as a {sensitivity} (Medium Risk) general entity (SpaCy NER {entity_type.upper()}) using contextual analysis."
+    
+    if detection_method in ("c1_regex", "c2_regex"):
+        return f"Detected as a {sensitivity} (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: {entity_type.upper()}."
+
+    if detection_method == "injection":
+        return "Injected during synthetic data generation for testing purposes."
+        
+    return f"Detected entity: {entity_type.upper()}."
 
 # ==============================================================================
 # MAIN EXECUTION

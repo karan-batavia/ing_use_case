@@ -15,6 +15,7 @@
         "context": "Annual Report with this link: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Keep the tone professional an",
         "detection_method": "c1_regex",
         "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
         "redacted_value": "[LINK_001]"
       },
       {
@@ -28,6 +29,7 @@
         "context": "nd include a call to read the full report. Phone: 3268542351.",
         "detection_method": "c1_regex",
         "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
         "redacted_value": "[DOCUMENT_001]"
       },
       {
@@ -40,6 +42,7 @@
         ],
         "context": " read the full report. Phone: 3268542351.",
         "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
         "redacted_value": "[PHONE_001]"
       },
       {
@@ -53,6 +56,7 @@
         "context": "t LinkedIn post promoting the 2021 Annual Report with this link:",
         "detection_method": "c1_regex",
         "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
         "redacted_value": "[YEAR_001]"
       }
     ],
@@ -102,6 +106,7 @@
         "context": "Additional Pillar III report (https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf). Client name: Dr. Sharon James",
         "detection_method": "c1_regex",
         "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
         "redacted_value": "[LINK_001]"
       },
       {
@@ -115,6 +120,7 @@
         "context": "to 2024 Pillar 3 Disclosures (https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx) and the Additional Pillar III",
         "detection_method": "c1_regex",
         "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
         "redacted_value": "[LINK_002]"
       },
       {
@@ -127,6 +133,7 @@
         ],
         "context": " Sharon James. Contact email: gabriellecameron@example.org. Phone: 505.964.1395.",
         "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
         "redacted_value": "[EMAIL_001]"
       },
       {
@@ -139,6 +146,7 @@
         ],
         "context": "eport-2024.pdf). Client name: Dr. Sharon James. Contact email: gabriellecame",
         "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: NAME.",
         "redacted_value": "[NAME_001]"
       },
       {
@@ -151,6 +159,7 @@
         ],
         "context": "lecameron@example.org. Phone: 505.964.1395.",
         "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
         "redacted_value": "[PHONE_001]"
       },
       {
@@ -164,6 +173,7 @@
         "context": "sx) and the Additional Pillar III report (https://assets.ing.com/m/42e",
         "detection_method": "c1_regex",
         "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
         "redacted_value": "[DOCUMENT_001]"
       },
       {
@@ -176,6 +186,7 @@
         ],
         "context": "-Pillar-III-Report-2024.pdf). Client name: Dr. Sharon James. Conta",
         "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
         "redacted_value": "[CUSTOMER_NUMBER_001]"
       },
       {
@@ -189,6 +200,7 @@
         "context": "aph investor brief linking to 2024 Pillar 3 Disclosures (https:/",
         "detection_method": "c1_regex",
         "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
         "redacted_value": "[YEAR_001]"
       }
     ],
@@ -264,6 +276,7 @@
         "context": ") and 2024 Half Year Results (https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024). Client name: Jennifer Brown. ",
         "detection_method": "c1_regex",
         "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
         "redacted_value": "[LINK_001]"
       },
       {
@@ -276,6 +289,7 @@
         ],
         "context": "ennifer Brown. Contact email: williamrodriguez@example.net.",
         "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
         "redacted_value": "[EMAIL_001]"
       },
       {
@@ -288,6 +302,7 @@
         ],
         "context": "to-customers-and-society) and 2024 Half Year Results (https://newsroom.ing.be/ing-",
         "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
         "redacted_value": "[POSTAL_CODE_001]"
       },
       {
@@ -300,6 +315,7 @@
           362
         ],
         "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
         "redacted_value": "[NAME_001]"
       },
       {
@@ -312,6 +328,7 @@
         ],
         "context": "reinforcing-its-commitment-to-customers-and-society) and 2024 Half Ye",
         "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
         "redacted_value": "[CUSTOMER_NUMBER_001]"
       },
       {
@@ -324,6 +341,7 @@
         ],
         "context": "it-after-first-half-of-2024). Client name: Jennifer Brown. Contact",
         "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
         "redacted_value": "[CUSTOMER_NUMBER_002]"
       },
       {
@@ -337,6 +355,7 @@
         "context": "email that indexes two links: 2024 Full Year Results (https://ne",
         "detection_method": "c1_regex",
         "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
         "redacted_value": "[YEAR_001]"
       }
     ],
@@ -351,6 +370,7 @@
           362
         ],
         "detection_method": "injection",
+        "explanation": "Injected during synthetic data generation for testing purposes.",
         "redacted_value": "[NAME_001]"
       },
       {
@@ -401,6 +421,7 @@
         "context": "Write all report 2021.",
         "detection_method": "c1_regex",
         "semantic_key": "<DOCUMENT_TYPE_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: DOCUMENT.",
         "redacted_value": "[DOCUMENT_001]"
       },
       {
@@ -414,6 +435,7 @@
         "context": "Write all report 2021.",
         "detection_method": "c1_regex",
         "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
         "redacted_value": "[YEAR_001]"
       }
     ],

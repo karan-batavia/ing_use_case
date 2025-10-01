@@ -150,10 +150,19 @@ def create_ml_dataset(labeled_data: List[Dict]) -> Tuple[np.ndarray, np.ndarray]
     # Sensitivity mapping for target variable: C4=4, C3=3, C2=2, C1=1, None=0
     risk_level_map = {'C4': 4, 'C3': 3, 'C2': 2, 'C1': 1}
     
-    for item in labeled_data:
-        text = item['text']
-        features = extract_features_for_ml(text)
-        X.append(list(features.values())) # Feature vector
+    def create_ml_dataset(labeled_data: List[Dict]) -> Tuple[np.ndarray, np.ndarray]:
+    # ...
+        for item in labeled_data:
+            # We use 'processed_prompt' as it includes injected entities, making it the best
+            # representation of the feature space the model should learn from.
+            text = item.get('processed_prompt')
+            
+            # Fallback to 'original_prompt' if 'processed_prompt' is missing
+            if text is None:
+                text = item.get('original_prompt')
+                
+            if text is None:
+                continue # Skip entries without text
         
         # Determine the highest sensitivity in the prompt
         highest_risk = 0
@@ -228,6 +237,34 @@ def outline_bert_classifier():
     print("\nNote: This requires heavy dependencies (transformers, torch/tensorflow) and labeled data.")
 
 
+# Inside ml_classifier.py, after the train_simple_classifier function:
+
+# ==============================================================================
+# 5. Fallback rules if ML fails
+# ==============================================================================
+
+def get_fallback_risk_level(y: np.ndarray) -> int:
+    """
+    Implements the fallback rule for risk classification.
+    If the ML model fails, the fallback is the highest risk level detected
+    by the rule-based system across the entire dataset (or the current batch).
+    """
+    if y.size == 0:
+        # If no labels are available at all, default to C0 (No Risk)
+        return 0 
+    
+    # Fallback to the highest risk level observed in the data (most conservative)
+    # The 'y' vector contains risk levels 0 (C0) to 4 (C4)
+    fallback_level = np.max(y) 
+    
+    # Map the numerical level back to a risk string for logging/reporting
+    risk_levels = {4: 'C4', 3: 'C3', 2: 'C2', 1: 'C1', 0: 'C0'}
+    
+    print(f"\\n[⚠️ FALLBACK ACTIVE] Fallback logic calculated.")
+    print(f"Highest training risk level: {risk_levels.get(fallback_level, 'C0')} (level {fallback_level})")
+    
+    return fallback_level
+
 # ==============================================================================
 # MAIN EXECUTION
 # ==============================================================================
@@ -235,27 +272,40 @@ def outline_bert_classifier():
 if __name__ == "__main__":
     MOCK_LABELED_FILE = "labeled_data/labeled_prompts_hybrid.json" 
     
-    # Load or create robust mock data
     labeled_data = load_labeled_data(MOCK_LABELED_FILE)
 
     if labeled_data:
         # Create the feature matrix (X) and target vector (y)
-        X, y = create_ml_dataset(labeled_data)
+        X, y = create_ml_dataset(labeled_data) 
         
         # Train a simple classifier
         classifier_model = train_simple_classifier(X, y)
         
-        if classifier_model is not None:
-            # Example prediction on a new prompt
-            new_prompt = "Hello, my name is Jane Smith and my social security is 901231-123.45. I support the democrat party."
-            new_features = np.array(list(extract_features_for_ml(new_prompt).values())).reshape(1, -1)
-            prediction = classifier_model.predict(new_features)[0]
-            
-            risk_levels = {4: 'C4', 3: 'C3', 2: 'C2', 1: 'C1', 0: 'C0'}
-            print(f"\nPrediction for new prompt: '{new_prompt[:50]}...'")
-            print(f"  Highest Predicted Risk Level: {risk_levels.get(prediction, 'Unknown')}")
-            print(f"  Extracted Features: {extract_features_for_ml(new_prompt)}")
+        # Calculate Fallback Level
+        fallback_level = get_fallback_risk_level(y)
 
+        # Example prediction on a new prompt
+        new_prompt = "Hello, my name is Jane Smith and my social security is 901231-123.45. I support the democrat party."
+        new_features = np.array(list(extract_features_for_ml(new_prompt).values())).reshape(1, -1)
+        
+        # Use ML Model, or fallback if the model is None or prediction fails
+        prediction = None
+        if classifier_model is not None:
+            try:
+                # Attempt to use the ML model
+                prediction = classifier_model.predict(new_features)[0]
+            except Exception as e:
+                # If ML model fails, use the fallback
+                print(f"ML Model Prediction failed: {e}. Using fallback.")
+                prediction = fallback_level
+        else:
+            # If no model exists, use the fallback
+            prediction = fallback_level
+            
+        risk_levels = {4: 'C4', 3: 'C3', 2: 'C2', 1: 'C1', 0: 'C0'}
+        print(f"\nPrediction for new prompt: '{new_prompt[:50]}...'")
+        print(f"  Highest Predicted Risk Level: {risk_levels.get(prediction, 'Unknown')}")
+        print(f"  Extracted Features: {extract_features_for_ml(new_prompt)}")
 
     # Outline the BERT-based approach
     outline_bert_classifier()
