@@ -1,0 +1,19 @@
+Test Document: prompts_01_06_14
+This document contains sample prompts extracted from Excel data.
+Prompt 1
+I found the 2024 Annual Report at https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf. Can you summarize its main focus?
+Prompt 2
+Could you tell me what’s covered in the Pillar 3 Disclosures Q4 2024? Here's the link: https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx
+Prompt 3
+I’m reviewing the 2023 Full Year Results. What does the document at http://newsroom.ing.be/strong-results-also-reflect-positively-on-customers-the-economy-and-society say about customer impact?
+Prompt 4
+What’s the difference between the 2022 and 2023 Pillar 3 Additional Disclosures?
+Prompt 5
+Can you compare the 2021 and 2022 Half Year Results in terms of profit growth?
+Data Table Sample
+[TABLE]
+Prompt | Sanitized Prompt | Response
+I found the 2024 Annual Report at https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2 | I found the <YEAR> <DOCUMENT_TYPE> at <DOCUMENT_LINK>. Can you summarize its main focus? | The 2024 Annual Report outlines ING Belgium’s financial performance and strategic priorities.
+Could you tell me what’s covered in the Pillar 3 Disclosures Q4 2024? Here's the link: https://asset | Could you tell me what’s covered in the <DOCUMENT_TYPE> <YEAR>? Here's the link: <DOCUMENT_LINK> | It includes regulatory disclosures on risk exposure and capital adequacy for Q4 2024.
+I’m reviewing the 2023 Full Year Results. What does the document at http://newsroom.ing.be/strong-re | I’m reviewing the <YEAR> <DOCUMENT_TYPE>. What does the document at <DOCUMENT_LINK> say about custom | It highlights how strong financial results translated into better services and support for customers
+[/TABLE]

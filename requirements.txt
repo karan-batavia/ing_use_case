@@ -1,12 +1,35 @@
+# Core data processing
 et_xmlfile==2.0.0
-numpy==2.3.3
+numpy>=1.26.0,<2.3.0
 openpyxl==3.1.5
 pandas==2.3.2
 python-dateutil==2.9.0.post0
 pytz==2025.2
 six==1.17.0
 tzdata==2025.2
+
+# Document processing
+python-docx==1.2.0
+lxml>=6.0.0
+PyYAML>=6.0.0
+
+# Web app framework
 streamlit>=1.28.0
-pytesseract==5.4.0.20240606
-pillow==11.3.0
-opencv-python==4.12.0.88
+
+# Image processing and OCR
+pytesseract==0.3.13
+pillow>=10.0.0
+opencv-python>=4.5.0
+
+# NLP and data anonymization
+presidio_analyzer>=2.2.0
+presidio_anonymizer>=2.2.0
+spacy>=3.8.0
+# Note: spaCy model en_core_web_lg needs to be downloaded separately
+
+# Additional dependencies for Presidio and spaCy
+phonenumbers>=9.0.0
+pydantic>=2.0.0
+regex>=2025.0.0
+transformers>=4.21.0,<4.50.0
+torch>=2.0.0

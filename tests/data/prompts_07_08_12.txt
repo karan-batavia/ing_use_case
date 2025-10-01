@@ -1,0 +1,22 @@
+Test Document: prompts_07_08_12
+This document contains sample prompts extracted from Excel data.
+Prompt 1
+Draft an ops email confirming transfer 490d1104-7e77-4bf6-9827-4022c36735a3 completed on 2024-11-18 for EUR 1,173.73 to IBAN BE96 3296 4713 6802.
+Prompt 2
+Open a failure investigation for transfer f9863527-0b1a-48b3-917b-03aca2d74ba3 (EUR 5,032.24) to IBAN BE76 1541 7848 7143 with Status: Failed on 2025-06-12.
+Prompt 3
+Prepare a reconciliation note for Pending transfers: be41f293-ae1b-458e-b9d1-5266037b9332 (EUR 9,428.45 to BE14 8365 4959 2937), fc722f2f-3bb1-4fb1-96f7-d517e4638697 (EUR 746.86 to BE34 3730 4312 2754), and 15705bcc-2ae3-4f0d-8968-03fa0b55ef77 (EUR 4,038.46 to BE49 3124 1282 1010).
+Prompt 4
+Send a risk alert for high-value Pending transfer ff2fcf47-4341-4729-86cd-ee1db7853be5 (EUR 9,573.90) to IBAN BE33 3644 9891 9701.
+Prompt 5
+Create an SLA snapshot listing: 490d1104-7e77-4bf6-9827-4022c36735a3 (Completed), e092a2a7-a5d7-4006-bdaa-91fb64592a79 (Completed), f9863527-0b1a-48b3-917b-03aca2d74ba3 (Failed), 25f7d032-14c1-4ce4-bc8b-7da2a9855be1 (Pending).
+Data Table Sample
+[TABLE]
+Prompt | Sanitized Prompt | Response
+Draft an ops email confirming transfer 490d1104-7e77-4bf6-9827-4022c36735a3 completed on 2024-11-18 | Draft an ops email confirming transfer <TRANSFER_ID> completed on <DATE> for <CURRENCY> <AMOUNT> to | Subject: Transfer completed
+Hi team,
+Transfer 490d1104-7e77-4bf6-9827-4022c36735a3 is Completed (202
+Open a failure investigation for transfer f9863527-0b1a-48b3-917b-03aca2d74ba3 (EUR 5,032.24) to IBA | Open a failure investigation for transfer <TRANSFER_ID> (<CURRENCY> <AMOUNT>) to IBAN <IBAN> with St | Incident created: transfer f9863527-0b1a-48b3-917b-03aca2d74ba3 Failed on 2025-06-12 (EUR 5,032.24)
+Prepare a reconciliation note for Pending transfers: be41f293-ae1b-458e-b9d1-5266037b9332 (EUR 9,428 | Prepare a reconciliation note for <STATUS> transfers: <TRANSFER_ID> (<CURRENCY> <AMOUNT> to <IBAN>), | Reconciliation — Pending transfers:
+• be41f293-ae1b-458e-b9d1-5266037b9332 — EUR 9,428.45 → BE14 836
+[/TABLE]
