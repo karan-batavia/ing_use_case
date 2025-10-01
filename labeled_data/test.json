@@ -1,0 +1,69 @@
+[
+  {
+    "text": "My SSN is 123-45-6789 and I was diagnosed with cancer.",
+    "entities": [
+      {"entity": "123-45-6789", "type": "ssn", "sensitivity": "C4"},
+      {"entity": "cancer", "type": "health_condition", "sensitivity": "C4"}
+    ]
+  },
+  {
+    "text": "Account IBAN BE68539007547034 belongs to a member of a far-right group.",
+    "entities": [
+      {"entity": "BE68539007547034", "type": "iban", "sensitivity": "C4"},
+      {"entity": "far-right group", "type": "political_opinion", "sensitivity": "C4"}
+    ]
+  },
+  {
+    "text": "Jane Doe, born on 05/04/1985, lives at 10 Main St, New York.",
+    "entities": [
+      {"entity": "Jane Doe", "type": "name", "sensitivity": "C3"},
+      {"entity": "05/04/1985", "type": "date_of_birth", "sensitivity": "C3"},
+      {"entity": "10 Main St, New York", "type": "address", "sensitivity": "C3"}
+    ]
+  },
+  {
+    "text": "Contact customer CUST-1025 via jane.doe@email.com",
+    "entities": [
+      {"entity": "CUST-1025", "type": "customer_id", "sensitivity": "C3"},
+      {"entity": "jane.doe@email.com", "type": "email", "sensitivity": "C3"}
+    ]
+  },
+  {
+    "text": "The meeting with Microsoft in Paris is scheduled for Tuesday.",
+    "entities": [
+      {"entity": "Microsoft", "type": "ORG", "sensitivity": "C2"},
+      {"entity": "Paris", "type": "GPE", "sensitivity": "C2"},
+      {"entity": "Tuesday", "type": "DATE", "sensitivity": "C2"}
+    ]
+  },
+  {
+    "text": "Apple will open a new office in London next year.",
+    "entities": [
+      {"entity": "Apple", "type": "ORG", "sensitivity": "C2"},
+      {"entity": "London", "type": "GPE", "sensitivity": "C2"},
+      {"entity": "next year", "type": "DATE", "sensitivity": "C2"}
+    ]
+  },
+  {
+    "text": "The final report for the 2024 project is complete.",
+    "entities": [
+      {"entity": "2024", "type": "year", "sensitivity": "C1"},
+      {"entity": "report", "type": "document_type", "sensitivity": "C1"}
+    ]
+  },
+  {
+    "text": "Please prepare the 2025 annual review document.",
+    "entities": [
+      {"entity": "2025", "type": "year", "sensitivity": "C1"},
+      {"entity": "review", "type": "document_type", "sensitivity": "C1"}
+    ]
+  },
+  {
+    "text": "We need to discuss project scope during the next call.",
+    "entities": []
+  },
+  {
+    "text": "Please draft a new email for external communication.",
+    "entities": []
+  }
+]
