@@ -5,7 +5,7 @@ from typing import List, Dict, Tuple, Set
 from faker import Faker
 import spacy
 from spacy.tokens import Doc, Span
-from regex import extract_c1_and_c2
+from preprocessing.regex import extract_c1_and_c2
 # Try to load SpaCy model, fall back to smaller model if needed
 try:
     nlp = spacy.load("en_core_web_lg")
@@ -14,7 +14,7 @@ except OSError:
     nlp = spacy.load("en_core_web_sm")
 
 # Import regex patterns
-from regex_queries import (
+from preprocessing.regex_queries import (
     ALL_PATTERNS, 
     is_likely_year, 
     filter_postal_codes,
