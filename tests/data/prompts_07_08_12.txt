@@ -1,5 +1,4 @@
-Test Document: prompts_07_08_12
-This document contains sample prompts extracted from Excel data.
+
 Prompt 1
 Draft an ops email confirming transfer 490d1104-7e77-4bf6-9827-4022c36735a3 completed on 2024-11-18 for EUR 1,173.73 to IBAN BE96 3296 4713 6802.
 Prompt 2
@@ -10,13 +9,3 @@ Prompt 4
 Send a risk alert for high-value Pending transfer ff2fcf47-4341-4729-86cd-ee1db7853be5 (EUR 9,573.90) to IBAN BE33 3644 9891 9701.
 Prompt 5
 Create an SLA snapshot listing: 490d1104-7e77-4bf6-9827-4022c36735a3 (Completed), e092a2a7-a5d7-4006-bdaa-91fb64592a79 (Completed), f9863527-0b1a-48b3-917b-03aca2d74ba3 (Failed), 25f7d032-14c1-4ce4-bc8b-7da2a9855be1 (Pending).
-Data Table Sample
-[TABLE]
-Prompt | Sanitized Prompt | Response
-Draft an ops email confirming transfer 490d1104-7e77-4bf6-9827-4022c36735a3 completed on 2024-11-18 | Draft an ops email confirming transfer <TRANSFER_ID> completed on <DATE> for <CURRENCY> <AMOUNT> to | Subject: Transfer completed
-Hi team,
-Transfer 490d1104-7e77-4bf6-9827-4022c36735a3 is Completed (202
-Open a failure investigation for transfer f9863527-0b1a-48b3-917b-03aca2d74ba3 (EUR 5,032.24) to IBA | Open a failure investigation for transfer <TRANSFER_ID> (<CURRENCY> <AMOUNT>) to IBAN <IBAN> with St | Incident created: transfer f9863527-0b1a-48b3-917b-03aca2d74ba3 Failed on 2025-06-12 (EUR 5,032.24)
-Prepare a reconciliation note for Pending transfers: be41f293-ae1b-458e-b9d1-5266037b9332 (EUR 9,428 | Prepare a reconciliation note for <STATUS> transfers: <TRANSFER_ID> (<CURRENCY> <AMOUNT> to <IBAN>), | Reconciliation — Pending transfers:
-• be41f293-ae1b-458e-b9d1-5266037b9332 — EUR 9,428.45 → BE14 836
-[/TABLE]

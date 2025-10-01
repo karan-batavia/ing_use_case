@@ -1,5 +1,4 @@
-Test Document: prompts_04_13_16
-This document contains sample prompts extracted from Excel data.
+
 Prompt 1
 Create an on-call roster for the customer outreach platform with primary Mary Sims (+32 42 361 650, mary.sims@ing.com) and backup John Graham (+32 31 603 900, john.graham@ing.com). Include CorpKeys NV26ZI and DI91EX.
 Prompt 2
@@ -10,14 +9,3 @@ Prompt 4
 Write an incident paging cascade SMS: page Daniel Taylor (+32 94 953 438); if no ack in 10 minutes, page Miguel Fitzgerald (+32 81 609 125).
 Prompt 5
 Create a RACI note: Owner Mary Sims; Approver John Graham; Contributors Erin Johnson and Kristy Peterson for customer communications templates.
-Data Table Sample
-[TABLE]
-Prompt | Sanitized Prompt | Response
-Create an on-call roster for the customer outreach platform with primary Mary Sims (+32 42 361 650, | Create an on-call roster for the customer outreach platform with primary <EMP1_FIRST> <EMP1_LAST> (< | On-call — Outreach Platform
-Primary: Mary Sims — +32 42 361 650 — mary.sims@ing.com — CorpKey NV26ZI
-Draft a contact card for ‘Customer Data Steward’ Erin Johnson (erin.johnson@ing.com, +32 92 249 506) | Draft a contact card for roles with <EMP_A_FIRST> <EMP_A_LAST> (<EMP_A_EMAIL>, <EMP_A_PHONE>) and <E | Contacts
-• Customer Data Steward — Erin Johnson — erin.johnson@ing.com — +32 92 249 506
-• Privacy Of
-Send a training invite for consent handling to Heather Johnson (NS99DB) and Nicholas Wolf (LW24YO). | Send a training invite for consent handling to <EMP1_FIRST> <EMP1_LAST> (<CORPKEY_1>) and <EMP2_FIRS | Subject: Training — Consent Handling
-Hi Heather / Nicholas, please attend the refresher. Tracking vi
-[/TABLE]

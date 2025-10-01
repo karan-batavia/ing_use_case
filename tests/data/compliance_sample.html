@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Sample Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        .content {
+            color: #34495e;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .status {
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .failed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .sample-id {
+            font-family: 'Courier New', monospace;
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Compliance Sample Report</h1>
+        
+        <div class="content">
+            <p>Provide a compliance sample set:</p>
+            
+            <ul>
+                <li><span class="sample-id">03488215-4c4a-49aa-ae1c-b7f6ede56a4a</span> (<span class="status pending">Pending</span>)</li>
+                <li><span class="sample-id">7f244a6e-6042-4b1f-b1e4-aced4fc1087d</span> (<span class="status completed">Completed</span>)</li>
+                <li><span class="sample-id">5518158a-0d88-48fb-9ed9-db32800c5216</span> (<span class="status failed">Failed</span>)</li>
+                <li><span class="sample-id">2fc89765-a638-4b6a-881a-83b5cfa4b877</span> (<span class="status pending">Pending</span>)</li>
+                <li><span class="sample-id">36d0b951-2d3d-4161-abff-147784fb9e6d</span> (<span class="status completed">Completed</span>)</li>
+            </ul>
+        </div>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #7f8c8d; font-size: 14px;">
+            <p><strong>Note:</strong> This document contains sample compliance data for testing purposes. The UUIDs and status information represent sensitive organizational data that should be properly classified and handled according to data governance policies.</p>
+        </div>
+    </div>
+</body>
+</html>

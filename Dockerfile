@@ -12,6 +12,10 @@ RUN apt-get update && apt-get install -y \
     libxslt1-dev \
     zlib1g-dev \
     curl \
+    tesseract-ocr \
+    tesseract-ocr-eng \
+    tesseract-ocr-fra \
+    tesseract-ocr-nld \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better Docker layer caching
