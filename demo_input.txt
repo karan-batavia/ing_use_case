@@ -1,0 +1,4 @@
+Hello, my name is Jane Smith and my social security is 901231-123.45.
+Contact me at jane.smith@example.com or +32 498 12 34 56.
+Wire transfer IBAN BE13 0018 6454 3175 and amount EUR 12,500.00 on 2025-08-10.
+National number 90.10.10-612-39; FaceID enabled.

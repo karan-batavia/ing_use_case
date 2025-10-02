@@ -31,7 +31,7 @@ from regex_queries import ALL_PATTERNS
 # ----------------------
 sensitive_categories = {
     "RELIGION": ["christian", "muslim", "jewish", "hindu", "buddhist", "atheist"],
-    "ETHNICITY": ["asian", "african", "latino", "caucasian", "arab", "indigenous"],
+    "ETHNICITY": ["asian", "african", "latino", "caucasian", "arab", "indigenous", "european"],
     "SEXUAL_ORIENTATION": ["gay", "lesbian", "bisexual", "transgender", "queer", "lgbtq"],
 }
 
