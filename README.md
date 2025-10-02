@@ -143,9 +143,4 @@ try:
     from redact import Redactor
 except Exception:
     from src.redact import Redactor  # if you placed it under src/
-
-class MLClassifier:
-    def __init__(self, sk_model_path: Optional[str] = None, hf_model_dir: Optional[str] = None):
-        self.mode = None
-        self.labels: List[str] = ["C1","C2","C3","C4"]
 ```
