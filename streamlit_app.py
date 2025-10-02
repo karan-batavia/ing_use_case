@@ -8,6 +8,11 @@ from src.file_handler.write_docx_file import DOCXWriter
 from src.file_handler.write_pdf_file import PDFWriter
 from src.file_handler.write_html_file import HTMLWriter
 from src.file_handler.write_txt_file import TXTWriter
+from src.mongodb_service import (
+    get_mongodb_service,
+    ensure_session_tracking,
+    log_app_interaction,
+)
 import io
 import uuid
 import os
@@ -51,8 +56,22 @@ def login_page():
             if st.button("🚀 Login", type="primary", use_container_width=True):
                 if role:
                     # Store login state in session
+                    user_id = (
+                        f"{role}_{uuid.uuid4().hex[:8]}"  # Generate unique user ID
+                    )
                     st.session_state.logged_in = True
                     st.session_state.user_role = role
+                    st.session_state.user_id = user_id
+
+                    # Initialize MongoDB session tracking
+                    mongodb_service = get_mongodb_service()
+                    session_id = mongodb_service.create_session(user_id, role)
+                    st.session_state.session_id = session_id
+                    mongodb_service.log_login(user_id, role)
+
+                    # Log the login interaction
+                    log_app_interaction("login", {"user_role": role})
+
                     st.success(f"Welcome, {st.session_state.user_role}!")
                     st.balloons()
                     st.rerun()
@@ -64,7 +83,14 @@ def login_page():
 
 def logout():
     """Handle user logout."""
-    for key in ["logged_in", "user_role", "username"]:
+    # End MongoDB session before clearing session state
+    if "session_id" in st.session_state:
+        mongodb_service = get_mongodb_service()
+        log_app_interaction("logout")
+        mongodb_service.end_session(st.session_state.session_id)
+
+    # Clear session state
+    for key in ["logged_in", "user_role", "username", "user_id", "session_id"]:
         if key in st.session_state:
             del st.session_state[key]
     st.rerun()
@@ -109,13 +135,26 @@ def create_download_button(
             scrubbed_filename = f"{file_base_name}_scrubbed_ocr.txt"
             mime_type = "text/plain"
 
-        return st.download_button(
+        download_clicked = st.download_button(
             label=f"📥 Download {scrubbed_filename}",
             data=file_buffer.getvalue(),
             file_name=scrubbed_filename,
             mime=mime_type,
             help=f"Download the scrubbed content as {scrubbed_filename}",
         )
+
+        # Log download interaction when button is clicked
+        if download_clicked:
+            log_app_interaction(
+                "file_download",
+                {
+                    "filename": scrubbed_filename,
+                    "file_type": file_extension,
+                    "file_size": len(file_buffer.getvalue()),
+                },
+            )
+
+        return download_clicked
 
     except Exception as e:
         st.error(f"Error creating download: {str(e)}")
@@ -125,6 +164,9 @@ def create_download_button(
 def main_app():
     """Main application after login."""
     st.set_page_config(page_title="Prompt Scrubber App", page_icon="🔍", layout="wide")
+
+    # Ensure session tracking is set up
+    ensure_session_tracking()
 
     # Header with user info and logout
     col1, col2 = st.columns([3, 1])
@@ -165,6 +207,9 @@ def main_app():
 
             if text_input and text_submitted:
                 text_content = text_input
+                # Log text input interaction
+                log_app_interaction("text_input", {"input_length": len(text_input)})
+
                 # Clear file session state when using text input
                 if hasattr(st.session_state, "uploaded_filename"):
                     del st.session_state.uploaded_filename
@@ -175,9 +220,7 @@ def main_app():
             st.subheader("File Upload")
 
             file_types = ["pdf", "docx", "txt", "html", "png"]
-            help_text = (
-                "Supported formats: PDF, DOCX, TXT, HTML, PNG (Admin access)"
-            )
+            help_text = "Supported formats: PDF, DOCX, TXT, HTML, PNG (Admin access)"
 
             uploaded_file = st.file_uploader(
                 "Choose a file",
@@ -187,6 +230,21 @@ def main_app():
 
             if uploaded_file is not None:
                 st.success(f"File uploaded: {uploaded_file.name}")
+
+                # Log file upload
+                file_size = (
+                    len(uploaded_file.getbuffer())
+                    if hasattr(uploaded_file, "getbuffer")
+                    else None
+                )
+                log_app_interaction(
+                    "file_upload",
+                    {
+                        "filename": uploaded_file.name,
+                        "file_type": uploaded_file.type,
+                        "file_size": file_size,
+                    },
+                )
 
                 # Store uploaded file info in session state
                 st.session_state.uploaded_filename = uploaded_file.name
@@ -401,6 +459,28 @@ def main_app():
                 # Get scrubbed prompt
                 scrubbed_prompt = scrubber.scrub_prompt(text_content)
 
+                # Log scrubbing interaction
+                matches_count = (
+                    sum(len(found_values) for found_values in matches.values())
+                    if matches
+                    else 0
+                )
+                log_app_interaction(
+                    "text_scrubbing",
+                    {
+                        "input_length": len(text_content),
+                        "output_length": len(scrubbed_prompt),
+                        "matches_found": matches_count,
+                        "reduction_percentage": (
+                            round(
+                                (1 - len(scrubbed_prompt) / len(text_content)) * 100, 2
+                            )
+                            if len(text_content) > 0
+                            else 0
+                        ),
+                    },
+                )
+
             if matches:
                 st.error("⚠️ Classified content detected!")
 
@@ -483,7 +563,38 @@ def main_app():
     # Footer with role-specific information
     st.markdown("---")
     if st.session_state.user_role == "admin":
-        st.markdown("*🔧 Admin Dashboard • Full Access Mode *")
+        col1, col2 = st.columns([2, 1])
+
+        with col1:
+            st.markdown("*🔧 Admin Dashboard • Full Access Mode *")
+
+        with col2:
+            # MongoDB connection status and stats for admin
+            mongodb_service = get_mongodb_service()
+            if mongodb_service.is_connected():
+                st.success("🟢 MongoDB Connected")
+
+                # Show session stats
+                if "session_id" in st.session_state:
+                    session_stats = mongodb_service.get_session_stats(
+                        st.session_state.session_id
+                    )
+                    if session_stats:
+                        st.info(
+                            f"Session interactions: {session_stats.get('total_interactions', 0)}"
+                        )
+
+                # Show user stats
+                if "user_id" in st.session_state:
+                    user_stats = mongodb_service.get_user_stats(
+                        st.session_state.user_id
+                    )
+                    if user_stats:
+                        st.info(
+                            f"Total user sessions: {user_stats.get('total_sessions', 0)}"
+                        )
+            else:
+                st.warning("🔴 MongoDB Disconnected")
     else:
         st.markdown(
             "*👤 User Dashboard • Standard Access • Contact your administrator for advanced features*"

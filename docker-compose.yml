@@ -1,6 +1,25 @@
 version: "3.8"
 
 services:
+  mongodb:
+    image: mongo:7.0
+    container_name: ing-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password123
+      - MONGO_INITDB_DATABASE=ing_prompt_scrubber
+    volumes:
+      - mongodb_data:/data/db
+      - ./logs:/var/log/mongodb
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   streamlit-app:
     build:
       context: .
@@ -23,6 +42,11 @@ services:
       # Python configuration
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/app
+      # MongoDB configuration
+      - MONGODB_URI=mongodb://admin:password123@mongodb:27017/ing_prompt_scrubber?authSource=admin
+      - MONGODB_DB_NAME=ing_prompt_scrubber
+    depends_on:
+      - mongodb
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
@@ -58,3 +82,8 @@ services:
 networks:
   default:
     name: ing-prompt-scrubber-network
+
+# Persistent volumes
+volumes:
+  mongodb_data:
+    driver: local

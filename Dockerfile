@@ -44,6 +44,10 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ENV STREAMLIT_SERVER_PORT=8501
 ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
 ENV STREAMLIT_SERVER_HEADLESS=true
+
+# MongoDB configuration (can be overridden at runtime)
+ENV MONGODB_URI=mongodb://mongodb:27017/
+ENV MONGODB_DB_NAME=ing_prompt_scrubber
 ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
 
 # Run the Streamlit application
