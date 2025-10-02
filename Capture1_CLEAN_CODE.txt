@@ -1,0 +1,44 @@
+# Extracted and cleaned Python code from Capture1.PNG
+
+# File explorer view showing:
+# dashboard_config.json
+# docx_to_txt.py
+# image_to_txt.py  
+# database_manager.py
+# image_to_txt.py
+
+# Code content:
+SUPPORTED_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.tiff', '.bmp']
+
+def image_to_text(image_path):
+    """Extract text from an image using Tesseract OCR."""
+    try:
+        image = Image.open(image_path)
+        text = pytesseract.image_to_string(image)
+        return text
+    except Exception as e:
+        print(f"Error processing {image_path}: {e}")
+        return ""
+
+def convert_images_to_txt(input_folder, output_folder):
+    """Convert all supported images in input_folder to .txt files in output_folder."""
+    os.makedirs(output_folder, exist_ok=True)
+    
+    for filename in os.listdir(input_folder):
+        file_ext = os.path.splitext(filename)[1].lower()
+        if file_ext in SUPPORTED_EXTENSIONS:
+            image_path = os.path.join(input_folder, filename)
+            extracted_text = image_to_text(image_path)
+            
+            output_filename = os.path.splitext(filename)[0] + ".txt"
+            output_path = os.path.join(output_folder, output_filename)
+            
+            with open(output_path, "w", encoding="utf-8") as f:
+                f.write(extracted_text)
+                
+            print(f"Processed {filename} -> {output_filename}")
+
+# Example usage:
+input_dir = "path_to_your_image_folder"
+output_dir = "path_to_output_txt_folder"
+convert_images_to_txt(input_dir, output_dir)
