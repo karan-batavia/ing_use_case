@@ -1,0 +1,8 @@
+line_idx,type,placeholder,original,span_start,span_end,explanation
+0,SSN_LIKE,[SSN_LIKE_001],901231-123.45,55,68,National/SSN-like identifiers are highly sensitive government-issued IDs.
+1,EMAIL,[EMAIL_001],jane.smith@example.com,14,36,Email addresses are personally identifiable information (PII).
+1,PHONE_EU,[PHONE_EU_001],+32 498 12 34 56,40,56,Phone numbers are PII and can identify or contact an individual.
+2,IBAN,[IBAN_001],BE13 0018 6454 3175 and amount EUR ,19,54,IBAN corresponds to a bank account identifier and is financial PII.
+2,DOB,[DOB_001],2025-08-10,67,77,Date of birth is personal data that can identify an individual.
+3,NATIONAL_ID,[NATIONAL_ID_001],National number 90.10.10-612-39,0,31,National ID/number is a highly sensitive personal identifier.
+3,BIOMETRIC,[BIOMETRIC_001],FaceID,33,39,Biometric references relate to sensitive authentication factors.

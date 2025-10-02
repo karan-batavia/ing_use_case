@@ -1,0 +1,107 @@
+[
+  {
+    "text": "Hello, my name is Jane Smith and my social security is [SSN_LIKE_001].",
+    "mapping": [
+      {
+        "type": "SSN_LIKE",
+        "placeholder": "[SSN_LIKE_001]",
+        "original": "901231-123.45",
+        "span": [
+          55,
+          68
+        ],
+        "explanation": "National/SSN-like identifiers are highly sensitive government-issued IDs."
+      }
+    ],
+    "index": {
+      "[SSN_LIKE_001]": "901231-123.45"
+    }
+  },
+  {
+    "text": "Contact me at [EMAIL_001] or [PHONE_EU_001].",
+    "mapping": [
+      {
+        "type": "EMAIL",
+        "placeholder": "[EMAIL_001]",
+        "original": "jane.smith@example.com",
+        "span": [
+          14,
+          36
+        ],
+        "explanation": "Email addresses are personally identifiable information (PII)."
+      },
+      {
+        "type": "PHONE_EU",
+        "placeholder": "[PHONE_EU_001]",
+        "original": "+32 498 12 34 56",
+        "span": [
+          40,
+          56
+        ],
+        "explanation": "Phone numbers are PII and can identify or contact an individual."
+      }
+    ],
+    "index": {
+      "[EMAIL_001]": "jane.smith@example.com",
+      "[PHONE_EU_001]": "+32 498 12 34 56"
+    }
+  },
+  {
+    "text": "Wire transfer IBAN [IBAN_001]12,500.00 on [DOB_001].",
+    "mapping": [
+      {
+        "type": "IBAN",
+        "placeholder": "[IBAN_001]",
+        "original": "BE13 0018 6454 3175 and amount EUR ",
+        "span": [
+          19,
+          54
+        ],
+        "explanation": "IBAN corresponds to a bank account identifier and is financial PII."
+      },
+      {
+        "type": "DOB",
+        "placeholder": "[DOB_001]",
+        "original": "2025-08-10",
+        "span": [
+          67,
+          77
+        ],
+        "explanation": "Date of birth is personal data that can identify an individual."
+      }
+    ],
+    "index": {
+      "[IBAN_001]": "BE13 0018 6454 3175 and amount EUR ",
+      "[DOB_001]": "2025-08-10"
+    }
+  },
+  {
+    "text": "[NATIONAL_ID_001]; [BIOMETRIC_001] enabled.",
+    "mapping": [
+      {
+        "type": "NATIONAL_ID",
+        "placeholder": "[NATIONAL_ID_001]",
+        "original": "National number 90.10.10-612-39",
+        "span": [
+          0,
+          31
+        ],
+        "explanation": "National ID/number is a highly sensitive personal identifier."
+      },
+      {
+        "type": "BIOMETRIC",
+        "placeholder": "[BIOMETRIC_001]",
+        "original": "FaceID",
+        "span": [
+          33,
+          39
+        ],
+        "explanation": "Biometric references relate to sensitive authentication factors."
+      }
+    ],
+    "index": {
+      "[NATIONAL_ID_001]": "National number 90.10.10-612-39",
+      "[BIOMETRIC_001]": "FaceID"
+    }
+  }
+]

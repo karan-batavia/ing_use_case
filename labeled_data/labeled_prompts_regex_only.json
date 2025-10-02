@@ -2685,5 +2685,3942 @@
     "redaction_map": {
       "[SOCIAL_SECURITY_001]": "901231-123.45"
     }
+  },
+  {
+    "original_prompt": "Prompt",
+    "processed_prompt": "Prompt",
+    "redacted_prompt": "Prompt",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "What insights can be drawn from the Annual Report published in 2024? Access it here: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf",
+    "processed_prompt": "What insights can be drawn from the Annual Report published in 2024? Access it here: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf",
+    "redacted_prompt": "What insights can be drawn from the Annual Report published in [YEAR_001]? Access it here: [LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          85,
+          158
+        ],
+        "context": "shed in 2024? Access it here: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          63,
+          67
+        ],
+        "context": "he Annual Report published in 2024? Access it here: https://asse",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "I’m analyzing ING’s performance. What does the Full Year Results from 2024 reveal? Here's the link: https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society",
+    "processed_prompt": "I’m analyzing ING’s performance. What does the Full Year Results from 2024 reveal? Here's the link: https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society",
+    "redacted_prompt": "I’m analyzing ING’s performance. What does the Full Year Results from [YEAR_001] reveal? Here's the link: https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society",
+    "entities": [
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          201,
+          210
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          70,
+          74
+        ],
+        "context": "es the Full Year Results from 2024 reveal? Here's the link: http",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 2,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Can you summarize the Half Year Results for 2024? I found it here: https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024",
+    "processed_prompt": "Can you summarize the Half Year Results for 2024? I found it here: https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024",
+    "redacted_prompt": "Can you summarize the Half Year Results for [YEAR_001]? I found it here: [LINK_001]",
+    "entities": [
+      {
+        "entity": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          67,
+          176
+        ],
+        "context": "ts for 2024? I found it here: https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          44,
+          48
+        ],
+        "context": "ize the Half Year Results for 2024? I found it here: https://new",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://newsroom.ing.be/ing-belgium-builds-on-strong-results-with-608-million-profit-after-first-half-of-2024",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "What kind of data is included in the Pillar 3 Disclosures Q4 2024? Link: https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx",
+    "processed_prompt": "What kind of data is included in the Pillar 3 Disclosures Q4 2024? Link: https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx",
+    "redacted_prompt": "What kind of data is included in the Pillar 3 Disclosures Q4 [YEAR_001]? Link: [LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          73,
+          164
+        ],
+        "context": " 3 Disclosures Q4 2024? Link: https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          61,
+          65
+        ],
+        "context": "n the Pillar 3 Disclosures Q4 2024? Link: https://assets.ing.com",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "I need help interpreting the Pillar 3 Additional Disclosure from 2024. Here's the document: https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf",
+    "processed_prompt": "I need help interpreting the Pillar 3 Additional Disclosure from 2024. Here's the document: https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf",
+    "redacted_prompt": "I need help interpreting the Pillar 3 Additional Disclosure from [YEAR_001]. Here's the document: [LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          92,
+          192
+        ],
+        "context": "om 2024. Here's the document: https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          65,
+          69
+        ],
+        "context": " 3 Additional Disclosure from 2024. Here's the document: https:/",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/42e3b0d86ac55855/original/ING-Belgium-Additional-Pillar-III-Report-2024.pdf",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "What’s the status of the 'Risk Governance Framework' guideline? I believe it was issued by the National Regulator.",
+    "processed_prompt": "What’s the status of the 'Risk Governance Framework' guideline? I believe it was issued by the National Regulator.",
+    "redacted_prompt": "What’s the status of the 'Risk Governance Framework' guideline? I believe it was issued by the National Regulator.",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "I’m reviewing 'AML Screening Guidelines'. Can you tell me who issued it and whether it’s still active?",
+    "processed_prompt": "I’m reviewing 'AML Screening Guidelines'. Can you tell me who issued it and whether it’s still active?",
+    "redacted_prompt": "I’m reviewing 'AML Screening Guidelines'. Can you tell me who issued it and whether it’s still active?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Is 'Digital Onboarding Standards' still considered advisory? Who published it?",
+    "processed_prompt": "Is 'Digital Onboarding Standards' still considered advisory? Who published it?",
+    "redacted_prompt": "Is 'Digital Onboarding Standards' still considered advisory? Who published it?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "I came across 'Sustainability Reporting Protocol'. What’s its category and current status?",
+    "processed_prompt": "I came across 'Sustainability Reporting Protocol'. What’s its category and current status?",
+    "redacted_prompt": "I came across 'Sustainability Reporting Protocol'. What’s its category and current status?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Can you confirm the status of 'Cybersecurity Controls' issued by the Basel Committee?",
+    "processed_prompt": "Can you confirm the status of 'Cybersecurity Controls' issued by the Basel Committee?",
+    "redacted_prompt": "Can you confirm the status of 'Cybersecurity Controls' issued by the Basel Committee?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Did Emily Davis complete a wire transfer of 15660.4 EUR to Supplier 764 on 45845?",
+    "processed_prompt": "Did Emily Davis complete a wire transfer of 15660.4 EUR to Supplier 764 on 45845?",
+    "redacted_prompt": "Did Emily Davis complete a wire transfer of 15660.4 EUR to Supplier 764 on 45845?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "What’s the status of Tom Taylor’s cheque to Anna Davis for 3402.37 USD on 45791?",
+    "processed_prompt": "What’s the status of Tom Taylor’s cheque to Anna Davis for 3402.37 USD on 45791?",
+    "redacted_prompt": "What’s the status of Tom Taylor’s cheque to Anna Davis for 3402.37 USD on 45791?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "I need confirmation: did Chris Smith’s SEPA Credit to Tom Davis for 18648.23 GBP on 45827 fail?",
+    "processed_prompt": "I need confirmation: did Chris Smith’s SEPA Credit to Tom Davis for 18648.23 GBP on 45827 fail?",
+    "redacted_prompt": "I need confirmation: did Chris Smith’s SEPA Credit to Tom Davis for 18648.23 GBP on 45827 fail?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Was Laura Taylor’s direct debit to Supplier 905 for 141.99 GBP on 45753 successful?",
+    "processed_prompt": "Was Laura Taylor’s direct debit to Supplier 905 for 141.99 GBP on 45753 successful?",
+    "redacted_prompt": "Was Laura Taylor’s direct debit to Supplier 905 for 141.99 GBP on 45753 successful?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Can you confirm if Jane Williams cancelled her standing order to Supplier 896 for 9153.49 GBP on 45376?",
+    "processed_prompt": "Can you confirm if Jane Williams cancelled her standing order to Supplier 896 for 9153.49 GBP on 45376?",
+    "redacted_prompt": "Can you confirm if Jane Williams cancelled her standing order to Supplier 896 for 9153.49 GBP on 45376?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Did Robert Brown’s cheque to Katie Williams for 19478.95 GBP on 45329 go through?",
+    "processed_prompt": "Did Robert Brown’s cheque to Katie Williams for 19478.95 GBP on 45329 go through?",
+    "redacted_prompt": "Did Robert Brown’s cheque to Katie Williams for 19478.95 GBP on 45329 go through?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "What’s the current status of Katie Brown’s wire transfer to Supplier 660 for 6014.97 EUR on 45637?",
+    "processed_prompt": "What’s the current status of Katie Brown’s wire transfer to Supplier 660 for 6014.97 EUR on 45637?",
+    "redacted_prompt": "What’s the current status of Katie Brown’s wire transfer to Supplier 660 for 6014.97 EUR on 45637?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Was the cheque from Emily Williams to Supplier 986 for 15311.43 USD on 45585 cancelled?",
+    "processed_prompt": "Was the cheque from Emily Williams to Supplier 986 for 15311.43 USD on 45585 cancelled?",
+    "redacted_prompt": "Was the cheque from Emily Williams to Supplier 986 for 15311.43 USD on 45585 cancelled?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Can you confirm if Tom Walker’s direct debit to Supplier 763 for 11428.94 GBP on 45378 was completed?",
+    "processed_prompt": "Can you confirm if Tom Walker’s direct debit to Supplier 763 for 11428.94 GBP on 45378 was completed?",
+    "redacted_prompt": "Can you confirm if Tom Walker’s direct debit to Supplier 763 for 11428.94 GBP on 45378 was completed?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Did Chris Taylor successfully complete a direct debit to John Miller for 10523.35 GBP on 45552?",
+    "processed_prompt": "Did Chris Taylor successfully complete a direct debit to John Miller for 10523.35 GBP on 45552?",
+    "redacted_prompt": "Did Chris Taylor successfully complete a direct debit to John Miller for 10523.35 GBP on 45552?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Original Prompt",
+    "processed_prompt": "Original Prompt",
+    "redacted_prompt": "Original Prompt",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Can you confirm the deployment date and provider for VM-IAAS-20 and whether it's currently retired?",
+    "processed_prompt": "Can you confirm the deployment date and provider for VM-IAAS-20 and whether it's currently retired?",
+    "redacted_prompt": "Can you confirm the deployment date and provider for [VM_001] and whether it's currently retired?",
+    "entities": [
+      {
+        "entity": "VM-IAAS-20",
+        "type": "vm",
+        "sensitivity": "C2",
+        "span": [
+          53,
+          63
+        ],
+        "context": "loyment date and provider for VM-IAAS-20 and whether it's currently re",
+        "detection_method": "c2_regex",
+        "semantic_key": "<VM_Name_1>",
+        "explanation": "Detected as a C2 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: VM.",
+        "redacted_value": "[VM_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 1,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[VM_001]": "VM-IAAS-20"
+    }
+  },
+  {
+    "original_prompt": "What’s the account balance for Katie Williams and her last wire transaction?",
+    "processed_prompt": "What’s the account balance for Katie Williams and her last wire transaction?",
+    "redacted_prompt": "What’s the account balance for Katie Williams and her last wire [TRANSACTION_001]?",
+    "entities": [
+      {
+        "entity": "transaction",
+        "type": "transaction",
+        "sensitivity": "C4",
+        "span": [
+          64,
+          75
+        ],
+        "context": "ie Williams and her last wire transaction?",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: TRANSACTION.",
+        "redacted_value": "[TRANSACTION_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[TRANSACTION_001]": "transaction"
+    }
+  },
+  {
+    "original_prompt": "Please list the storage capacity and environment type for SYS-IAAS-4.",
+    "processed_prompt": "Please list the storage capacity and environment type for SYS-IAAS-4.",
+    "redacted_prompt": "Please list the storage capacity and environment type for [SYSTEM_001].",
+    "entities": [
+      {
+        "entity": "SYS-IAAS-4",
+        "type": "system",
+        "sensitivity": "C2",
+        "span": [
+          58,
+          68
+        ],
+        "context": "city and environment type for SYS-IAAS-4.",
+        "detection_method": "c2_regex",
+        "semantic_key": "<System_name_1>",
+        "explanation": "Detected as a C2 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: SYSTEM.",
+        "redacted_value": "[SYSTEM_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 1,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[SYSTEM_001]": "SYS-IAAS-4"
+    }
+  },
+  {
+    "original_prompt": "Is the document link for ING Belgium’s 2024 Pillar 3 Disclosures still active?",
+    "processed_prompt": "Is the document link for ING Belgium’s 2024 Pillar 3 Disclosures still active?",
+    "redacted_prompt": "Is the document link for ING Belgium’s [YEAR_001] Pillar 3 Disclosures still active?",
+    "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          39,
+          43
+        ],
+        "context": "cument link for ING Belgium’s 2024 Pillar 3 Disclosures still ac",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Can you provide the credit score and income of Chris Williams?",
+    "processed_prompt": "Can you provide the credit score and income of Chris Williams?",
+    "redacted_prompt": "Can you provide the credit score and income of Chris Williams?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Summarize the investment portfolio and insurance policy type for Anna Williams.",
+    "processed_prompt": "Summarize the investment portfolio and insurance policy type for Anna Williams.",
+    "redacted_prompt": "Summarize the investment portfolio and insurance policy type for Anna Williams.",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Which VM has the highest storage capacity and is hosted on Google Cloud?",
+    "processed_prompt": "Which VM has the highest storage capacity and is hosted on Google Cloud?",
+    "redacted_prompt": "Which VM has the highest storage capacity and is hosted on Google Cloud?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Evaluate the credit score and criminal conviction status of Kimberly Hardin.",
+    "processed_prompt": "Evaluate the credit score and criminal conviction status of Kimberly Hardin.",
+    "redacted_prompt": "Evaluate the credit score and criminal conviction status of Kimberly Hardin.",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Can you list all 2023 ING Belgium documents related to Pillar 3?",
+    "processed_prompt": "Can you list all 2023 ING Belgium documents related to Pillar 3?",
+    "redacted_prompt": "Can you list all [POSTAL_CODE_001] 3?",
+    "entities": [
+      {
+        "entity": "2023 ING Belgium documents related to Pillar",
+        "type": "postal_code",
+        "sensitivity": "C3",
+        "span": [
+          17,
+          61
+        ],
+        "context": "Can you list all 2023 ING Belgium documents related to Pillar 3?",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: POSTAL_CODE.",
+        "redacted_value": "[POSTAL_CODE_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[POSTAL_CODE_001]": "2023 ING Belgium documents related to Pillar"
+    }
+  },
+  {
+    "original_prompt": "Is VM-IAAS-8 still operational, and what’s its environment type?",
+    "processed_prompt": "Is VM-IAAS-8 still operational, and what’s its environment type?",
+    "redacted_prompt": "Is [VM_001] still operational, and what’s its environment type?",
+    "entities": [
+      {
+        "entity": "VM-IAAS-8",
+        "type": "vm",
+        "sensitivity": "C2",
+        "span": [
+          3,
+          12
+        ],
+        "context": "Is VM-IAAS-8 still operational, and what’s",
+        "detection_method": "c2_regex",
+        "semantic_key": "<VM_Name_1>",
+        "explanation": "Detected as a C2 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: VM.",
+        "redacted_value": "[VM_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 1,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[VM_001]": "VM-IAAS-8"
+    }
+  },
+  {
+    "original_prompt": "Group customers by biometric authentication method and list their income.",
+    "processed_prompt": "Group customers by biometric authentication method and list their income.",
+    "redacted_prompt": "Group [CUSTOMER_NUMBER_001] by biometric authentication method and list their income.",
+    "entities": [
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          6,
+          15
+        ],
+        "context": "Group customers by biometric authentication m",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "customers"
+    }
+  },
+  {
+    "original_prompt": "Which Azure-hosted systems are currently retired?",
+    "processed_prompt": "Which Azure-hosted systems are currently retired?",
+    "redacted_prompt": "Which Azure-hosted systems are currently retired?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "What was the largest POS transaction for Emily Williams?",
+    "processed_prompt": "What was the largest POS transaction for Emily Williams?",
+    "redacted_prompt": "What was the largest POS [TRANSACTION_001] for Emily Williams?",
+    "entities": [
+      {
+        "entity": "transaction",
+        "type": "transaction",
+        "sensitivity": "C4",
+        "span": [
+          25,
+          36
+        ],
+        "context": "What was the largest POS transaction for Emily Williams?",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: TRANSACTION.",
+        "redacted_value": "[TRANSACTION_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[TRANSACTION_001]": "transaction"
+    }
+  },
+  {
+    "original_prompt": "Which ING Belgium document in 2022 had the highest profit figure?",
+    "processed_prompt": "Which ING Belgium document in 2022 had the highest profit figure?",
+    "redacted_prompt": "Which ING Belgium document in [ADDRESS_001] profit figure?",
+    "entities": [
+      {
+        "entity": "2022 had the highest",
+        "type": "address",
+        "sensitivity": "C3",
+        "span": [
+          30,
+          50
+        ],
+        "context": "Which ING Belgium document in 2022 had the highest profit figure?",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: ADDRESS.",
+        "redacted_value": "[ADDRESS_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[ADDRESS_001]": "2022 had the highest"
+    }
+  },
+  {
+    "original_prompt": "List all customers using FaceID and their masked PINs.",
+    "processed_prompt": "List all customers using FaceID and their masked PINs.",
+    "redacted_prompt": "List all [CUSTOMER_NUMBER_001] using FaceID and their masked PINs.",
+    "entities": [
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          9,
+          18
+        ],
+        "context": "List all customers using FaceID and their masked",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "customers"
+    }
+  },
+  {
+    "original_prompt": "What’s the account balance and income of John Williams?",
+    "processed_prompt": "What’s the account balance and income of John Williams?",
+    "redacted_prompt": "What’s the account balance and income of John Williams?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Which VM on AWS has the lowest storage capacity?",
+    "processed_prompt": "Which VM on AWS has the lowest storage capacity?",
+    "redacted_prompt": "Which VM on AWS has the lowest storage capacity?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "How many online transactions did Chris Williams make in 2025?",
+    "processed_prompt": "How many online transactions did Chris Williams make in 2025?",
+    "redacted_prompt": "How many online [TRANSACTION_001] did Chris Williams make in [YEAR_001]?",
+    "entities": [
+      {
+        "entity": "transactions",
+        "type": "transaction",
+        "sensitivity": "C4",
+        "span": [
+          16,
+          28
+        ],
+        "context": "How many online transactions did Chris Williams make in 20",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: TRANSACTION.",
+        "redacted_value": "[TRANSACTION_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          56,
+          60
+        ],
+        "context": "ns did Chris Williams make in 2025?",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 2,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[TRANSACTION_001]": "transactions",
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Give me the link to ING Belgium’s 2021 Annual Report.",
+    "processed_prompt": "Give me the link to ING Belgium’s 2021 Annual Report.",
+    "redacted_prompt": "Give me the link to ING Belgium’s [YEAR_001] Annual Report.",
+    "entities": [
+      {
+        "entity": "2021",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          34,
+          38
+        ],
+        "context": " me the link to ING Belgium’s 2021 Annual Report.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2021"
+    }
+  },
+  {
+    "original_prompt": "What’s the national ID and biometric method for Emily Williams?",
+    "processed_prompt": "What’s the national ID and biometric method for Emily Williams?",
+    "redacted_prompt": "What’s the national ID and biometric method for Emily Williams?",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Prompt",
+    "processed_prompt": "Prompt",
+    "redacted_prompt": "Prompt",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Draft an internal notice to deprecate 'Risk Governance Framework' (Compliance; Issuer: National Regulator; Last Reviewed 2024-12-04; Status: Deprecated) and point teams to active policies where applicable.",
+    "processed_prompt": "Draft an internal notice to deprecate 'Risk Governance Framework' (Compliance; Issuer: National Regulator; Last Reviewed 2024-12-04; Status: Deprecated) and point teams to active policies where applicable.",
+    "redacted_prompt": "Draft an internal notice to deprecate 'Risk Governance Framework' (Compliance; Issuer: National Regulator; Last Reviewed [YEAR_001]-12-04; Status: Deprecated) and point teams to active policies where applicable.",
+    "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          121,
+          125
+        ],
+        "context": "onal Regulator; Last Reviewed 2024-12-04; Status: Deprecated) an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Prepare a sync note: 'AML Screening Guidelines' are Deprecated (Risk Management; National Regulator; last 2025-01-29). Align with 'AML Compliance Policy' (Compliance; Under Review; last 2024-12-18; owner dept Compliance).",
+    "processed_prompt": "Prepare a sync note: 'AML Screening Guidelines' are Deprecated (Risk Management; National Regulator; last 2025-01-29). Align with 'AML Compliance Policy' (Compliance; Under Review; last 2024-12-18; owner dept Compliance).",
+    "redacted_prompt": "Prepare a sync note: 'AML Screening Guidelines' are Deprecated (Risk Management; National Regulator; last [YEAR_001]-01-29). Align with 'AML Compliance Policy' (Compliance; Under Review; last [YEAR_002]-12-18; owner dept Compliance).",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          106,
+          110
+        ],
+        "context": "ent; National Regulator; last 2025-01-29). Align with 'AML Compl",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          186,
+          190
+        ],
+        "context": "ompliance; Under Review; last 2024-12-18; owner dept Compliance)",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025",
+      "[YEAR_002]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a one-paragraph brief on 'Digital Onboarding Standards' (Sustainability; Internal Governance; Annual; last 2025-02-09; Status: Advisory) for product managers.",
+    "processed_prompt": "Write a one-paragraph brief on 'Digital Onboarding Standards' (Sustainability; Internal Governance; Annual; last 2025-02-09; Status: Advisory) for product managers.",
+    "redacted_prompt": "Write a one-paragraph brief on 'Digital Onboarding Standards' (Sustainability; Internal Governance; Annual; last [YEAR_001]-02-09; Status: Advisory) for product managers.",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          113,
+          117
+        ],
+        "context": "rnal Governance; Annual; last 2025-02-09; Status: Advisory) for ",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Draft a heads-up: 'Sustainability Reporting Protocol' (Risk Management; Industry Consortium; Annual; last 2025-06-17; Advisory) impacts ESG dashboards; request data lineage checks.",
+    "processed_prompt": "Draft a heads-up: 'Sustainability Reporting Protocol' (Risk Management; Industry Consortium; Annual; last 2025-06-17; Advisory) impacts ESG dashboards; request data lineage checks.",
+    "redacted_prompt": "Draft a heads-up: 'Sustainability Reporting Protocol' (Risk Management; Industry Consortium; Annual; last [YEAR_001]-06-17; Advisory) impacts ESG dashboards; request data lineage checks.",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          106,
+          110
+        ],
+        "context": "stry Consortium; Annual; last 2025-06-17; Advisory) impacts ESG ",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Propose to transition from 'Mobile Banking Security' (Deprecated; National Regulator; last 2024-11-22) to 'Cybersecurity Controls' (Advisory; Basel Committee; last 2025-04-03).",
+    "processed_prompt": "Propose to transition from 'Mobile Banking Security' (Deprecated; National Regulator; last 2024-11-22) to 'Cybersecurity Controls' (Advisory; Basel Committee; last 2025-04-03).",
+    "redacted_prompt": "Propose to transition from 'Mobile Banking Security' (Deprecated; National Regulator; last [YEAR_001]-11-22) to 'Cybersecurity Controls' (Advisory; Basel Committee; last [YEAR_002]-04-03).",
+    "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          91,
+          95
+        ],
+        "context": "ted; National Regulator; last 2024-11-22) to 'Cybersecurity Cont",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          164,
+          168
+        ],
+        "context": "visory; Basel Committee; last 2025-04-03).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2024",
+      "[YEAR_002]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Create an action list to retire 'Third-Party Risk Management' guideline (Governance; Basel Committee; Bi-Annual; last 2025-04-09; Deprecated).",
+    "processed_prompt": "Create an action list to retire 'Third-Party Risk Management' guideline (Governance; Basel Committee; Bi-Annual; last 2025-04-09; Deprecated).",
+    "redacted_prompt": "Create an action list to retire 'Third-Party Risk Management' guideline (Governance; Basel Committee; Bi-Annual; last [YEAR_001]-04-09; Deprecated).",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          118,
+          122
+        ],
+        "context": "el Committee; Bi-Annual; last 2025-04-09; Deprecated).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Send a reminder about 'Data Privacy Guidelines' (Compliance; Internal Governance; Bi-Annual; last 2024-10-16; Advisory) ahead of next review cycle.",
+    "processed_prompt": "Send a reminder about 'Data Privacy Guidelines' (Compliance; Internal Governance; Bi-Annual; last 2024-10-16; Advisory) ahead of next review cycle.",
+    "redacted_prompt": "Send a reminder about 'Data Privacy Guidelines' (Compliance; Internal Governance; Bi-Annual; last [YEAR_001]-10-16; Advisory) ahead of next review cycle.",
+    "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          98,
+          102
+        ],
+        "context": "l Governance; Bi-Annual; last 2024-10-16; Advisory) ahead of nex",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a change note: 'Board Oversight Principles' (Sustainability; Industry Consortium; Bi-Annual; last 2025-03-02; Deprecated) marked obsolete; archive references.",
+    "processed_prompt": "Write a change note: 'Board Oversight Principles' (Sustainability; Industry Consortium; Bi-Annual; last 2025-03-02; Deprecated) marked obsolete; archive references.",
+    "redacted_prompt": "Write a change note: 'Board Oversight Principles' (Sustainability; Industry Consortium; Bi-Annual; last [YEAR_001]-03-02; Deprecated) marked obsolete; archive [TRANSACTION_001].",
+    "entities": [
+      {
+        "entity": "references",
+        "type": "transaction",
+        "sensitivity": "C4",
+        "span": [
+          153,
+          163
+        ],
+        "context": "ted) marked obsolete; archive references.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: TRANSACTION.",
+        "redacted_value": "[TRANSACTION_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          104,
+          108
+        ],
+        "context": "y Consortium; Bi-Annual; last 2025-03-02; Deprecated) marked obs",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 2,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[TRANSACTION_001]": "references",
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Prepare a policy status digest: Credit Risk Policy (Active; last 2025-06-22); AML Compliance Policy (Under Review; last 2024-12-18); Operational Risk Policy (Under Review; last 2025-04-18); Loan Approval Policy (Retired; last 2025-02-18).",
+    "processed_prompt": "Prepare a policy status digest: Credit Risk Policy (Active; last 2025-06-22); AML Compliance Policy (Under Review; last 2024-12-18); Operational Risk Policy (Under Review; last 2025-04-18); Loan Approval Policy (Retired; last 2025-02-18).",
+    "redacted_prompt": "Prepare a policy status digest: Credit Risk Policy (Active; last [YEAR_001]-06-22); AML Compliance Policy (Under Review; last [YEAR_002]-12-18); Operational Risk Policy (Under Review; last 2025-04-18); Loan Approval Policy (Retired; last 2025-02-18).",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          65,
+          69
+        ],
+        "context": "dit Risk Policy (Active; last 2025-06-22); AML Compliance Policy",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          120,
+          124
+        ],
+        "context": "ce Policy (Under Review; last 2024-12-18); Operational Risk Poli",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025",
+      "[YEAR_002]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write an alignment note between 'KYC Policy' (Active; Responsible Dept IT; Approval: Board; Bi-Annual; last 2024-10-18) and 'Digital Onboarding Standards' (Advisory; Internal Governance; last 2025-02-09).",
+    "processed_prompt": "Write an alignment note between 'KYC Policy' (Active; Responsible Dept IT; Approval: Board; Bi-Annual; last 2024-10-18) and 'Digital Onboarding Standards' (Advisory; Internal Governance; last 2025-02-09).",
+    "redacted_prompt": "Write an alignment note between 'KYC Policy' (Active; Responsible Dept IT; Approval: Board; Bi-Annual; last [YEAR_001]-10-18) and 'Digital Onboarding Standards' (Advisory; Internal Governance; last [YEAR_002]-02-09).",
+    "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          108,
+          112
+        ],
+        "context": "roval: Board; Bi-Annual; last 2024-10-18) and 'Digital Onboardin",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          192,
+          196
+        ],
+        "context": "ry; Internal Governance; last 2025-02-09).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2024",
+      "[YEAR_002]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Draft an email announcing 'IT Governance Policy' is Active (Risk Management; Approval: Compliance Officer; Bi-Annual; last 2024-11-16).",
+    "processed_prompt": "Draft an email announcing 'IT Governance Policy' is Active (Risk Management; Approval: Compliance Officer; Bi-Annual; last 2024-11-16).",
+    "redacted_prompt": "Draft an email announcing 'IT Governance Policy' is Active (Risk Management; Approval: Compliance Officer; Bi-Annual; last [YEAR_001]-11-16).",
+    "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          123,
+          127
+        ],
+        "context": "ance Officer; Bi-Annual; last 2024-11-16).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Write a short broadcast that 'Customer Service Policy' is Active (Responsible Dept IT; Approval Board; Quarterly review; last 2024-12-27).",
+    "processed_prompt": "Write a short broadcast that 'Customer Service Policy' is Active (Responsible Dept IT; Approval Board; Quarterly review; last 2024-12-27).",
+    "redacted_prompt": "Write a short broadcast that '[CUSTOMER_NUMBER_001] Service Policy' is Active (Responsible Dept IT; Approval Board; Quarterly review; last [YEAR_001]-12-27).",
+    "entities": [
+      {
+        "entity": "Customer",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          30,
+          38
+        ],
+        "context": "Write a short broadcast that 'Customer Service Policy' is Active (Re",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          126,
+          130
+        ],
+        "context": "Board; Quarterly review; last 2024-12-27).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 2,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "Customer",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Raise an escalation that 'Operational Risk Policy' is Under Review (Responsible Dept IT; Approval: Operations Head; Quarterly; last 2025-04-18) and may impact control attestations.",
+    "processed_prompt": "Raise an escalation that 'Operational Risk Policy' is Under Review (Responsible Dept IT; Approval: Operations Head; Quarterly; last 2025-04-18) and may impact control attestations.",
+    "redacted_prompt": "Raise an escalation that 'Operational Risk Policy' is Under Review (Responsible Dept IT; Approval: Operations Head; Quarterly; last [YEAR_001]-04-18) and may impact control attestations.",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          132,
+          136
+        ],
+        "context": "rations Head; Quarterly; last 2025-04-18) and may impact control",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Create a retirements summary for: 'Fraud Detection Policy' (Retired; Board approval; last 2025-01-06) and 'Privacy Protection Policy' (Retired; Operations Head; last 2025-02-08).",
+    "processed_prompt": "Create a retirements summary for: 'Fraud Detection Policy' (Retired; Board approval; last 2025-01-06) and 'Privacy Protection Policy' (Retired; Operations Head; last 2025-02-08).",
+    "redacted_prompt": "Create a retirements summary for: 'Fraud Detection Policy' (Retired; Board approval; last [YEAR_001]-01-06) and 'Privacy Protection Policy' (Retired; Operations Head; last 2025-02-08).",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          90,
+          94
+        ],
+        "context": "Retired; Board approval; last 2025-01-06) and 'Privacy Protectio",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Draft a notice that 'Loan Approval Policy' is Retired (Risk Management; Approval: Compliance Officer; Quarterly; last 2025-02-18); remove from approval workflows.",
+    "processed_prompt": "Draft a notice that 'Loan Approval Policy' is Retired (Risk Management; Approval: Compliance Officer; Quarterly; last 2025-02-18); remove from approval workflows.",
+    "redacted_prompt": "Draft a notice that 'Loan Approval Policy' is Retired (Risk Management; Approval: Compliance Officer; Quarterly; last [YEAR_001]-02-18); remove from approval workflows.",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          118,
+          122
+        ],
+        "context": "ance Officer; Quarterly; last 2025-02-18); remove from approval ",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Build a contact card for policy queries: Mary Sims (+32 42 361 650; mary.sims@ing.com) and John Graham (+32 31 603 900; john.graham@ing.com).",
+    "processed_prompt": "Build a contact card for policy queries: Mary Sims (+32 42 361 650; mary.sims@ing.com) and John Graham (+32 31 603 900; john.graham@ing.com).",
+    "redacted_prompt": "Build a contact card for policy queries: Mary Sims (+32 [PHONE_001]; [EMAIL_002]) and John Graham (+32 [PHONE_002]; [EMAIL_001]).",
+    "entities": [
+      {
+        "entity": "john.graham@ing.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          120,
+          139
+        ],
+        "context": " John Graham (+32 31 603 900; john.graham@ing.com).",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "mary.sims@ing.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          68,
+          85
+        ],
+        "context": "s: Mary Sims (+32 42 361 650; mary.sims@ing.com) and John Graham (+32 31 603 ",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_002]"
+      },
+      {
+        "entity": "42 361 650",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          56,
+          66
+        ],
+        "context": "olicy queries: Mary Sims (+32 42 361 650; mary.sims@ing.com) and John ",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_001]"
+      },
+      {
+        "entity": "31 603 900",
+        "type": "phone",
+        "sensitivity": "C4",
+        "span": [
+          108,
+          118
+        ],
+        "context": "ing.com) and John Graham (+32 31 603 900; john.graham@ing.com).",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: PHONE.",
+        "redacted_value": "[PHONE_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 2,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 4,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[EMAIL_001]": "john.graham@ing.com",
+      "[EMAIL_002]": "mary.sims@ing.com",
+      "[PHONE_001]": "42 361 650",
+      "[PHONE_002]": "31 603 900"
+    }
+  },
+  {
+    "original_prompt": "Send a training invite referencing 'Data Security Policy' (Active; Customer Service; IT Manager; last 2025-05-07) to Heather Johnson (NS99DB) and Nicholas Wolf (LW24YO).",
+    "processed_prompt": "Send a training invite referencing 'Data Security Policy' (Active; Customer Service; IT Manager; last 2025-05-07) to Heather Johnson (NS99DB) and Nicholas Wolf (LW24YO).",
+    "redacted_prompt": "Send a training invite [TRANSACTION_001] 'Data Security Policy' (Active; [CUSTOMER_NUMBER_001] Service; IT Manager; last [YEAR_001]-05-07) to Heather Johnson ([IBAN_001]) and Nicholas Wolf ([IBAN_002]).",
+    "entities": [
+      {
+        "entity": "referencing",
+        "type": "transaction",
+        "sensitivity": "C4",
+        "span": [
+          23,
+          34
+        ],
+        "context": "Send a training invite referencing 'Data Security Policy' (Activ",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: TRANSACTION.",
+        "redacted_value": "[TRANSACTION_001]"
+      },
+      {
+        "entity": "Customer",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          67,
+          75
+        ],
+        "context": "ata Security Policy' (Active; Customer Service; IT Manager; last 202",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "NS99DB",
+        "type": "iban",
+        "sensitivity": "C4",
+        "span": [
+          134,
+          140
+        ],
+        "context": "25-05-07) to Heather Johnson (NS99DB) and Nicholas Wolf (LW24YO).",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: IBAN.",
+        "redacted_value": "[IBAN_001]"
+      },
+      {
+        "entity": "LW24YO",
+        "type": "iban",
+        "sensitivity": "C4",
+        "span": [
+          161,
+          167
+        ],
+        "context": "n (NS99DB) and Nicholas Wolf (LW24YO).",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: IBAN.",
+        "redacted_value": "[IBAN_002]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          102,
+          106
+        ],
+        "context": "mer Service; IT Manager; last 2025-05-07) to Heather Johnson (NS",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 3,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 5,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[TRANSACTION_001]": "referencing",
+      "[CUSTOMER_NUMBER_001]": "Customer",
+      "[IBAN_001]": "NS99DB",
+      "[IBAN_002]": "LW24YO",
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Prepare a RACI note: Mary Sims as Owner, John Graham as Approver, Erin Johnson and Kristy Peterson as Contributors for policy communications DL.",
+    "processed_prompt": "Prepare a RACI note: Mary Sims as Owner, John Graham as Approver, Erin Johnson and Kristy Peterson as Contributors for policy communications DL.",
+    "redacted_prompt": "Prepare a RACI note: Mary Sims as Owner, John Graham as Approver, Erin Johnson and Kristy Peterson as Contributors for policy communications DL.",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Create a calendar entry for next quarter reviews: Credit Risk Policy (Annual; last 2025-06-22), Customer Service Policy (Quarterly; last 2024-12-27), AML Compliance Policy (Bi-Annual; last 2024-12-18).",
+    "processed_prompt": "Create a calendar entry for next quarter reviews: Credit Risk Policy (Annual; last 2025-06-22), Customer Service Policy (Quarterly; last 2024-12-27), AML Compliance Policy (Bi-Annual; last 2024-12-18).",
+    "redacted_prompt": "Create a calendar entry for next quarter reviews: Credit Risk Policy (Annual; last [YEAR_001]-06-22), [CUSTOMER_NUMBER_001] Service Policy (Quarterly; last [YEAR_002]-12-27), AML Compliance Policy (Bi-Annual; last 2024-12-18).",
+    "entities": [
+      {
+        "entity": "Customer",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          96,
+          104
+        ],
+        "context": "cy (Annual; last 2025-06-22), Customer Service Policy (Quarterly; la",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          83,
+          87
+        ],
+        "context": "dit Risk Policy (Annual; last 2025-06-22), Customer Service Poli",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          137,
+          141
+        ],
+        "context": "rvice Policy (Quarterly; last 2024-12-27), AML Compliance Policy",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 3,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "Customer",
+      "[YEAR_001]": "2025",
+      "[YEAR_002]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Create a data-minimization note: when sharing employee lists (phones/emails/CorpKeys), restrict to least-privileged distribution lists and avoid external emails.",
+    "processed_prompt": "Create a data-minimization note: when sharing employee lists (phones/emails/CorpKeys), restrict to least-privileged distribution lists and avoid external emails.",
+    "redacted_prompt": "Create a data-minimization note: when sharing [EMPLOYEE_ID_001] lists (phones/emails/CorpKeys), restrict to least-privileged distribution lists and avoid external emails.",
+    "entities": [
+      {
+        "entity": "employee",
+        "type": "employee_id",
+        "sensitivity": "C3",
+        "span": [
+          46,
+          54
+        ],
+        "context": "nimization note: when sharing employee lists (phones/emails/CorpKeys",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMPLOYEE_ID.",
+        "redacted_value": "[EMPLOYEE_ID_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[EMPLOYEE_ID_001]": "employee"
+    }
+  },
+  {
+    "original_prompt": "Prompt",
+    "processed_prompt": "Prompt",
+    "redacted_prompt": "Prompt",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Write a LinkedIn post announcing the 2024 Annual Report. Include the link and 2 bullet points for customers/investors: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+    "processed_prompt": "Write a LinkedIn post announcing the 2024 Annual Report. Include the link and 2 bullet points for customers/investors: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+    "redacted_prompt": "Write a LinkedIn post announcing the [YEAR_001] Annual Report. Include the link and 2 bullet points for [CUSTOMER_NUMBER_001]/investors: [LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          119,
+          193
+        ],
+        "context": "ints for customers/investors: https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          98,
+          107
+        ],
+        "context": " link and 2 bullet points for customers/investors: https://assets.ing",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          37,
+          41
+        ],
+        "context": " LinkedIn post announcing the 2024 Annual Report. Include the li",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 3,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/6e8ace8ade094690/original/Annual-report-2024.pdf.",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Draft an internal newsletter blurb pointing to 2024 Pillar 3 Disclosures (Q4) for risk, capital and liquidity metrics: https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx.",
+    "processed_prompt": "Draft an internal newsletter blurb pointing to 2024 Pillar 3 Disclosures (Q4) for risk, capital and liquidity metrics: https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx.",
+    "redacted_prompt": "Draft an internal newsletter blurb pointing to [YEAR_001] Pillar 3 Disclosures (Q4) for risk, capital and liquidity metrics: [LINK_001]",
+    "entities": [
+      {
+        "entity": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          119,
+          211
+        ],
+        "context": "apital and liquidity metrics: https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          47,
+          51
+        ],
+        "context": " newsletter blurb pointing to 2024 Pillar 3 Disclosures (Q4) for",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[LINK_001]": "https://assets.ing.com/m/5f710bfeff3364d0/original/ING-BE-Pillar-3-Disclosures-Q4-2024.xlsx.",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Prepare an analyst Q&A pack referencing 2024 Full Year Results (press room): https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society.",
+    "processed_prompt": "Prepare an analyst Q&A pack referencing 2024 Full Year Results (press room): https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-customers-and-society.",
+    "redacted_prompt": "Prepare an analyst Q&A pack [TRANSACTION_001] [YEAR_001] Full Year Results (press room): https://newsroom.ing.be/ing-continues-to-deliver-strong-growth-in-2024-reinforcing-its-commitment-to-[CUSTOMER_NUMBER_001]-and-society.",
+    "entities": [
+      {
+        "entity": "referencing",
+        "type": "transaction",
+        "sensitivity": "C4",
+        "span": [
+          28,
+          39
+        ],
+        "context": "Prepare an analyst Q&A pack referencing 2024 Full Year Results (press",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: TRANSACTION.",
+        "redacted_value": "[TRANSACTION_001]"
+      },
+      {
+        "entity": "customers",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          178,
+          187
+        ],
+        "context": "reinforcing-its-commitment-to-customers-and-society.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          40,
+          44
+        ],
+        "context": " analyst Q&A pack referencing 2024 Full Year Results (press room",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 3,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[TRANSACTION_001]": "referencing",
+      "[CUSTOMER_NUMBER_001]": "customers",
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Compose an investor FAQ citing 2023 Annual Report and 2023 Additional Pillar III: https://assets.ing.com/m/38b726ce41627db/original/EN-2023-ING-Belgium-SA-NV-Annual-report.pdf and http://assets.ing.com/m/138d1df935c37a6d/original/ING-Belgium-Additional-Pillar-III-Report-2023.pdf.",
+    "processed_prompt": "Compose an investor FAQ citing 2023 Annual Report and 2023 Additional Pillar III: https://assets.ing.com/m/38b726ce41627db/original/EN-2023-ING-Belgium-SA-NV-Annual-report.pdf and http://assets.ing.com/m/138d1df935c37a6d/original/ING-Belgium-Additional-Pillar-III-Report-2023.pdf.",
+    "redacted_prompt": "Compose an investor FAQ citing [YEAR_001] Annual Report and 2023 Additional Pillar III: [LINK_002] and [LINK_001]",
+    "entities": [
+      {
+        "entity": "http://assets.ing.com/m/138d1df935c37a6d/original/ING-Belgium-Additional-Pillar-III-Report-2023.pdf.",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          180,
+          280
+        ],
+        "context": "m-SA-NV-Annual-report.pdf and http://assets.ing.com/m/138d1df935c37a6d/original/ING-Belgium-Additional-Pillar-III-Report-2023.pdf.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_001]"
+      },
+      {
+        "entity": "https://assets.ing.com/m/38b726ce41627db/original/EN-2023-ING-Belgium-SA-NV-Annual-report.pdf",
+        "type": "link",
+        "sensitivity": "C1",
+        "span": [
+          82,
+          175
+        ],
+        "context": "d 2023 Additional Pillar III: https://assets.ing.com/m/38b726ce41627db/original/EN-2023-ING-Belgium-SA-NV-Annual-report.pdf and http://assets.ing.com/m/1",
+        "detection_method": "c1_regex",
+        "semantic_key": "<LINK_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: LINK.",
+        "redacted_value": "[LINK_002]"
+      },
+      {
+        "entity": "2023",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          31,
+          35
+        ],
+        "context": "ompose an investor FAQ citing 2023 Annual Report and 2023 Additi",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 3,
+      "total_entities": 3,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 3
+    },
+    "redaction_map": {
+      "[LINK_001]": "http://assets.ing.com/m/138d1df935c37a6d/original/ING-Belgium-Additional-Pillar-III-Report-2023.pdf.",
+      "[LINK_002]": "https://assets.ing.com/m/38b726ce41627db/original/EN-2023-ING-Belgium-SA-NV-Annual-report.pdf",
+      "[YEAR_001]": "2023"
+    }
+  },
+  {
+    "original_prompt": "Create a press-room index linking 2019 Full Year Results and 2018 Full Year Results releases.",
+    "processed_prompt": "Create a press-room index linking 2019 Full Year Results and 2018 Full Year Results releases.",
+    "redacted_prompt": "Create a press-room index linking [YEAR_001] Full Year Results and [YEAR_002] Full Year Results releases.",
+    "entities": [
+      {
+        "entity": "2019",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          34,
+          38
+        ],
+        "context": "te a press-room index linking 2019 Full Year Results and 2018 Fu",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      },
+      {
+        "entity": "2018",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          61,
+          65
+        ],
+        "context": "ng 2019 Full Year Results and 2018 Full Year Results releases.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2019",
+      "[YEAR_002]": "2018"
+    }
+  },
+  {
+    "original_prompt": "Prepare a renewal/health check digest for Active customer agreements: CUST-0001 (Emily Davis — Credit Card Agreement — €162,507.76), CUST-0011 (Laura Smith — Insurance Distribution — €263,429.48), CUST-0023 (Emily Williams — Line of Credit — €353,236.74).",
+    "processed_prompt": "Prepare a renewal/health check digest for Active customer agreements: CUST-0001 (Emily Davis — Credit Card Agreement — €162,507.76), CUST-0011 (Laura Smith — Insurance Distribution — €263,429.48), CUST-0023 (Emily Williams — Line of Credit — €353,236.74).",
+    "redacted_prompt": "Prepare a renewal/health check digest for Active [CUSTOMER_NUMBER_004] agreements: [CUSTOMER_NUMBER_001] (Emily Davis — Credit Card Agreement — €162,507.76), [CUSTOMER_NUMBER_002] (Laura Smith — Insurance Distribution — €263,429.48), [CUSTOMER_NUMBER_003] (Emily Williams — Line of Credit — €353,236.74).",
+    "entities": [
+      {
+        "entity": "CUST-0001",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          70,
+          79
+        ],
+        "context": "r Active customer agreements: CUST-0001 (Emily Davis — Credit Card Ag",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "CUST-0011",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          133,
+          142
+        ],
+        "context": "ard Agreement — €162,507.76), CUST-0011 (Laura Smith — Insurance Dist",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "CUST-0023",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          197,
+          206
+        ],
+        "context": " Distribution — €263,429.48), CUST-0023 (Emily Williams — Line of Cre",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_003]"
+      },
+      {
+        "entity": "customer",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          49,
+          57
+        ],
+        "context": "ealth check digest for Active customer agreements: CUST-0001 (Emily ",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_004]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 4,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 4,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "CUST-0001",
+      "[CUSTOMER_NUMBER_002]": "CUST-0011",
+      "[CUSTOMER_NUMBER_003]": "CUST-0023",
+      "[CUSTOMER_NUMBER_004]": "customer"
+    }
+  },
+  {
+    "original_prompt": "List Terminated Letters of Credit to archive and reconcile: CUST-0002 (Michael Clark — €499,667.34) and CUST-0007 (Chris Garcia — €126,113.91).",
+    "processed_prompt": "List Terminated Letters of Credit to archive and reconcile: CUST-0002 (Michael Clark — €499,667.34) and CUST-0007 (Chris Garcia — €126,113.91).",
+    "redacted_prompt": "List Terminated Letters of Credit to archive and reconcile: [CUSTOMER_NUMBER_001] (Michael Clark — €499,667.34) and [CUSTOMER_NUMBER_002] (Chris Garcia — €126,113.91).",
+    "entities": [
+      {
+        "entity": "CUST-0002",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          60,
+          69
+        ],
+        "context": "dit to archive and reconcile: CUST-0002 (Michael Clark — €499,667.34)",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "CUST-0007",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          104,
+          113
+        ],
+        "context": "hael Clark — €499,667.34) and CUST-0007 (Chris Garcia — €126,113.91).",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 2,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "CUST-0002",
+      "[CUSTOMER_NUMBER_002]": "CUST-0007"
+    }
+  },
+  {
+    "original_prompt": "Flag Pending customer agreements for action: CUST-0004 (Insurance Distribution — €95,984.87), CUST-0044 (Letter of Credit — €310,738.37), CUST-0045 (Bank Guarantee — €212,569.00), CUST-0046 (Personal Loan — €451,133.43), CUST-0055 (Credit Card — €279,479.12), CUST-0056 (Overdraft — €492,879.62).",
+    "processed_prompt": "Flag Pending customer agreements for action: CUST-0004 (Insurance Distribution — €95,984.87), CUST-0044 (Letter of Credit — €310,738.37), CUST-0045 (Bank Guarantee — €212,569.00), CUST-0046 (Personal Loan — €451,133.43), CUST-0055 (Credit Card — €279,479.12), CUST-0056 (Overdraft — €492,879.62).",
+    "redacted_prompt": "Flag Pending [CUSTOMER_NUMBER_007] agreements for action: [CUSTOMER_NUMBER_001] (Insurance Distribution — €95,984.87), [CUSTOMER_NUMBER_002] (Letter of Credit — €310,738.37), [CUSTOMER_NUMBER_003] (Bank Guarantee — €212,569.00), [CUSTOMER_NUMBER_004] (Personal Loan — €451,133.43), [CUSTOMER_NUMBER_005] (Credit Card — €279,479.12), [CUSTOMER_NUMBER_006] (Overdraft — €492,879.62).",
+    "entities": [
+      {
+        "entity": "CUST-0004",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          45,
+          54
+        ],
+        "context": "stomer agreements for action: CUST-0004 (Insurance Distribution — €95",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "CUST-0044",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          94,
+          103
+        ],
+        "context": "e Distribution — €95,984.87), CUST-0044 (Letter of Credit — €310,738.",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "CUST-0045",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          138,
+          147
+        ],
+        "context": "ter of Credit — €310,738.37), CUST-0045 (Bank Guarantee — €212,569.00",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_003]"
+      },
+      {
+        "entity": "CUST-0046",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          180,
+          189
+        ],
+        "context": "ank Guarantee — €212,569.00), CUST-0046 (Personal Loan — €451,133.43)",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_004]"
+      },
+      {
+        "entity": "CUST-0055",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          221,
+          230
+        ],
+        "context": "Personal Loan — €451,133.43), CUST-0055 (Credit Card — €279,479.12), ",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_005]"
+      },
+      {
+        "entity": "CUST-0056",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          260,
+          269
+        ],
+        "context": " (Credit Card — €279,479.12), CUST-0056 (Overdraft — €492,879.62).",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_006]"
+      },
+      {
+        "entity": "customer",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          13,
+          21
+        ],
+        "context": "Flag Pending customer agreements for action: CUST-0",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_007]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 7,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 7,
+      "regex_detected": 7,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "CUST-0004",
+      "[CUSTOMER_NUMBER_002]": "CUST-0044",
+      "[CUSTOMER_NUMBER_003]": "CUST-0045",
+      "[CUSTOMER_NUMBER_004]": "CUST-0046",
+      "[CUSTOMER_NUMBER_005]": "CUST-0055",
+      "[CUSTOMER_NUMBER_006]": "CUST-0056",
+      "[CUSTOMER_NUMBER_007]": "customer"
+    }
+  },
+  {
+    "original_prompt": "Summarize Expired/Terminated overdrafts and deposit agreements for housekeeping: CUST-0008 (Overdraft — Expired — €121,557.18), CUST-0012 (Overdraft — Expired — €295,420.43), CUST-0026 (Deposit — Terminated — €97,198.94), CUST-0014 (Overdraft — Terminated — €277,191.04).",
+    "processed_prompt": "Summarize Expired/Terminated overdrafts and deposit agreements for housekeeping: CUST-0008 (Overdraft — Expired — €121,557.18), CUST-0012 (Overdraft — Expired — €295,420.43), CUST-0026 (Deposit — Terminated — €97,198.94), CUST-0014 (Overdraft — Terminated — €277,191.04).",
+    "redacted_prompt": "Summarize Expired/Terminated overdrafts and deposit agreements for housekeeping: [CUSTOMER_NUMBER_001] (Overdraft — Expired — €121,557.18), [CUSTOMER_NUMBER_002] (Overdraft — Expired — €295,420.43), [CUSTOMER_NUMBER_003] (Deposit — Terminated — €97,198.94), [CUSTOMER_NUMBER_004] (Overdraft — Terminated — €277,191.04).",
+    "entities": [
+      {
+        "entity": "CUST-0008",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          81,
+          90
+        ],
+        "context": " agreements for housekeeping: CUST-0008 (Overdraft — Expired — €121,5",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "CUST-0012",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          128,
+          137
+        ],
+        "context": "aft — Expired — €121,557.18), CUST-0012 (Overdraft — Expired — €295,4",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "CUST-0026",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          175,
+          184
+        ],
+        "context": "aft — Expired — €295,420.43), CUST-0026 (Deposit — Terminated — €97,1",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_003]"
+      },
+      {
+        "entity": "CUST-0014",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          222,
+          231
+        ],
+        "context": "t — Terminated — €97,198.94), CUST-0014 (Overdraft — Terminated — €27",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_004]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 4,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 4,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "CUST-0008",
+      "[CUSTOMER_NUMBER_002]": "CUST-0012",
+      "[CUSTOMER_NUMBER_003]": "CUST-0026",
+      "[CUSTOMER_NUMBER_004]": "CUST-0014"
+    }
+  },
+  {
+    "original_prompt": "Prepare customer notification emails (draft) for status changes: CUST-0033 (Chris Miller — Line of Credit — Terminated), CUST-0035 (John Johnson — Security Agreement — Expired), CUST-0044 (Jane Lewis — Letter of Credit — Pending).",
+    "processed_prompt": "Prepare customer notification emails (draft) for status changes: CUST-0033 (Chris Miller — Line of Credit — Terminated), CUST-0035 (John Johnson — Security Agreement — Expired), CUST-0044 (Jane Lewis — Letter of Credit — Pending).",
+    "redacted_prompt": "Prepare [CUSTOMER_NUMBER_004] notification emails (draft) for status changes: [CUSTOMER_NUMBER_001] (Chris Miller — Line of Credit — Terminated), [CUSTOMER_NUMBER_002] (John Johnson — Security Agreement — Expired), [CUSTOMER_NUMBER_003] (Jane Lewis — Letter of Credit — Pending).",
+    "entities": [
+      {
+        "entity": "CUST-0033",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          65,
+          74
+        ],
+        "context": "s (draft) for status changes: CUST-0033 (Chris Miller — Line of Credi",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "CUST-0035",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          121,
+          130
+        ],
+        "context": "Line of Credit — Terminated), CUST-0035 (John Johnson — Security Agre",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_002]"
+      },
+      {
+        "entity": "CUST-0044",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          178,
+          187
+        ],
+        "context": "ecurity Agreement — Expired), CUST-0044 (Jane Lewis — Letter of Credi",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_003]"
+      },
+      {
+        "entity": "customer",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          8,
+          16
+        ],
+        "context": "Prepare customer notification emails (draft) f",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_004]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 4,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 4,
+      "regex_detected": 4,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "CUST-0033",
+      "[CUSTOMER_NUMBER_002]": "CUST-0035",
+      "[CUSTOMER_NUMBER_003]": "CUST-0044",
+      "[CUSTOMER_NUMBER_004]": "customer"
+    }
+  },
+  {
+    "original_prompt": "List Active supplier agreements for quarterly review: SUP-0012 (Outsourcing — Supplier 702 — €64,145.18), SUP-0036 (Outsourcing — Supplier 630 — €396,361.85), SUP-0039 (Outsourcing — Supplier 401 — €61,399.13), SUP-0034 (Services Supply — Supplier 986 — €237,777.45), SUP-0035 (Goods Supply — Supplier 395 — €265,967.84).",
+    "processed_prompt": "List Active supplier agreements for quarterly review: SUP-0012 (Outsourcing — Supplier 702 — €64,145.18), SUP-0036 (Outsourcing — Supplier 630 — €396,361.85), SUP-0039 (Outsourcing — Supplier 401 — €61,399.13), SUP-0034 (Services Supply — Supplier 986 — €237,777.45), SUP-0035 (Goods Supply — Supplier 395 — €265,967.84).",
+    "redacted_prompt": "List Active supplier agreements for quarterly review: SUP-0012 (Outsourcing — Supplier 702 — €64,145.18), SUP-0036 (Outsourcing — Supplier 630 — €396,361.85), SUP-0039 (Outsourcing — Supplier 401 — €61,399.13), SUP-0034 (Services Supply — Supplier 986 — €237,777.45), SUP-0035 (Goods Supply — Supplier 395 — €265,967.84).",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Flag Pending supplier agreements requiring approvals: SUP-0015 (Maintenance — Supplier 823 — €376,434.55), SUP-0006 (Goods Supply — Supplier 986 — €335,706.97), SUP-0021 (One-off — Supplier 186 — €253,416.37), SUP-0028 (One-off — Supplier 559 — €113,213.53), SUP-0030 (Support — Supplier 763 — €405,599.67).",
+    "processed_prompt": "Flag Pending supplier agreements requiring approvals: SUP-0015 (Maintenance — Supplier 823 — €376,434.55), SUP-0006 (Goods Supply — Supplier 986 — €335,706.97), SUP-0021 (One-off — Supplier 186 — €253,416.37), SUP-0028 (One-off — Supplier 559 — €113,213.53), SUP-0030 (Support — Supplier 763 — €405,599.67).",
+    "redacted_prompt": "Flag Pending supplier agreements requiring approvals: SUP-0015 (Maintenance — Supplier 823 — €376,434.55), SUP-0006 (Goods Supply — Supplier 986 — €335,706.97), SUP-0021 (One-off — Supplier 186 — €253,416.37), SUP-0028 (One-off — Supplier 559 — €113,213.53), SUP-0030 (Support — Supplier 763 — €405,599.67).",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Draft an ops email confirming payment order PO-0038 (Wire Transfer) completed for USD 19,335.18 from Linda Lewis (linda.lewis@hotmail.com) to Supplier 207 at IBAN BE01390286750206 (Ref: Invoice 23294).",
+    "processed_prompt": "Draft an ops email confirming payment order PO-0038 (Wire Transfer) completed for USD 19,335.18 from Linda Lewis (linda.lewis@hotmail.com) to Supplier 207 at IBAN BE01390286750206 (Ref: Invoice 23294).",
+    "redacted_prompt": "Draft an ops email confirming payment order PO-0038 (Wire Transfer) completed for USD 19,335.18 from Linda Lewis ([EMAIL_001]) to Supplier 207 at IBAN [IBAN_001] ([TRANSACTION_001] 23294).",
+    "entities": [
+      {
+        "entity": "linda.lewis@hotmail.com",
+        "type": "email",
+        "sensitivity": "C3",
+        "span": [
+          114,
+          137
+        ],
+        "context": "D 19,335.18 from Linda Lewis (linda.lewis@hotmail.com) to Supplier 207 at IBAN BE01",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: EMAIL.",
+        "redacted_value": "[EMAIL_001]"
+      },
+      {
+        "entity": "BE01390286750206",
+        "type": "iban",
+        "sensitivity": "C4",
+        "span": [
+          163,
+          179
+        ],
+        "context": ".com) to Supplier 207 at IBAN BE01390286750206 (Ref: Invoice 23294).",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: IBAN.",
+        "redacted_value": "[IBAN_001]"
+      },
+      {
+        "entity": "Ref: Invoice",
+        "type": "transaction",
+        "sensitivity": "C4",
+        "span": [
+          181,
+          193
+        ],
+        "context": "207 at IBAN BE01390286750206 (Ref: Invoice 23294).",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: TRANSACTION.",
+        "redacted_value": "[TRANSACTION_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 2,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 3,
+      "regex_detected": 3,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[EMAIL_001]": "linda.lewis@hotmail.com",
+      "[IBAN_001]": "BE01390286750206",
+      "[TRANSACTION_001]": "Ref: Invoice"
+    }
+  },
+  {
+    "original_prompt": "Draft an analysis of Direct Debit failures: PO-0047 (GBP 1,531.94 to Supplier 186, IBAN BE35825771477528) and PO-0049 (GBP 18,071.87 to Supplier 207, IBAN BE59083717722036).",
+    "processed_prompt": "Draft an analysis of Direct Debit failures: PO-0047 (GBP 1,531.94 to Supplier 186, IBAN BE35825771477528) and PO-0049 (GBP 18,071.87 to Supplier 207, IBAN BE59083717722036).",
+    "redacted_prompt": "Draft an analysis of Direct Debit failures: PO-0047 (GBP 1,531.94 to Supplier 186, IBAN [IBAN_001]) and PO-0049 (GBP 18,071.87 to Supplier 207, IBAN [IBAN_002]).",
+    "entities": [
+      {
+        "entity": "BE35825771477528",
+        "type": "iban",
+        "sensitivity": "C4",
+        "span": [
+          88,
+          104
+        ],
+        "context": ",531.94 to Supplier 186, IBAN BE35825771477528) and PO-0049 (GBP 18,071.87 t",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: IBAN.",
+        "redacted_value": "[IBAN_001]"
+      },
+      {
+        "entity": "BE59083717722036",
+        "type": "iban",
+        "sensitivity": "C4",
+        "span": [
+          155,
+          171
+        ],
+        "context": ",071.87 to Supplier 207, IBAN BE59083717722036).",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: IBAN.",
+        "redacted_value": "[IBAN_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 2,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 2,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[IBAN_001]": "BE35825771477528",
+      "[IBAN_002]": "BE59083717722036"
+    }
+  },
+  {
+    "original_prompt": "Prepare a Pending Standing Order digest: PO-0044 EUR 6,242.15 (Linda Smith), PO-0029 USD 19,031.16 (Tom Jones), PO-0041 EUR 14,825.92 (Linda Jones).",
+    "processed_prompt": "Prepare a Pending Standing Order digest: PO-0044 EUR 6,242.15 (Linda Smith), PO-0029 USD 19,031.16 (Tom Jones), PO-0041 EUR 14,825.92 (Linda Jones).",
+    "redacted_prompt": "Prepare a Pending Standing Order digest: PO-0044 EUR 6,242.15 (Linda Smith), PO-0029 USD 19,031.16 (Tom Jones), PO-0041 EUR 14,825.92 (Linda Jones).",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Create a Cheque completion digest: PO-0013 GBP 13,990.49; PO-0014 USD 1,632.00; PO-0015 USD 12,595.45; PO-0034 EUR 5,835.07; PO-0054 USD 2,792.05.",
+    "processed_prompt": "Create a Cheque completion digest: PO-0013 GBP 13,990.49; PO-0014 USD 1,632.00; PO-0015 USD 12,595.45; PO-0034 EUR 5,835.07; PO-0054 USD 2,792.05.",
+    "redacted_prompt": "Create a Cheque completion digest: PO-0013 GBP 13,990.49; PO-0014 USD 1,632.00; PO-0015 USD 12,595.45; PO-0034 EUR 5,835.07; PO-0054 USD 2,792.05.",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Draft a payer notification for PO-0040 (Direct Debit Completed, USD 2,090.09) initiated by Tom Clark to Supplier 776 (IBAN BE96081490396036).",
+    "processed_prompt": "Draft a payer notification for PO-0040 (Direct Debit Completed, USD 2,090.09) initiated by Tom Clark to Supplier 776 (IBAN BE96081490396036).",
+    "redacted_prompt": "Draft a payer notification for PO-0040 (Direct Debit Completed, USD 2,090.09) initiated by Tom Clark to Supplier 776 (IBAN [IBAN_001]).",
+    "entities": [
+      {
+        "entity": "BE96081490396036",
+        "type": "iban",
+        "sensitivity": "C4",
+        "span": [
+          123,
+          139
+        ],
+        "context": "m Clark to Supplier 776 (IBAN BE96081490396036).",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: IBAN.",
+        "redacted_value": "[IBAN_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[IBAN_001]": "BE96081490396036"
+    }
+  },
+  {
+    "original_prompt": "Create a data-minimization note: IBANs in payment orders (e.g., BE01390286750206; BE35825771477528; BE59083717722036) must be masked (show last 4) in analytics exports and restricted to least-privilege roles.",
+    "processed_prompt": "Create a data-minimization note: IBANs in payment orders (e.g., BE01390286750206; BE35825771477528; BE59083717722036) must be masked (show last 4) in analytics exports and restricted to least-privilege roles.",
+    "redacted_prompt": "Create a data-minimization note: IBANs in payment orders (e.g., [IBAN_001]; [IBAN_002]; [IBAN_003]) must be masked (show last 4) in analytics exports and restricted to least-privilege roles.",
+    "entities": [
+      {
+        "entity": "BE01390286750206",
+        "type": "iban",
+        "sensitivity": "C4",
+        "span": [
+          64,
+          80
+        ],
+        "context": "BANs in payment orders (e.g., BE01390286750206; BE35825771477528; BE59083717",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: IBAN.",
+        "redacted_value": "[IBAN_001]"
+      },
+      {
+        "entity": "BE35825771477528",
+        "type": "iban",
+        "sensitivity": "C4",
+        "span": [
+          82,
+          98
+        ],
+        "context": "ders (e.g., BE01390286750206; BE35825771477528; BE59083717722036) must be ma",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: IBAN.",
+        "redacted_value": "[IBAN_002]"
+      },
+      {
+        "entity": "BE59083717722036",
+        "type": "iban",
+        "sensitivity": "C4",
+        "span": [
+          100,
+          116
+        ],
+        "context": "0286750206; BE35825771477528; BE59083717722036) must be masked (show last 4)",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: IBAN.",
+        "redacted_value": "[IBAN_003]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 3,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 3,
+      "regex_detected": 3,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[IBAN_001]": "BE01390286750206",
+      "[IBAN_002]": "BE35825771477528",
+      "[IBAN_003]": "BE59083717722036"
+    }
+  },
+  {
+    "original_prompt": "Create a data-minimization note: customer agreement data (names, emails, types, amounts) is C3 PII/business-sensitive — use pseudonymous IDs in analytics and restrict raw exports to authorized teams.",
+    "processed_prompt": "Create a data-minimization note: customer agreement data (names, emails, types, amounts) is C3 PII/business-sensitive — use pseudonymous IDs in analytics and restrict raw exports to authorized teams.",
+    "redacted_prompt": "Create a data-minimization note: [CUSTOMER_NUMBER_001] [CONTRACT_NUMBER_001] (names, emails, types, amounts) is C3 PII/business-sensitive — use pseudonymous IDs in analytics and restrict raw exports to authorized teams.",
+    "entities": [
+      {
+        "entity": "agreement data",
+        "type": "contract_number",
+        "sensitivity": "C3",
+        "span": [
+          42,
+          56
+        ],
+        "context": "a-minimization note: customer agreement data (names, emails, types, amount",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CONTRACT_NUMBER.",
+        "redacted_value": "[CONTRACT_NUMBER_001]"
+      },
+      {
+        "entity": "customer",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          33,
+          41
+        ],
+        "context": "ate a data-minimization note: customer agreement data (names, emails",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 2,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 2,
+      "regex_detected": 2,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[CONTRACT_NUMBER_001]": "agreement data",
+      "[CUSTOMER_NUMBER_001]": "customer"
+    }
+  },
+  {
+    "original_prompt": "Create a sharing note: public disclosures (Annual Reports, Pillar 3, press releases) are C1 and can be shared externally; do not merge with C3/C4 datasets in uncontrolled channels.",
+    "processed_prompt": "Create a sharing note: public disclosures (Annual Reports, Pillar 3, press releases) are C1 and can be shared externally; do not merge with C3/C4 datasets in uncontrolled channels.",
+    "redacted_prompt": "Create a sharing note: public disclosures (Annual Reports, Pillar 3, press releases) are C1 and can be shared externally; do not merge with C3/C4 datasets in uncontrolled channels.",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Prompt",
+    "processed_prompt": "Prompt",
+    "redacted_prompt": "Prompt",
+    "entities": [],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 0,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {}
+  },
+  {
+    "original_prompt": "Create a glossary card for 'Accrued Interest' (Category: Financial; Source: Internal Policy; Last Reviewed 2024-12-12). Include a one-line definition and an example sentence.",
+    "processed_prompt": "Create a glossary card for 'Accrued Interest' (Category: Financial; Source: Internal Policy; Last Reviewed 2024-12-12). Include a one-line definition and an example sentence.",
+    "redacted_prompt": "Create a glossary card for 'Accrued Interest' (Category: Financial; Source: Internal Policy; Last Reviewed [YEAR_001]-12-12). Include a one-line definition and an example sentence.",
+    "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          107,
+          111
+        ],
+        "context": "nternal Policy; Last Reviewed 2024-12-12). Include a one-line de",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Log a change note for 'Amortization' (Category: Financial; Source: Regulatory Body; Last Reviewed 2025-04-07) clarifying schedule and accounting treatment.",
+    "processed_prompt": "Log a change note for 'Amortization' (Category: Financial; Source: Regulatory Body; Last Reviewed 2025-04-07) clarifying schedule and accounting treatment.",
+    "redacted_prompt": "Log a change note for 'Amortization' (Category: Financial; Source: Regulatory Body; Last Reviewed [YEAR_001]-04-07) [CUSTOMER_NUMBER_001] schedule and accounting treatment.",
+    "entities": [
+      {
+        "entity": "clarifying",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          110,
+          120
+        ],
+        "context": "dy; Last Reviewed 2025-04-07) clarifying schedule and accounting treat",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          98,
+          102
+        ],
+        "context": "egulatory Body; Last Reviewed 2025-04-07) clarifying schedule an",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 2,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "clarifying",
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Draft a micro-glossary comparing 'KYC' (Regulatory; last 2024-09-29) and 'AML' (Regulatory; last 2025-03-31): include purpose, typical controls, and review cadence.",
+    "processed_prompt": "Draft a micro-glossary comparing 'KYC' (Regulatory; last 2024-09-29) and 'AML' (Regulatory; last 2025-03-31): include purpose, typical controls, and review cadence.",
+    "redacted_prompt": "Draft a micro-glossary comparing 'KYC' (Regulatory; last [YEAR_001]-09-29) and 'AML' (Regulatory; last [YEAR_002]-03-31): include purpose, typical controls, and review cadence.",
+    "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          57,
+          61
+        ],
+        "context": "aring 'KYC' (Regulatory; last 2024-09-29) and 'AML' (Regulatory;",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          97,
+          101
+        ],
+        "context": ") and 'AML' (Regulatory; last 2025-03-31): include purpose, typi",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2024",
+      "[YEAR_002]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Write a quick reference comparing 'CapEx' (Financial; last 2025-04-25) and 'OpEx' (Financial; last 2025-01-10) with 2 examples each.",
+    "processed_prompt": "Write a quick reference comparing 'CapEx' (Financial; last 2025-04-25) and 'OpEx' (Financial; last 2025-01-10) with 2 examples each.",
+    "redacted_prompt": "Write a quick [TRANSACTION_001] comparing 'CapEx' (Financial; last [YEAR_001]-04-25) and 'OpEx' (Financial; last 2025-01-10) with 2 examples each.",
+    "entities": [
+      {
+        "entity": "reference",
+        "type": "transaction",
+        "sensitivity": "C4",
+        "span": [
+          14,
+          23
+        ],
+        "context": "Write a quick reference comparing 'CapEx' (Financial;",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: TRANSACTION.",
+        "redacted_value": "[TRANSACTION_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          59,
+          63
+        ],
+        "context": "ring 'CapEx' (Financial; last 2025-04-25) and 'OpEx' (Financial;",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 2,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[TRANSACTION_001]": "reference",
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.",
+    "processed_prompt": "Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.",
+    "redacted_prompt": "Bundle technical definitions for 'Virtual Machine' (last [YEAR_001]-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          57,
+          61
+        ],
+        "context": "s for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Draft short entries for 'Product Specification' (Product; last 2025-02-20) and 'Operational Status' (Operational; last 2025-04-08) used in CMDB templates.",
+    "processed_prompt": "Draft short entries for 'Product Specification' (Product; last 2025-02-20) and 'Operational Status' (Operational; last 2025-04-08) used in CMDB templates.",
+    "redacted_prompt": "Draft short entries for 'Product Specification' (Product; last [YEAR_001]-02-20) and 'Operational Status' (Operational; last 2025-04-08) used in CMDB templates.",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          63,
+          67
+        ],
+        "context": "Specification' (Product; last 2025-02-20) and 'Operational Statu",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Create governance stubs for 'Risk Assessment' (Operational; last 2024-12-27) and 'Compliance Check' (Regulatory; last 2025-04-04) with who/when/outputs.",
+    "processed_prompt": "Create governance stubs for 'Risk Assessment' (Operational; last 2024-12-27) and 'Compliance Check' (Regulatory; last 2025-04-04) with who/when/outputs.",
+    "redacted_prompt": "Create governance stubs for 'Risk Assessment' (Operational; last [YEAR_001]-12-27) and 'Compliance Check' (Regulatory; last [YEAR_002]-04-04) with who/when/outputs.",
+    "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          65,
+          69
+        ],
+        "context": "ssessment' (Operational; last 2024-12-27) and 'Compliance Check'",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          118,
+          122
+        ],
+        "context": "ance Check' (Regulatory; last 2025-04-04) with who/when/outputs.",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2024",
+      "[YEAR_002]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Draft a retirement plan for 'Third-Party Risk Management' guideline (Governance; Basel Committee; Bi-Annual; last 2025-04-09; Status: Deprecated).",
+    "processed_prompt": "Draft a retirement plan for 'Third-Party Risk Management' guideline (Governance; Basel Committee; Bi-Annual; last 2025-04-09; Status: Deprecated).",
+    "redacted_prompt": "Draft a retirement plan for 'Third-Party Risk Management' guideline (Governance; Basel Committee; Bi-Annual; last [YEAR_001]-04-09; Status: Deprecated).",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          114,
+          118
+        ],
+        "context": "el Committee; Bi-Annual; last 2025-04-09; Status: Deprecated).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Send a review reminder for 'Data Privacy Guidelines' (Compliance; Internal Governance; Bi-Annual; last 2024-10-16; Status: Advisory).",
+    "processed_prompt": "Send a review reminder for 'Data Privacy Guidelines' (Compliance; Internal Governance; Bi-Annual; last 2024-10-16; Status: Advisory).",
+    "redacted_prompt": "Send a review reminder for 'Data Privacy Guidelines' (Compliance; Internal Governance; Bi-Annual; last [YEAR_001]-10-16; Status: Advisory).",
+    "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          103,
+          107
+        ],
+        "context": "l Governance; Bi-Annual; last 2024-10-16; Status: Advisory).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Propose transition from 'Mobile Banking Security' (Deprecated; National Regulator; last 2024-11-22) to 'Cybersecurity Controls' (Advisory; Basel Committee; last 2025-04-03).",
+    "processed_prompt": "Propose transition from 'Mobile Banking Security' (Deprecated; National Regulator; last 2024-11-22) to 'Cybersecurity Controls' (Advisory; Basel Committee; last 2025-04-03).",
+    "redacted_prompt": "Propose transition from 'Mobile Banking Security' (Deprecated; National Regulator; last [YEAR_001]-11-22) to 'Cybersecurity Controls' (Advisory; Basel Committee; last [YEAR_002]-04-03).",
+    "entities": [
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          88,
+          92
+        ],
+        "context": "ted; National Regulator; last 2024-11-22) to 'Cybersecurity Cont",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          161,
+          165
+        ],
+        "context": "visory; Basel Committee; last 2025-04-03).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2024",
+      "[YEAR_002]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Draft a note that 'Sustainability Reporting Protocol' (Risk Management; Industry Consortium; Annual; last 2025-06-17; Advisory) requires ESG dashboard lineage checks before refresh.",
+    "processed_prompt": "Draft a note that 'Sustainability Reporting Protocol' (Risk Management; Industry Consortium; Annual; last 2025-06-17; Advisory) requires ESG dashboard lineage checks before refresh.",
+    "redacted_prompt": "Draft a note that 'Sustainability Reporting Protocol' (Risk Management; Industry Consortium; Annual; last [YEAR_001]-06-17; Advisory) requires ESG dashboard lineage checks before refresh.",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          106,
+          110
+        ],
+        "context": "stry Consortium; Annual; last 2025-06-17; Advisory) requires ESG",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Write an SOP update for 'Customer Complaint Handling' (Governance; Basel Committee; Bi-Annual; last 2025-01-02; Advisory).",
+    "processed_prompt": "Write an SOP update for 'Customer Complaint Handling' (Governance; Basel Committee; Bi-Annual; last 2025-01-02; Advisory).",
+    "redacted_prompt": "Write an SOP update for '[CUSTOMER_NUMBER_001] Complaint Handling' (Governance; Basel Committee; Bi-Annual; last [YEAR_001]-01-02; Advisory).",
+    "entities": [
+      {
+        "entity": "Customer",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          25,
+          33
+        ],
+        "context": "Write an SOP update for 'Customer Complaint Handling' (Governan",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          100,
+          104
+        ],
+        "context": "el Committee; Bi-Annual; last 2025-01-02; Advisory).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 2,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "Customer",
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Prepare a product onboarding brief for 'Digital Onboarding Standards' (Sustainability; Internal Governance; Annual; last 2025-02-09; Advisory).",
+    "processed_prompt": "Prepare a product onboarding brief for 'Digital Onboarding Standards' (Sustainability; Internal Governance; Annual; last 2025-02-09; Advisory).",
+    "redacted_prompt": "Prepare a product onboarding brief for 'Digital Onboarding Standards' (Sustainability; Internal Governance; Annual; last [YEAR_001]-02-09; Advisory).",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          121,
+          125
+        ],
+        "context": "rnal Governance; Annual; last 2025-02-09; Advisory).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Issue a change note: 'Board Oversight Principles' (Sustainability; Industry Consortium; Bi-Annual; last 2025-03-02) is Deprecated; archive references and update board briefing packs.",
+    "processed_prompt": "Issue a change note: 'Board Oversight Principles' (Sustainability; Industry Consortium; Bi-Annual; last 2025-03-02) is Deprecated; archive references and update board briefing packs.",
+    "redacted_prompt": "Issue a change note: 'Board Oversight Principles' (Sustainability; Industry Consortium; Bi-Annual; last [YEAR_001]-03-02) is Deprecated; archive [TRANSACTION_001] and update board briefing packs.",
+    "entities": [
+      {
+        "entity": "references",
+        "type": "transaction",
+        "sensitivity": "C4",
+        "span": [
+          139,
+          149
+        ],
+        "context": "03-02) is Deprecated; archive references and update board briefing pac",
+        "detection_method": "regex",
+        "explanation": "Detected as a C4 (Critical/High Risk) entity by a pattern match for: TRANSACTION.",
+        "redacted_value": "[TRANSACTION_001]"
+      },
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          104,
+          108
+        ],
+        "context": "y Consortium; Bi-Annual; last 2025-03-02) is Deprecated; archive",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 1,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 2,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[TRANSACTION_001]": "references",
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Write an engagement snapshot for Emily Smith: Online Banking (User, Active; last 2025-08-07), Investment Portfolio (Investor, Active; last 2025-07-09), Personal Loan (Borrower, Active; last 2024-10-19).",
+    "processed_prompt": "Write an engagement snapshot for Emily Smith: Online Banking (User, Active; last 2025-08-07), Investment Portfolio (Investor, Active; last 2025-07-09), Personal Loan (Borrower, Active; last 2024-10-19).",
+    "redacted_prompt": "Write an engagement snapshot for Emily Smith: Online Banking (User, Active; last [YEAR_001]-08-07), Investment Portfolio (Investor, Active; last 2025-07-09), Personal Loan (Borrower, Active; last [YEAR_002]-10-19).",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          81,
+          85
+        ],
+        "context": "e Banking (User, Active; last 2025-08-07), Investment Portfolio ",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          190,
+          194
+        ],
+        "context": " Loan (Borrower, Active; last 2024-10-19).",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_3>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025",
+      "[YEAR_002]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Produce a Mortgage (Active) microsegment with last interaction dates: John Lewis (2025-09-09), Alex Taylor (2025-02-03), Jane Smith (2025-06-08). Suggest a rate-alert campaign.",
+    "processed_prompt": "Produce a Mortgage (Active) microsegment with last interaction dates: John Lewis (2025-09-09), Alex Taylor (2025-02-03), Jane Smith (2025-06-08). Suggest a rate-alert campaign.",
+    "redacted_prompt": "Produce a Mortgage (Active) microsegment with last interaction dates: John Lewis ([YEAR_001]-09-09), Alex Taylor (2025-02-03), Jane Smith (2025-06-08). Suggest a rate-alert campaign.",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          82,
+          86
+        ],
+        "context": "nteraction dates: John Lewis (2025-09-09), Alex Taylor (2025-02-",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Draft re‑engagement nudges for Online Banking users now Inactive: John Taylor (last 2025-03-19), Katie Taylor (last 2025-05-04), Robert Johnson (last 2025-08-27).",
+    "processed_prompt": "Draft re‑engagement nudges for Online Banking users now Inactive: John Taylor (last 2025-03-19), Katie Taylor (last 2025-05-04), Robert Johnson (last 2025-08-27).",
+    "redacted_prompt": "Draft re‑engagement nudges for Online Banking users now Inactive: John Taylor (last [YEAR_001]-03-19), Katie Taylor (last 2025-05-04), Robert Johnson (last 2025-08-27).",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          84,
+          88
+        ],
+        "context": "w Inactive: John Taylor (last 2025-03-19), Katie Taylor (last 20",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Write a cross‑sell note for Jane Miller: Active — Life Insurance (Subscriber; 2025-01-15) and Savings Account (Holder; 2025-05-04). Inactive — Mortgage (last 2025-06-28). Offer a mortgage health check.",
+    "processed_prompt": "Write a cross‑sell note for Jane Miller: Active — Life Insurance (Subscriber; 2025-01-15) and Savings Account (Holder; 2025-05-04). Inactive — Mortgage (last 2025-06-28). Offer a mortgage health check.",
+    "redacted_prompt": "Write a cross‑sell note for Jane Miller: Active — Life Insurance (Subscriber; [YEAR_001]-01-15) and Savings Account (Holder; 2025-05-04). Inactive — Mortgage (last 2025-06-28). Offer a mortgage health check.",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          78,
+          82
+        ],
+        "context": "— Life Insurance (Subscriber; 2025-01-15) and Savings Account (H",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 1,
+      "total_entities": 1,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 1
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025"
+    }
+  },
+  {
+    "original_prompt": "Prepare a list of Active Credit Card holders to invite to cashback pilot: Alex Jones (2025-03-21), Jane Jones (2024-12-24), Laura Smith (2025-04-14).",
+    "processed_prompt": "Prepare a list of Active Credit Card holders to invite to cashback pilot: Alex Jones (2025-03-21), Jane Jones (2024-12-24), Laura Smith (2025-04-14).",
+    "redacted_prompt": "Prepare a list of Active Credit Card holders to invite to cashback pilot: Alex Jones ([YEAR_001]-03-21), Jane Jones ([YEAR_002]-12-24), Laura Smith (2025-04-14).",
+    "entities": [
+      {
+        "entity": "2025",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          86,
+          90
+        ],
+        "context": "o cashback pilot: Alex Jones (2025-03-21), Jane Jones (2024-12-2",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_1>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_001]"
+      },
+      {
+        "entity": "2024",
+        "type": "year",
+        "sensitivity": "C1",
+        "span": [
+          111,
+          115
+        ],
+        "context": "nes (2025-03-21), Jane Jones (2024-12-24), Laura Smith (2025-04-",
+        "detection_method": "c1_regex",
+        "semantic_key": "<YEAR_2>",
+        "explanation": "Detected as a C1 (Low/Medium Risk) entity based on file-specific C1/C2 patterns for: YEAR.",
+        "redacted_value": "[YEAR_002]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 0,
+      "c2_count": 0,
+      "c1_count": 2,
+      "total_entities": 2,
+      "regex_detected": 0,
+      "spacy_detected": 0,
+      "c1_c2_detected": 2
+    },
+    "redaction_map": {
+      "[YEAR_001]": "2025",
+      "[YEAR_002]": "2024"
+    }
+  },
+  {
+    "original_prompt": "Create a data‑minimization note: product–customer link data contains C3 PII (names + product status). Use placeholders in training material and pseudonymous IDs in analytics exports.",
+    "processed_prompt": "Create a data‑minimization note: product–customer link data contains C3 PII (names + product status). Use placeholders in training material and pseudonymous IDs in analytics exports.",
+    "redacted_prompt": "Create a data‑minimization note: product–[CUSTOMER_NUMBER_001] link data contains C3 PII (names + product status). Use placeholders in training material and pseudonymous IDs in analytics exports.",
+    "entities": [
+      {
+        "entity": "customer",
+        "type": "customer_number",
+        "sensitivity": "C3",
+        "span": [
+          41,
+          49
+        ],
+        "context": "ta‑minimization note: product–customer link data contains C3 PII (na",
+        "detection_method": "regex",
+        "explanation": "Detected as a C3 (Critical/High Risk) entity by a pattern match for: CUSTOMER_NUMBER.",
+        "redacted_value": "[CUSTOMER_NUMBER_001]"
+      }
+    ],
+    "injected_entities": [],
+    "statistics": {
+      "c4_count": 0,
+      "c3_count": 1,
+      "c2_count": 0,
+      "c1_count": 0,
+      "total_entities": 1,
+      "regex_detected": 1,
+      "spacy_detected": 0,
+      "c1_c2_detected": 0
+    },
+    "redaction_map": {
+      "[CUSTOMER_NUMBER_001]": "customer"
+    }
   }
 ]
