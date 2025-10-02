@@ -129,3 +129,23 @@ python redact.py --in demo\_input.txt \\
     
 
 > If you use a path like ./outputs/demo\_output.txt, make sure the folder exists (or add a small \_ensure\_parent() in \_write\_outputs to auto-create dirs).
+
+You can use ML in the app like below:
+
+```bash
+try:
+    from transformers import AutoTokenizer, AutoModelForSequenceClassification, TextClassificationPipeline
+    HF_AVAILABLE = True
+except Exception:
+    HF_AVAILABLE = False
+
+try:
+    from redact import Redactor
+except Exception:
+    from src.redact import Redactor  # if you placed it under src/
+
+class MLClassifier:
+    def __init__(self, sk_model_path: Optional[str] = None, hf_model_dir: Optional[str] = None):
+        self.mode = None
+        self.labels: List[str] = ["C1","C2","C3","C4"]
+```
