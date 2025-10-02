@@ -1,79 +1,49 @@
 """
-Custom Anonymizer Script using Presidio + SpaCy
-------------------------------------------------
-This script combines:
-- Presidio for regex-based detection of sensitive entities (IBAN, credit card, etc.).
-- A custom semantic similarity recognizer using SpaCy to detect sensitive categories
-  such as religion, ethnicity, and sexual orientation.
-- Automatic integration of your regex dictionary (ALL_PATTERNS).
+Presidio Anonymization Pipeline
 
-Parameters you can tweak:
-- `ALL_PATTERNS`: dictionary of regex patterns you maintain.
-- `sensitive_categories`: semantic categories to detect with SpaCy.
-- `threshold` in SemanticSimilarityRecognizer: controls how strict the similarity detection is.
+- Uses Presidio Analyzer + Anonymizer with your custom regexes and semantic recognizer.
+- After anonymization, runs ML classifier (from sensitivity_classifier.joblib)
+  to assign a sensitivity class (C1–C4) to the whole document.
+
+How it fits:
+- ML (ml_setup.py) = sensitivity classifier (C1–C4).
+- Presidio (this file) = entity-level anonymization (PII, sensitive categories).
 """
 
 from presidio_analyzer import AnalyzerEngine, RecognizerRegistry, PatternRecognizer, RecognizerResult, EntityRecognizer
 from presidio_anonymizer import AnonymizerEngine
 import spacy
-import re
+import joblib
+from pathlib import Path
 
 # ----------------------
-# Load SpaCy model
+# Load SpaCy for embeddings
 # ----------------------
-# Use a medium or large model for better word vectors.
 nlp = spacy.load("en_core_web_md")
 
 # ----------------------
-# Your custom regex dictionary
+# Import regex patterns (already defined in regex_queries.py)
 # ----------------------
-# Example: add your predefined regex constants (IBAN_REGEX, etc.)
-ALL_PATTERNS = {
-    # C4 - Critical Risk
-    'iban': r'[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}',
-    'credit_card': r'\b(?:\d[ -]*?){13,16}\b',
-    'social_security': r'\b\d{3}-\d{2}-\d{4}\b',
-    'pin': r'\b\d{4}\b',
-    'cvv': r'\b\d{3,4}\b',
-    'transaction': r'TRX[0-9]{6,}',
-    'phone': r'\+?[0-9]{7,15}',
-
-    # C3 - High Risk
-    'email': r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+',
-    'customer_number': r'CUST[0-9]{6,}',
-    'date_of_birth': r'\b\d{2}/\d{2}/\d{4}\b',
-    'belgian_id': r'\b\d{11}\b',
-    'address': r'\d+\s+\w+\s+(Street|St|Ave|Road|Rd)\b',
-    'name': r'[A-Z][a-z]+\s[A-Z][a-z]+',
-    'postal_code': r'\b\d{4,5}\b',
-    'citizenship': r'Belgian|French|German|Dutch|Spanish|Italian',
-}
+from regex_queries import ALL_PATTERNS
 
 # ----------------------
-# Define sensitive categories for semantic similarity
+# Sensitive categories (semantic similarity)
 # ----------------------
-# Extend these with terms that should trigger anonymization even if not exact match.
 sensitive_categories = {
     "RELIGION": ["christian", "muslim", "jewish", "hindu", "buddhist", "atheist"],
     "ETHNICITY": ["asian", "african", "latino", "caucasian", "arab", "indigenous"],
     "SEXUAL_ORIENTATION": ["gay", "lesbian", "bisexual", "transgender", "queer", "lgbtq"],
 }
 
-# Precompute embeddings for sensitive terms
 category_embeddings = {
     category: [nlp(term)[0].vector for term in terms]
     for category, terms in sensitive_categories.items()
 }
 
 # ----------------------
-# Custom SpaCy-based semantic similarity recognizer
+# Custom semantic similarity recognizer
 # ----------------------
 class SemanticSimilarityRecognizer(EntityRecognizer):
-    """
-    A custom Presidio Recognizer that uses SpaCy embeddings to detect sensitive words
-    related to categories like religion, ethnicity, or sexual orientation.
-    """
-
     def __init__(self, supported_entities=None, threshold=0.7):
         super().__init__(supported_entities or list(sensitive_categories.keys()), "en")
         self.threshold = threshold
@@ -85,7 +55,6 @@ class SemanticSimilarityRecognizer(EntityRecognizer):
         for token in doc:
             if not token.is_alpha:
                 continue
-
             for category, vectors in category_embeddings.items():
                 for v in vectors:
                     similarity = token.vector.dot(v) / (
@@ -103,11 +72,11 @@ class SemanticSimilarityRecognizer(EntityRecognizer):
         return results
 
 # ----------------------
-# Setup Presidio Analyzer with regex + semantic recognizers
+# Setup Presidio Analyzer + Registry
 # ----------------------
 registry = RecognizerRegistry()
 
-# Add all regex patterns as recognizers automatically
+# Register regex recognizers
 for entity, pattern in ALL_PATTERNS.items():
     recognizer = PatternRecognizer(
         supported_entity=entity.upper(),
@@ -115,40 +84,53 @@ for entity, pattern in ALL_PATTERNS.items():
     )
     registry.add_recognizer(recognizer)
 
-# Add semantic similarity recognizer
-semantic_recognizer = SemanticSimilarityRecognizer()
-registry.add_recognizer(semantic_recognizer)
+# Register semantic recognizer
+registry.add_recognizer(SemanticSimilarityRecognizer())
 
-# Initialize Analyzer and Anonymizer
+# Initialize Presidio engines
 analyzer = AnalyzerEngine(registry=registry, supported_languages=["en"])
 anonymizer = AnonymizerEngine()
 
 # ----------------------
-# Combined analysis function
+# Load ML sensitivity classifier
 # ----------------------
-def analyze_and_anonymize(text):
+MODEL_PATH = Path(__file__).parent / "sensitivity_classifier.joblib"
+clf_bundle = joblib.load(MODEL_PATH)
+classifier = clf_bundle["pipeline"]
+labels = clf_bundle["labels"]
+
+# ----------------------
+# Combined pipeline
+# ----------------------
+def analyze_and_anonymize_with_classification(text: str):
     """
-    Run analysis and anonymization on input text.
-
-    Args:
-        text (str): Input text to analyze.
-
-    Returns:
-        str: Anonymized text.
+    1. Use Presidio to detect and anonymize entities.
+    2. Use ML classifier to assign sensitivity label (C1–C4).
     """
-
-    # Analyzer runs all registered recognizers (regex + semantic)
+    # Step 1: Presidio analysis
     results = analyzer.analyze(text=text, language="en")
-
-    # Anonymize all detected entities
     anonymized_text = anonymizer.anonymize(text=text, analyzer_results=results)
-    return anonymized_text
+
+    # Step 2: Sensitivity classification (on original or anonymized text)
+    # Choice: classify original text (more accurate)
+    sensitivity = classifier.predict([text])[0]
+
+    return {
+        "original": text,
+        "anonymized": anonymized_text.text,
+        "entities": [r.to_dict() for r in results],
+        "sensitivity": sensitivity,
+    }
 
 # ----------------------
 # Example usage
 # ----------------------
 if __name__ == "__main__":
-    sample_text = "John is a Christian engineer. Contact him at john.doe@email.com"
-    result = analyze_and_anonymize(sample_text)
-    print("Original:", sample_text)
-    print("Anonymized:", result.text)
+    sample = "John is a Christian engineer. Contact him at john.doe@email.com"
+    output = analyze_and_anonymize_with_classification(sample)
+
+    print("=== Presidio + ML Pipeline ===")
+    print("Original:   ", output["original"])
+    print("Anonymized: ", output["anonymized"])
+    print("Entities:   ", output["entities"])
+    print("Sensitivity:", output["sensitivity"])
