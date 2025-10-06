@@ -1,11 +1,85 @@
-version: "3.8"
-
 services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: ing-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: inguser
+      MONGO_INITDB_ROOT_PASSWORD: ingpassword
+      MONGO_INITDB_DATABASE: ing_prompt_scrubber
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    restart: unless-stopped
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Ollama AI Service
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ing-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    # If you have NVIDIA GPU support, uncomment the following:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+  # FastAPI Backend
+  fastapi-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ing-fastapi
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data:ro
+      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app
+      - MONGODB_URL=mongodb://inguser:ingpassword@mongodb:27017/ing_prompt_scrubber?authSource=admin
+      - OLLAMA_HOST=http://ollama:11434
+    command: uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      - mongodb
+      - ollama
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Streamlit Frontend
   streamlit-app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ing-prompt-scrubber
+    container_name: ing-streamlit
     ports:
       - "8501:8501"
     volumes:
@@ -23,6 +97,12 @@ services:
       # Python configuration
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/app
+      - MONGODB_URL=mongodb://inguser:ingpassword@mongodb:27017/ing_prompt_scrubber?authSource=admin
+      - OLLAMA_HOST=http://ollama:11434
+    command: streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0
+    depends_on:
+      - mongodb
+      - ollama
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
@@ -52,7 +132,17 @@ services:
   #     - ./ssl:/etc/nginx/ssl:ro
   #   depends_on:
   #     - streamlit-app
+  #     - fastapi-app
   #   restart: unless-stopped
+
+# Persistent volumes
+volumes:
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+  ollama_data:
+    driver: local
 
 # Optional: Create a custom network
 networks:
