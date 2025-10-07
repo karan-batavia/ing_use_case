@@ -29,22 +29,20 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY . .
 
 # Create a non-root user for security
-RUN useradd -m -u 1000 streamlit && \
-    chown -R streamlit:streamlit /app
-USER streamlit
+RUN useradd -m -u 1000 appuser && \
+    chown -R appuser:appuser /app
+USER appuser
 
-# Expose the Streamlit port
-EXPOSE 8501
+# Expose both Streamlit and FastAPI ports
+EXPOSE 8501 8000
 
-# Add health check
+# Add health checks for both services
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8501/_stcore/health || exit 1
+    CMD curl -f http://localhost:8501/_stcore/health || curl -f http://localhost:8000/health || exit 1
 
-# Set Streamlit configuration
-ENV STREAMLIT_SERVER_PORT=8501
-ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
-ENV STREAMLIT_SERVER_HEADLESS=true
-ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1
 
-# Run the Streamlit application
+# Default command (can be overridden in docker-compose)
 CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
