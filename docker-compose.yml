@@ -20,32 +20,6 @@ services:
       retries: 3
       start_period: 40s
 
-  # Ollama AI Service
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ing-ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    environment:
-      - OLLAMA_HOST=0.0.0.0
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
-    # If you have NVIDIA GPU support, uncomment the following:
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
-
   # FastAPI Backend
   fastapi-app:
     build:
@@ -61,11 +35,11 @@ services:
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/app
       - MONGODB_URL=mongodb://inguser:ingpassword@mongodb:27017/ing_prompt_scrubber?authSource=admin
-      - OLLAMA_HOST=http://ollama:11434
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+
     command: uvicorn api:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       - mongodb
-      - ollama
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
@@ -98,11 +72,9 @@ services:
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/app
       - MONGODB_URL=mongodb://inguser:ingpassword@mongodb:27017/ing_prompt_scrubber?authSource=admin
-      - OLLAMA_HOST=http://ollama:11434
     command: streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0
     depends_on:
       - mongodb
-      - ollama
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
@@ -140,8 +112,6 @@ volumes:
   mongodb_data:
     driver: local
   mongodb_config:
-    driver: local
-  ollama_data:
     driver: local
 
 # Optional: Create a custom network

@@ -7,11 +7,12 @@ import uvicorn
 import os
 import uuid
 import asyncio
+import subprocess
 from datetime import datetime, timedelta
 from src.mongodb_service import MongoDBService
-from src.prompt_scrubber import PromptScrubber
 from src.dependencies import get_current_user, get_current_admin
-from src.ollama_service import get_ollama_service
+from src.gemini_service import get_gemini_service
+from src.sensitivity_classifier import get_classifier_service
 from src.file_handler.docx_to_txt import DOCXToTextConverter
 from src.file_handler.html_to_txt import HTMLToTextConverter
 from src.file_handler.read_pdf_file import PDFToTextConverter
@@ -47,7 +48,6 @@ app = FastAPI(
 
 # Initialize services
 mongodb_service = MongoDBService()
-prompt_scrubber = PromptScrubber()
 
 
 # Pydantic models for request/response
@@ -62,6 +62,12 @@ class TextScrubResponse(BaseModel):
     matches_found: int
     reduction_percentage: float
     processed_at: datetime
+    # Sensitivity classification fields
+    original_classification: Optional[str] = None
+    scrubbed_classification: Optional[str] = None
+    classification_confidence: Optional[float] = None
+    classification_explanation: Optional[str] = None
+    classification_available: bool = False
 
 
 class HealthResponse(BaseModel):
@@ -104,7 +110,7 @@ class FileDownloadInfo(BaseModel):
 class PredictionRequest(BaseModel):
     prompt: str
     context: Optional[str] = None
-    model_name: Optional[str] = "llama3.2:1b"  # Optimized smaller model
+    model_name: Optional[str] = "gemini-pro"  # Stable Gemini model
     max_tokens: Optional[int] = 150  # Reduced for faster responses
     temperature: Optional[float] = 0.3  # Lower for faster, more focused responses
 
@@ -115,6 +121,63 @@ class PredictionResponse(BaseModel):
     success: bool
     session_id: str
     processed_at: datetime
+
+
+# Sensitivity Classification Models
+class ClassifyRequest(BaseModel):
+    text: str
+
+
+class ClassifyResponse(BaseModel):
+    prediction: str
+    probabilities: Dict[str, float]
+    confidence: float
+    explanation: str
+    success: bool
+
+
+class RedactRequest(BaseModel):
+    text: str
+
+
+class Detection(BaseModel):
+    type: str
+    original: str
+    placeholder: str
+
+
+class RedactResponse(BaseModel):
+    original_text: str
+    redacted_text: str
+    detections: List[Detection]
+    total_redacted: int
+    detection_summary: Dict[str, int]
+    success: bool
+
+
+class TrainModelRequest(BaseModel):
+    data_file: str = "raw_prompts.txt"
+    model_type: str = "logreg"
+    test_size: float = 0.2
+    ngram_max: int = 2
+    random_seed: int = 42
+
+
+class TrainModelResponse(BaseModel):
+    success: bool
+    message: str
+    metrics: Optional[Dict[str, Any]] = None
+    error: Optional[str] = None
+
+
+class ModelMetricsResponse(BaseModel):
+    accuracy: float
+    precision: Dict[str, float]
+    recall: Dict[str, float]
+    f1_score: Dict[str, float]
+    support: Dict[str, int]
+    confusion_matrix: List[List[int]]
+    available: bool
 
 
 @app.get("/", response_model=Dict[str, str])
@@ -138,96 +201,32 @@ def health_check():
     )
 
 
-@app.post("/scrub", response_model=TextScrubResponse)
-def scrub_text(
-    request: TextScrubRequest, current_user: dict = Depends(get_current_user)
-):
-    """Scrub sensitive information from text (Authenticated users only)"""
-    try:
-        # Extract user_id from the authenticated user data
-        authenticated_user_id = current_user.get(
-            "user_id", current_user.get("_id", "unknown")
-        )
-
-        # Create session for authenticated user
-        session_id = mongodb_service.create_session(authenticated_user_id, "api")
-
-        # Scrub the text
-        matches = prompt_scrubber.scrub(request.text)
-        scrubbed_text = prompt_scrubber.scrub_prompt(request.text)
-
-        # Calculate metrics
-        original_length = len(request.text)
-        scrubbed_length = len(scrubbed_text)
-        matches_found = (
-            sum(len(found_values) for found_values in matches.values())
-            if matches
-            else 0
-        )
-        reduction_percentage = (
-            round((1 - scrubbed_length / original_length) * 100, 2)
-            if original_length > 0
-            else 0
-        )
-
-        # Log the interaction
-        mongodb_service.log_interaction(
-            session_id,
-            authenticated_user_id,
-            "api_text_scrubbing",
-            {
-                "input_length": original_length,
-                "output_length": scrubbed_length,
-                "matches_found": matches_found,
-                "reduction_percentage": reduction_percentage,
-                "endpoint": "/scrub",
-            },
-        )
-
-        return TextScrubResponse(
-            scrubbed_text=scrubbed_text,
-            original_length=original_length,
-            scrubbed_length=scrubbed_length,
-            matches_found=matches_found,
-            reduction_percentage=reduction_percentage,
-            processed_at=datetime.now(),
-        )
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing text: {str(e)}")
-
-
 @app.post("/predict", response_model=PredictionResponse)
 async def generate_prediction(
     request: PredictionRequest, current_user: Dict[str, Any] = Depends(get_current_user)
 ):
     """
-    Generate a prediction using Ollama AI based on prompt and context.
+    Generate a prediction using Gemini AI based on prompt and context.
     Requires user authentication.
     """
     try:
-        # Get Ollama service instance
-        ollama_service = get_ollama_service()
-
-        # Validate that Ollama service is available
-        if not ollama_service.validate_connection():
-            raise HTTPException(
-                status_code=503,
-                detail="Ollama AI service is not available. Please check that Ollama is running.",
-            )
+        # Get Gemini service instance
+        gemini_service = get_gemini_service()
 
         # Generate session ID for this request
         session_id = str(uuid.uuid4())
 
-        # Generate prediction using Ollama with timeout
+        # Generate prediction using Gemini with timeout
         try:
             prediction_text = await asyncio.wait_for(
-                ollama_service.generate_prediction(
+                gemini_service.generate_prediction(
                     prompt=request.prompt,
                     context=request.context,
                     model_name=request.model_name,
+                    max_tokens=request.max_tokens,
+                    temperature=request.temperature,
                 ),
-                timeout=300.0,  # 5 minutes timeout
+                timeout=30.0,
             )
         except asyncio.TimeoutError:
             raise HTTPException(
@@ -515,14 +514,27 @@ async def scrub_file(
         # Create session for authenticated user
         session_id = mongodb_service.create_session(authenticated_user_id, "api")
 
-        # Scrub the extracted text
-        matches = prompt_scrubber.scrub(upload_response.extracted_text)
-        scrubbed_text = prompt_scrubber.scrub_prompt(upload_response.extracted_text)
+        # Scrub the extracted text using sensitivity classifier
+        classifier_service = get_classifier_service()
+        redaction_result = classifier_service.redact_sensitive_info(
+            upload_response.extracted_text
+        )
+        scrubbed_text = redaction_result.redacted_text
+
+        # Extract matches information from redaction result
+        matches = {
+            detection_type: [
+                d["original"]
+                for d in redaction_result.detections
+                if d["type"] == detection_type
+            ]
+            for detection_type in redaction_result.detection_summary.keys()
+        }
 
         # Calculate metrics
         original_length = len(upload_response.extracted_text)
         scrubbed_length = len(scrubbed_text)
-        matches_found = sum(len(values) for values in matches.values())
+        matches_found = redaction_result.total_redacted
 
         reduction_percentage = (
             round((1 - scrubbed_length / original_length) * 100, 2)
@@ -565,6 +577,245 @@ async def scrub_file(
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
+
+
+# Sensitivity Classification Endpoints
+@app.post("/classify", response_model=ClassifyResponse)
+async def classify_text(
+    request: ClassifyRequest, current_user: Dict[str, Any] = Depends(get_current_user)
+):
+    """
+    Classify text sensitivity level (C1-C4).
+    Requires user authentication.
+    """
+    try:
+        classifier_service = get_classifier_service()
+
+        if not classifier_service.is_model_available():
+            raise HTTPException(
+                status_code=503,
+                detail="Classification model not available. Please train the model first.",
+            )
+
+        # Classify the text
+        result = classifier_service.classify_text(request.text)
+
+        # Log the classification
+        mongodb_service = MongoDBService()
+        session_id = str(uuid.uuid4())
+
+        mongodb_service.log_interaction(
+            session_id=session_id,
+            user_id=current_user["user_id"],
+            action="text_classified",
+            details={
+                "text_length": len(request.text),
+                "prediction": result.prediction,
+                "confidence": result.confidence,
+                "endpoint": "/classify",
+            },
+        )
+
+        return ClassifyResponse(
+            prediction=result.prediction,
+            probabilities=result.probabilities,
+            confidence=result.confidence,
+            explanation=result.explanation,
+            success=True,
+        )
+
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error classifying text: {str(e)}")
+
+
+@app.post("/redact", response_model=RedactResponse)
+async def redact_sensitive_data(
+    request: RedactRequest, current_user: Dict[str, Any] = Depends(get_current_user)
+):
+    """
+    Redact sensitive information from text.
+    Requires user authentication.
+    """
+    try:
+        classifier_service = get_classifier_service()
+
+        # Redact sensitive information
+        result = classifier_service.redact_sensitive_info(request.text)
+
+        # Log the redaction
+        mongodb_service = MongoDBService()
+        session_id = str(uuid.uuid4())
+
+        mongodb_service.log_interaction(
+            session_id=session_id,
+            user_id=current_user["user_id"],
+            action="text_redacted",
+            details={
+                "text_length": len(request.text),
+                "total_redacted": result.total_redacted,
+                "detection_types": list(result.detection_summary.keys()),
+                "endpoint": "/redact",
+            },
+        )
+
+        # Convert detections to Pydantic models
+        detections = [
+            Detection(
+                type=d["type"], original=d["original"], placeholder=d["placeholder"]
+            )
+            for d in result.detections
+        ]
+
+        return RedactResponse(
+            original_text=result.original_text,
+            redacted_text=result.redacted_text,
+            detections=detections,
+            total_redacted=result.total_redacted,
+            detection_summary=result.detection_summary,
+            success=True,
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error redacting text: {str(e)}")
+
+
+@app.post("/train-model", response_model=TrainModelResponse)
+async def train_classification_model(
+    request: TrainModelRequest,
+    current_user: Dict[str, Any] = Depends(get_current_admin),
+):
+    """
+    Train the sensitivity classification model.
+    Requires admin authentication.
+    """
+    try:
+        import subprocess
+        import sys
+
+        # Set environment variables for training
+        env = os.environ.copy()
+        env["MODEL"] = request.model_type
+        env["DATA_PATH"] = request.data_file
+        env["TEST_SIZE"] = str(request.test_size)
+        env["NGRAM_MAX"] = str(request.ngram_max)
+        env["SEED"] = str(request.random_seed)
+
+        # Run training script
+        result = subprocess.run(
+            [sys.executable, "ml_setup.py", "--train"],
+            capture_output=True,
+            text=True,
+            env=env,
+            timeout=300,  # 5 minute timeout
+        )
+
+        # Log the training attempt
+        mongodb_service = MongoDBService()
+        session_id = str(uuid.uuid4())
+
+        mongodb_service.log_interaction(
+            session_id=session_id,
+            user_id=current_user["user_id"],
+            action="model_training",
+            details={
+                "model_type": request.model_type,
+                "data_file": request.data_file,
+                "success": result.returncode == 0,
+                "endpoint": "/train-model",
+            },
+        )
+
+        if result.returncode == 0:
+            # Parse metrics from output if available
+            metrics = None
+            try:
+                # Try to load metrics file if created
+                classifier_service = get_classifier_service()
+                classifier_service._load_model()  # Reload model
+                model_metrics = classifier_service.get_model_metrics()
+                if model_metrics:
+                    metrics = {
+                        "accuracy": model_metrics.accuracy,
+                        "precision": model_metrics.precision,
+                        "recall": model_metrics.recall,
+                        "f1_score": model_metrics.f1_score,
+                    }
+            except Exception:
+                pass
+
+            return TrainModelResponse(
+                success=True, message="Model trained successfully", metrics=metrics
+            )
+        else:
+            return TrainModelResponse(
+                success=False,
+                message="Model training failed",
+                error=result.stderr or result.stdout,
+            )
+
+    except subprocess.TimeoutExpired:
+        return TrainModelResponse(
+            success=False,
+            message="Training timeout exceeded (5 minutes)",
+            error="Training took too long",
+        )
+    except FileNotFoundError:
+        return TrainModelResponse(
+            success=False,
+            message="Training script not found",
+            error="ml_setup.py not found in current directory",
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error training model: {str(e)}")
+
+
+@app.get("/model-metrics", response_model=ModelMetricsResponse)
+async def get_model_metrics(current_user: Dict[str, Any] = Depends(get_current_user)):
+    """
+    Get model performance metrics.
+    Requires user authentication.
+    """
+    try:
+        classifier_service = get_classifier_service()
+        model_metrics = classifier_service.get_model_metrics()
+
+        if model_metrics is None:
+            return ModelMetricsResponse(
+                accuracy=0.0,
+                precision={},
+                recall={},
+                f1_score={},
+                support={},
+                confusion_matrix=[],
+                available=False,
+            )
+
+        return ModelMetricsResponse(
+            accuracy=model_metrics.accuracy,
+            precision=model_metrics.precision,
+            recall=model_metrics.recall,
+            f1_score=model_metrics.f1_score,
+            support=model_metrics.support,
+            confusion_matrix=model_metrics.confusion_matrix,
+            available=True,
+        )
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error getting model metrics: {str(e)}"
+        )
+
+
+@app.get("/classification-categories", response_model=Dict[str, str])
+async def get_classification_categories():
+    """
+    Get information about classification categories.
+    Public endpoint.
+    """
+    classifier_service = get_classifier_service()
+    return classifier_service.get_category_info()
 
 
 if __name__ == "__main__":
