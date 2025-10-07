@@ -113,6 +113,9 @@ class PredictionRequest(BaseModel):
     model_name: Optional[str] = "gemini-pro"  # Stable Gemini model
     max_tokens: Optional[int] = 150  # Reduced for faster responses
     temperature: Optional[float] = 0.3  # Lower for faster, more focused responses
+    session_id: Optional[str] = (
+        None  # Optional session ID to maintain workflow consistency
+    )
 
 
 class PredictionResponse(BaseModel):
@@ -147,6 +150,7 @@ class Detection(BaseModel):
 
 
 class RedactResponse(BaseModel):
+    session_id: str
     original_text: str
     redacted_text: str
     detections: List[Detection]
@@ -178,6 +182,38 @@ class ModelMetricsResponse(BaseModel):
     support: Dict[str, int]
     confusion_matrix: List[List[int]]
     available: bool
+
+
+# De-scrubbing Models
+class DescrubRequest(BaseModel):
+    session_id: str
+    scrubbed_text: str
+
+
+class RedactionRecord(BaseModel):
+    session_id: str
+    user_id: str
+    timestamp: datetime
+    original_text: str
+    redacted_text: str
+    detections: List[Detection]
+    total_redacted: int
+
+
+class DescrubResponse(BaseModel):
+    success: bool
+    session_id: str
+    original_text: str
+    redacted_text: str
+    restored_text: str
+    detections_restored: int
+    message: str
+
+
+class RedactionRecordsResponse(BaseModel):
+    success: bool
+    records: List[Dict[str, Any]]
+    total_count: int
 
 
 @app.get("/", response_model=Dict[str, str])
@@ -213,8 +249,8 @@ async def generate_prediction(
         # Get Gemini service instance
         gemini_service = get_gemini_service()
 
-        # Generate session ID for this request
-        session_id = str(uuid.uuid4())
+        # Use provided session_id or generate a new one for this request
+        session_id = request.session_id or str(uuid.uuid4())
 
         # Generate prediction using Gemini with timeout
         try:
@@ -656,6 +692,7 @@ async def redact_sensitive_data(
                 "text_length": len(request.text),
                 "total_redacted": result.total_redacted,
                 "detection_types": list(result.detection_summary.keys()),
+                "detections": result.detections,
                 "endpoint": "/redact",
             },
         )
@@ -669,6 +706,7 @@ async def redact_sensitive_data(
         ]
 
         return RedactResponse(
+            session_id=session_id,
             original_text=result.original_text,
             redacted_text=result.redacted_text,
             detections=detections,
@@ -805,6 +843,120 @@ async def get_model_metrics(current_user: Dict[str, Any] = Depends(get_current_u
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error getting model metrics: {str(e)}"
+        )
+
+
+@app.post("/de-scrub", response_model=DescrubResponse)
+async def de_scrub_text(
+    request: DescrubRequest, current_user: Dict[str, Any] = Depends(get_current_admin)
+):
+    """
+    De-scrub (restore) redacted text using stored redaction records.
+    Takes scrubbed text with placeholders and replaces them with original values.
+    Admin only endpoint for security.
+    """
+    try:
+        # Get the redaction record from MongoDB to get the detections
+        redaction_record = mongodb_service.get_redaction_record_by_session(
+            request.session_id
+        )
+
+        if not redaction_record:
+            raise HTTPException(
+                status_code=404,
+                detail=f"No redaction record found for session {request.session_id}",
+            )
+
+        # Get the detections from the stored record
+        details = redaction_record.get("details", {})
+
+        # Handle case where details might be stored as a JSON string
+        if isinstance(details, str):
+            import json
+
+            try:
+                details = json.loads(details)
+            except json.JSONDecodeError:
+                raise HTTPException(
+                    status_code=400, detail="Invalid details format in redaction record"
+                )
+
+        detections = details.get("detections", [])
+
+        if not detections:
+            raise HTTPException(
+                status_code=400, detail="No detections found for de-scrubbing"
+            )
+
+        # Perform de-scrubbing: replace each placeholder with its original value
+        restored_text = request.scrubbed_text
+        detections_restored = 0
+
+        for detection in detections:
+            placeholder = detection.get("placeholder", "")
+            original = detection.get("original", "")
+
+            if placeholder and original and placeholder in restored_text:
+                restored_text = restored_text.replace(placeholder, original)
+                detections_restored += 1
+
+        # Store the de-scrubbing action in the database
+        # Use the provided session_id to maintain workflow consistency
+        session_id = request.session_id
+        mongodb_service.log_interaction(
+            session_id=session_id,
+            user_id=current_user["user_id"],
+            action="text_de_scrubbed",
+            details={
+                "original_session_id": request.session_id,
+                "scrubbed_text": request.scrubbed_text,
+                "restored_text": restored_text,
+                "detections_restored": detections_restored,
+                "endpoint": "/de-scrub",
+            },
+        )
+
+        return DescrubResponse(
+            success=True,
+            session_id=session_id,
+            original_text=details.get("original_text", ""),
+            redacted_text=request.scrubbed_text,
+            restored_text=restored_text,
+            detections_restored=detections_restored,
+            message=f"Successfully restored {detections_restored} redacted items",
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error during de-scrubbing: {str(e)}"
+        )
+
+
+@app.get("/redaction-records", response_model=RedactionRecordsResponse)
+async def get_redaction_records(
+    user_id: Optional[str] = None,
+    limit: int = 50,
+    current_user: Dict[str, Any] = Depends(get_current_admin),
+):
+    """
+    Get list of redaction records from the database.
+    Admin only endpoint.
+    """
+    try:
+        # Limit the maximum number of records to prevent large responses
+        limit = min(limit, 100)
+
+        records = mongodb_service.get_redaction_records(user_id=user_id, limit=limit)
+
+        return RedactionRecordsResponse(
+            success=True, records=records, total_count=len(records)
+        )
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error retrieving redaction records: {str(e)}"
         )
 
 

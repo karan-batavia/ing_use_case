@@ -436,6 +436,74 @@ class MongoDBService:
             self.logger.error(f"Error migrating users: {e}")
             return {"success": False, "error": str(e)}
 
+    def get_redaction_records(
+        self, user_id: Optional[str] = None, limit: int = 100
+    ) -> List[Dict[str, Any]]:
+        """
+        Get redaction records from the database.
+
+        Args:
+            user_id: Optional user ID to filter records
+            limit: Maximum number of records to return
+
+        Returns:
+            List of redaction records with detections
+        """
+        if not self.connected:
+            self.logger.error("Not connected to MongoDB")
+            return []
+
+        try:
+            query = {"action": "text_redacted"}
+            if user_id:
+                query["user_id"] = user_id
+
+            records = list(
+                self.db.interactions.find(query).sort("timestamp", -1).limit(limit)
+            )
+            print(f"Found {len(records)} redaction records", records)
+
+            # Convert ObjectId to string for JSON serialization
+            for record in records:
+                if "_id" in record:
+                    record["_id"] = str(record["_id"])
+
+            return records
+
+        except Exception as e:
+            self.logger.error(f"Error getting redaction records: {e}")
+            return []
+
+    def get_redaction_record_by_session(
+        self, session_id: str
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Get a specific redaction record by session ID.
+
+        Args:
+            session_id: Session ID of the redaction
+
+        Returns:
+            Redaction record or None if not found
+        """
+        if not self.connected:
+            self.logger.error("Not connected to MongoDB")
+            return None
+
+        try:
+            record = self.db.interactions.find_one(
+                {"session_id": session_id, "action": "text_redacted"}
+            )
+
+            if record and "_id" in record:
+                record["_id"] = str(record["_id"])
+
+            return record
+
+        except Exception as e:
+            self.logger.error(f"Error getting redaction record: {e}")
+            return None
+
     def close_connection(self):
         """Close MongoDB connection"""
         if self.client:
