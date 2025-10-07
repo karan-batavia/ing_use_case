@@ -919,7 +919,7 @@ async def de_scrub_text(
         return DescrubResponse(
             success=True,
             session_id=session_id,
-            original_text=details.get("original_text", ""),
+            original_text=redaction_record.get("details", {}).get("original_text", ""),
             redacted_text=request.scrubbed_text,
             restored_text=restored_text,
             detections_restored=detections_restored,
