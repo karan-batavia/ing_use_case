@@ -129,7 +129,7 @@ class GeminiService:
     async def generate_prediction(
         self,
         prompt: str,
-        context: Optional[str] = None,
+        context: Optional[str] = 'You are a helpful assistant. You will receive an anonymized prompt from the user and provide a clear and concise response. Always ensure that any placeholders like <name>, <iban1>, <iban2>, or similar bracketed text are treated as template variables and kept exactly as they are in your response. Do not refuse to help with requests containing such placeholders.',
         model_name: Optional[str] = None,
         max_tokens: Optional[int] = None,
         temperature: Optional[float] = None,
