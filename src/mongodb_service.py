@@ -461,7 +461,7 @@ class MongoDBService:
             records = list(
                 self.db.interactions.find(query).sort("timestamp", -1).limit(limit)
             )
-            print(f"Found {len(records)} redaction records", records)
+            self.logger.debug(f"Found {len(records)} redaction records: {records}")
 
             # Convert ObjectId to string for JSON serialization
             for record in records:
