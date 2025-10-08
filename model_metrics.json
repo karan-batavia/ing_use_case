@@ -1,33 +1,29 @@
 {
-  "report": "precision    recall  f1-score   support\n\n          C1      1.000     0.857     0.923         7\n          C2      0.833     1.000     0.909        10\n          C3      1.000     0.833     0.909         6\n          C4      0.800     0.800     0.800         5\n\n    accuracy                          0.893        28\n   macro avg      0.908     0.873     0.885        28\nweighted avg      0.905     0.893     0.893        28",
+  "report": "              precision    recall  f1-score   support\n\n          C1      0.000     0.000     0.000         0\n          C2      1.000     1.000     1.000       594\n          C3      1.000     1.000     1.000     28830\n          C4      1.000     1.000     1.000     10576\n\n    accuracy                          1.000     40000\n   macro avg      0.750     0.750     0.750     40000\nweighted avg      1.000     1.000     1.000     40000\n",
   "confusion_matrix": [
     [
-      6,
-      1,
+      0,
+      0,
       0,
       0
     ],
     [
       0,
-      10,
+      594,
       0,
       0
     ],
     [
       0,
       0,
-      5,
-      1
+      28830,
+      0
     ],
     [
       0,
-      1,
       0,
-      4
+      0,
+      10576
     ]
-  ],
-  "model_type": "logreg",
-  "data_file": "raw_prompts.txt",
-  "test_size": 0.2,
-  "accuracy": 0.893
+  ]
 }
