@@ -16,6 +16,7 @@ cryptography==44.0.3
 cymem==2.0.11
 en_core_web_lg @ https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl#sha256=293e9547a655b25499198ab15a525b05b9407a75f10255e405e8c3854329ab63
 et_xmlfile==2.0.0
+faker==33.1.0
 filelock==3.19.1
 gitdb==4.0.12
 # ML dependencies for sensitivity classification
