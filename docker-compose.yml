@@ -31,6 +31,7 @@ services:
     volumes:
       - ./data:/app/data:ro
       - ./logs:/app/logs
+      - .:/app
     environment:
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/app
