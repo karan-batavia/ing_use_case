@@ -86,6 +86,11 @@ class FileUploadResponse(BaseModel):
     processed_at: datetime
 
 
+class FileScrubRequest(BaseModel):
+    session_id: Optional[str] = None
+    output_format: Optional[str] = "text"  # "text", "original", "both"
+
+
 class FileScrubResponse(BaseModel):
     filename: str
     file_type: str
@@ -98,6 +103,8 @@ class FileScrubResponse(BaseModel):
     reduction_percentage: float
     matches_detected: Dict[str, List[str]]
     processed_at: datetime
+    session_id: str
+    download_url: Optional[str] = None
 
 
 class FileDownloadInfo(BaseModel):
@@ -426,6 +433,8 @@ async def upload_file(
             "image/png": "png",
             "image/jpeg": "jpg",
             "image/jpg": "jpg",
+            "text/csv": "csv",
+            "application/csv": "csv",
         }
 
         file_extension = (
@@ -442,10 +451,11 @@ async def upload_file(
             "png",
             "jpg",
             "jpeg",
+            "csv",
         ]:
             raise HTTPException(
                 status_code=400,
-                detail=f"Unsupported file type. Supported: PDF, DOCX, TXT, HTML, PNG, JPG",
+                detail=f"Unsupported file type. Supported: PDF, DOCX, TXT, HTML, PNG, JPG, CSV",
             )
 
         # Read file content
@@ -508,6 +518,36 @@ async def upload_file(
                 )
                 extracted_text = converter.extract_text_from_image(temp_file_path)
 
+            elif (
+                content_type in ["text/csv", "application/csv"]
+                or file_extension == "csv"
+            ):
+                import pandas as pd
+
+                try:
+                    # Read CSV and convert to text representation
+                    df = pd.read_csv(temp_file_path, encoding="utf-8")
+                    # Convert DataFrame to string representation with headers
+                    extracted_text = df.to_string(index=False)
+                except UnicodeDecodeError:
+                    # Try alternative encodings
+                    for encoding in ["latin-1", "iso-8859-1", "cp1252"]:
+                        try:
+                            df = pd.read_csv(temp_file_path, encoding=encoding)
+                            extracted_text = df.to_string(index=False)
+                            break
+                        except:
+                            continue
+                    if not extracted_text:
+                        raise HTTPException(
+                            status_code=400,
+                            detail="Could not read CSV file with any encoding",
+                        )
+                except Exception as e:
+                    raise HTTPException(
+                        status_code=400, detail=f"Error reading CSV file: {str(e)}"
+                    )
+
             if not extracted_text:
                 raise HTTPException(
                     status_code=400, detail="Could not extract text from file"
@@ -535,7 +575,9 @@ async def upload_file(
 
 @app.post("/scrub-file", response_model=FileScrubResponse)
 async def scrub_file(
-    file: UploadFile = File(...), current_user: dict = Depends(get_current_user)
+    file: UploadFile = File(...),
+    request: FileScrubRequest = FileScrubRequest(),
+    current_user: dict = Depends(get_current_user),
 ):
     """Upload file, extract text, and scrub sensitive information (Authenticated users only)"""
     try:
@@ -547,8 +589,10 @@ async def scrub_file(
             "user_id", current_user.get("_id", "unknown")
         )
 
-        # Create session for authenticated user
-        session_id = mongodb_service.create_session(authenticated_user_id, "api")
+        # Use provided session_id or create new one for workflow consistency
+        session_id = request.session_id or mongodb_service.create_session(
+            authenticated_user_id, "api"
+        )
 
         # Scrub the extracted text using sensitivity classifier
         classifier_service = get_classifier_service()
@@ -556,6 +600,22 @@ async def scrub_file(
             upload_response.extracted_text
         )
         scrubbed_text = redaction_result.redacted_text
+
+        # Store redaction record for potential de-scrubbing using existing method
+        mongodb_service.log_interaction(
+            session_id=session_id,
+            user_id=authenticated_user_id,
+            action="file_redacted",
+            details={
+                "filename": file.filename,
+                "file_type": upload_response.file_type,
+                "original_text": upload_response.extracted_text,
+                "redacted_text": scrubbed_text,
+                "detections": redaction_result.detections,
+                "total_redacted": redaction_result.total_redacted,
+                "endpoint": "/scrub-file",
+            },
+        )
 
         # Extract matches information from redaction result
         matches = {
@@ -578,7 +638,7 @@ async def scrub_file(
             else 0
         )
 
-        # Log the interaction
+        # Log the more detailed interaction for audit purposes
         mongodb_service.log_interaction(
             session_id,
             authenticated_user_id,
@@ -591,6 +651,7 @@ async def scrub_file(
                 "output_length": scrubbed_length,
                 "matches_found": matches_found,
                 "reduction_percentage": reduction_percentage,
+                "detection_summary": redaction_result.detection_summary,
                 "endpoint": "/scrub-file",
             },
         )
@@ -607,12 +668,86 @@ async def scrub_file(
             reduction_percentage=reduction_percentage,
             matches_detected=matches,
             processed_at=datetime.now(),
+            session_id=session_id,
+            download_url=None,  # Will be implemented with file download functionality
         )
 
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
+
+
+@app.post("/scrub-file-download")
+async def scrub_file_download(
+    file: UploadFile = File(...),
+    request: FileScrubRequest = FileScrubRequest(),
+    current_user: dict = Depends(get_current_user),
+):
+    """
+    Upload file, scrub sensitive information, and download the scrubbed file in original format.
+    Supports PDF, DOCX, TXT, HTML, CSV formats.
+    """
+    try:
+        import io
+
+        # Validate filename
+        if not file.filename:
+            raise HTTPException(status_code=400, detail="Filename is required")
+
+        # First scrub the file
+        scrub_response = await scrub_file(file, request, current_user)
+
+        # Get file extension for processing
+        file_extension = (
+            file.filename.lower().split(".")[-1] if "." in file.filename else "txt"
+        )
+        scrubbed_filename = f"scrubbed_{file.filename}"
+
+        # Create scrubbed file in appropriate format
+        if file_extension == "txt":
+            writer = TXTWriter()
+            file_bytes = writer.create_txt_from_text(scrub_response.scrubbed_text)
+            content_type = "text/plain"
+
+        elif file_extension == "docx":
+            writer = DOCXWriter()
+            file_bytes = writer.create_docx_from_text(scrub_response.scrubbed_text)
+            content_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+
+        elif file_extension == "html":
+            writer = HTMLWriter()
+            file_bytes = writer.create_html_from_text(
+                text_content=scrub_response.scrubbed_text
+            )
+            content_type = "text/html"
+
+        elif file_extension == "csv":
+            # For CSV, just save as text with original structure preserved
+            file_bytes = scrub_response.scrubbed_text.encode("utf-8")
+            content_type = "text/csv"
+
+        else:
+            # Default to text file
+            file_bytes = scrub_response.scrubbed_text.encode("utf-8")
+            content_type = "text/plain"
+
+        # Return file as download
+        headers = {
+            "Content-Disposition": f'attachment; filename="{scrubbed_filename}"',
+            "Content-Type": content_type,
+        }
+
+        return StreamingResponse(
+            io.BytesIO(file_bytes), headers=headers, media_type=content_type
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error creating scrubbed file: {str(e)}"
+        )
 
 
 # Sensitivity Classification Endpoints
