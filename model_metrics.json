@@ -1,0 +1,33 @@
+{
+  "report": "precision    recall  f1-score   support\n\n          C1      1.000     0.857     0.923         7\n          C2      0.833     1.000     0.909        10\n          C3      1.000     0.833     0.909         6\n          C4      0.800     0.800     0.800         5\n\n    accuracy                          0.893        28\n   macro avg      0.908     0.873     0.885        28\nweighted avg      0.905     0.893     0.893        28",
+  "confusion_matrix": [
+    [
+      6,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      10,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      5,
+      1
+    ],
+    [
+      0,
+      1,
+      0,
+      4
+    ]
+  ],
+  "model_type": "logreg",
+  "data_file": "raw_prompts.txt",
+  "test_size": 0.2,
+  "accuracy": 0.893
+}

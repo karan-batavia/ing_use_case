@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Hybrid Sensitivity Classifier (rules + ML) with a simple model toggle.
+Hybrid Sensitivity Classifier (rules + ML) with multi-format support.
 
+Supports: TXT, CSV, PDF, DOCX, and images (PNG, JPG, JPEG)
 - DATA_PATH can be set via env or --data argument
 - MODEL can be: logreg | rf (roberta is a stub that raises NotImplementedError)
 - Robust tokenization (unicode-friendly) + Hashing fallback to avoid 'empty vocabulary' errors
@@ -14,6 +15,7 @@ import sys
 import json
 from dataclasses import dataclass
 from typing import List, Tuple, Dict, Any, Optional
+from pathlib import Path
 
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import FeatureUnion, Pipeline
@@ -23,23 +25,114 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer, HashingVectorizer
 import joblib
-from pathlib import Path
+
+import spacy
+from langdetect import detect
+import unicodedata
+
+class SpacyPreprocessor(BaseEstimator, TransformerMixin):
+    def __init__(self, lang_map=None):
+        # Default language model map
+        self.lang_map = lang_map or {
+            "en": spacy.load("en_core_web_sm"),
+            "fr": spacy.load("fr_core_news_sm"),
+            "nl": spacy.load("nl_core_news_sm"),
+        }
+
+    def detect_lang(self, text: str) -> str:
+        try:
+            return detect(text)
+        except:
+            return "en"
+
+    def normalize(self, text: str) -> str:
+        return unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('utf-8').lower()
+
+    def preprocess(self, text: str, lang: str) -> str:
+        nlp = self.lang_map.get(lang, self.lang_map["en"])
+        doc = nlp(text)
+        tokens = [token.lemma_.lower() for token in doc if not token.is_stop and token.is_alpha]
+        return " ".join(tokens)
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        processed = []
+        for text in X:
+            lang = self.detect_lang(text)
+            cleaned = self.normalize(text)
+            processed.append(self.preprocess(cleaned, lang))
+        return processed
+
+# File parsing libraries
+try:
+    import pandas as pd
+    HAS_PANDAS = True
+except ImportError:
+    HAS_PANDAS = False
+    print("Warning: pandas not installed. CSV support disabled.")
+
+try:
+    import PyPDF2
+    HAS_PDF = True
+except ImportError:
+    HAS_PDF = False
+    print("Warning: PyPDF2 not installed. PDF support disabled.")
+
+try:
+    from PIL import Image
+    import pytesseract
+    HAS_OCR = True
+except ImportError:
+    HAS_OCR = False
+    print("Warning: PIL/pytesseract not installed. Image OCR support disabled.")
+
+try:
+    from docx import Document
+    HAS_DOCX = True
+except ImportError:
+    HAS_DOCX = False
+    print("Warning: python-docx not installed. DOCX support disabled.")
+
+# --- Integrations: your regex modules ---
+EXT_REGEX_OK = False
+EXT_C12_OK = False
+try:
+    # regex_queries.py provides: ALL_PATTERNS (compiled re.Patterns)
+    from .preprocessing.regex_queries import ALL_PATTERNS as RQ_ALL
+    EXT_REGEX_OK = isinstance(RQ_ALL, dict) and len(RQ_ALL) > 0
+except Exception as e:
+    EXT_REGEX_OK = False
+    print(f"Failed to import regex_queries.py: {e}")
+
+try:
+    # regex.py provides: extract_c1_and_c2(text_filepath, data_dir) and transform_text(text, c1, c2)
+    import preprocessing.regex as c12mod  
+    EXT_C12_OK = hasattr(c12mod, "extract_c1_and_c2") and hasattr(c12mod, "transform_text")
+except Exception:
+    EXT_C12_OK = False
+
+# Feature flags (env)
+USE_REGEX_QUERIES = os.environ.get("USE_REGEX_QUERIES", "1") == "1"
+USE_C12_NORMALIZE = os.environ.get("USE_C12_NORMALIZE", "0") == "1"
+C12_DATA_DIR = os.environ.get("C12_DATA_DIR", "")
 
 # --------------------------
 # Config (env + sensible defaults)
 # --------------------------
-DEFAULT_DATA = "raw_prompts.txt"  # override via DATA_PATH or --data
+DEFAULT_DATA = "raw_prompts.txt"
 DATA_PATH = os.environ.get("DATA_PATH", DEFAULT_DATA)
-MODEL_CHOICE = os.environ.get("MODEL", "logreg").lower()   # logreg | rf | roberta(stub)
+MODEL_CHOICE = os.environ.get("MODEL", "logreg").lower()
 RANDOM_STATE = int(os.environ.get("SEED", "42"))
 TEST_SIZE = float(os.environ.get("TEST_SIZE", "0.2"))
 NGRAM_MAX = int(os.environ.get("NGRAM_MAX", "2"))
 
-# Use integers for min_df to avoid over-pruning on small datasets
 _env_min_df = os.environ.get("MIN_DF", "1")
 MIN_DF = int(_env_min_df) if _env_min_df.isdigit() else 1
-# Keep all tokens by default (no max_df pruning)
 MAX_DF = float(os.environ.get("MAX_DF", "1.0"))
+
+CSV_TEXT_COLUMN = os.environ.get("CSV_TEXT_COLUMN", None)
 
 # --------------------------
 # Optional user regex patterns
@@ -63,41 +156,79 @@ FALLBACK_PATTERNS: Dict[str, str] = {
     "BIOMETRIC": r"\b(FaceID|fingerprint|iris|biometric)\b",
 }
 
-def get_patterns() -> Dict[str, str]:
-    if USER_REGEX_OK and isinstance(user_regex.PATTERNS, dict):
-        return {**FALLBACK_PATTERNS, **user_regex.PATTERNS}  # user wins
-    return FALLBACK_PATTERNS
+def _to_compiled(v) -> re.Pattern:
+    if isinstance(v, re.Pattern):
+        return re.compile(v.pattern, re.IGNORECASE)
+    return re.compile(str(v), re.IGNORECASE)
 
-PATTERNS = {k: re.compile(v, re.IGNORECASE) for k, v in get_patterns().items()}
+def get_patterns() -> Dict[str, re.Pattern]:
+    merged: Dict[str, re.Pattern] = {}
+    for k, pat in FALLBACK_PATTERNS.items():
+        merged[k] = _to_compiled(pat)
+
+    if USER_REGEX_OK and isinstance(user_regex.PATTERNS, dict):
+        for k, pat in user_regex.PATTERNS.items():
+            k_upper = k.upper()
+            if k_upper in merged:
+                print(f"Overriding pattern for {k_upper} from user_regex")
+            merged[k_upper] = _to_compiled(pat)
+
+    if USE_REGEX_QUERIES and EXT_REGEX_OK:
+        for k, pat in RQ_ALL.items():
+            k_upper = k.upper()
+            if k_upper in merged:
+                print(f"Overriding pattern for {k_upper} from regex_queries")
+            merged[k_upper] = _to_compiled(pat)
+
+    return merged
+
+PATTERNS: Dict[str, re.Pattern] = get_patterns()
 
 # --------------------------
 # Labels + heuristics
 # --------------------------
-LABELS = ["C1", "C2", "C3", "C4"]  # Public, Internal, Confidential, Highly Sensitive
+LABELS = ["C1", "C2", "C3", "C4"]
 
 def heuristic_label(text: str) -> str:
     t = text.lower()
 
-    # C4: strong signals (PII/biometrics) or financial-personal specifics
+    if USE_C12_NORMALIZE and ("<" in text and ">" in text):
+        if any(tag in t for tag in ["<iban", "<credit_card", "<social_security", "<pin", "<cvv", "<transaction", "<phone"]):
+            return "C4"
+        if any(tag in t for tag in ["<email", "<customer_number", "<date_of_birth", "<address", "<belgian_id", "<employee_id", "<contract_number"]):
+            return "C3"
+    
     c4_hits = any(PATTERNS[k].search(text) for k in ["SSN_LIKE", "IBAN", "NATIONAL_ID", "BIOMETRIC"])
     email_hit = PATTERNS["EMAIL"].search(text) is not None
     amount_hit = PATTERNS["AMOUNT"].search(text) is not None
     c4_words = any(w in t for w in [
-        "credit score","income","account balance","masked pin","national id","corpkeys","biometric",
-        "sepa","wire transfer","cheque","direct debit"
+        "credit score", "cote de crédit", "cotes de crédit", "kredietscore", "kredietscores",
+        "income", "revenu", "revenus", "inkomen", "inkomens",
+        "account balance", "solde du compte", "soldes des comptes", "rekeningsaldo", "rekeningsaldi",
+        "pin", "PIN", "pincode", "pincodes",
+        "national id", "carte d’identité", "identiteitskaart", "identiteitskaarten",
+        "corpkeys", "clé d’entreprise", "bedrijfsleutel", "bedrijfsleutels",
+        "biometric", "biométrique", "biométriques", "biometrisch", "biometrische",
+        "sepa",
+        "wire transfer", "virement", "virements", "overschrijving", "overschrijvingen",
+        "cheque", "cheques",
+        "direct debit", "prélèvement automatique", "prélèvements automatiques", "domiciliëring", "domiciliëringen"
     ])
     if c4_hits or (email_hit and amount_hit) or c4_words:
         return "C4"
 
-    # C3: transactions, agreements, amounts (no direct PII)
     c3_words = any(w in t for w in [
-        "agreement","supplier","customer","standing order","payment order","deposit","overdraft",
-        "line of credit","bank guarantee","letter of credit","invoice","po-"
+        "overeenkomst", "overeenkomsten", "supplier", "fournisseur", "fournisseuse", "leverancier", "leveranciers", "customer",
+        "client", "clientes", "klant", "klanten", "standing order", "ordre permanent", "ordres permanents", "doorlopende opdracht", 
+        "doorlopende opdrachten", "payment order", "ordre de paiement", "ordres de paiement", "betaalopdracht", "betaalopdrachten", 
+        "deposit",  "dépôt", "storting", "stortingen", "overdraft", "découvert", "découverts", "roodstand", "roodstanden", "line of credit",
+        "ligne de crédit", "lignes de crédit", "kredietlijn", "kredietlijnen", "bank guarantee", "garantie bancaire", "garanties bancaires",
+        "bankgarantie", "bankgaranties", "letter of credit", "lettre de crédit", "lettres de crédit", "kredietbrief", "kredietbrieven", "invoice", 
+        "facture", "factures", "factuur", "facturen"
     ])
     if c3_words or amount_hit:
         return "C3"
 
-    # C2: internal governance/policy/process
     c2_words = any(w in t for w in [
         "policy","guideline","standard","sop","governance","raci","owner","approver",
         "review cycle","deprecated","retired","under review","internal","digest","reminder","notice"
@@ -105,36 +236,155 @@ def heuristic_label(text: str) -> str:
     if c2_words:
         return "C2"
 
-    # C1: public docs/press/investor materials
     c1_words = any(w in t for w in [
-        "annual report","pillar 3","press","newsroom","full year results","half year results",
-        "public disclosures","investor","analyst","linkedin","press-room","pdf","xlsx","report"
+    "annual report", "rapport annuel", "rapports annuels", "jaarverslag", "jaarverslagen", "pillar 3",
+    "pilier 3", "piliers 3", "pijler 3", "pijlers 3", "press", "presse", "pers", "newsroom", "salle de presse",
+    "salles de presse", "perskamer", "perskamers", "full year results", "résultats annuels", "jaarresultaten", 
+    "half year results", "résultats semestriels", "halfjaarresultaten", "public disclosures", "divulgation publique", 
+    "divulgations publiques", "openbare bekendmaking", "openbare bekendmakingen", "investor", "investisseur", "investisseuse",
+    "investisseurs", "investisseuses", "investeerder", "investeerders", "analyst", "analyste", "analystes", "analist", "analisten", 
+    "linkedin", "press-room", "salle de presse", "salles de presse", "persruimte", "persruimtes", "pdf", "xlsx", "report", "rapport",
+    "rapports", "verslag", "verslagen"    
     ])
     if c1_words:
         return "C1"
 
-    # Default to internal
     return "C2"
+
+# --------------------------
+# File parsers
+# --------------------------
+def parse_txt(path: Path) -> List[str]:
+    with path.open("r", encoding="utf-8") as f:
+        lines = [line.strip() for line in f if line.strip()]
+    return lines
+
+def parse_csv(path: Path) -> List[str]:
+    if not HAS_PANDAS:
+        raise RuntimeError("pandas is required for CSV parsing. Install: pip install pandas")
+    
+    df = pd.read_csv(path)
+    texts = []
+    
+    if CSV_TEXT_COLUMN and CSV_TEXT_COLUMN in df.columns:
+        texts = df[CSV_TEXT_COLUMN].astype(str).tolist()
+    else:
+        for _, row in df.iterrows():
+            combined = " ".join(str(val) for val in row.values if pd.notna(val))
+            if combined.strip():
+                texts.append(combined.strip())
+    
+    return texts
+
+def parse_pdf(path: Path) -> List[str]:
+    if not HAS_PDF:
+        raise RuntimeError("PyPDF2 is required for PDF parsing. Install: pip install PyPDF2")
+    
+    texts = []
+    with path.open("rb") as f:
+        reader = PyPDF2.PdfReader(f)
+        for page in reader.pages:
+            text = page.extract_text()
+            if text and text.strip():
+                lines = [line.strip() for line in text.split('\n') if line.strip()]
+                texts.extend(lines)
+    
+    return texts
+
+def parse_docx(path: Path) -> List[str]:
+    if not HAS_DOCX:
+        raise RuntimeError("python-docx is required for DOCX parsing. Install: pip install python-docx")
+    
+    doc = Document(str(path))
+    texts = []
+    
+    for para in doc.paragraphs:
+        text = para.text.strip()
+        if text:
+            texts.append(text)
+    
+    for table in doc.tables:
+        for row in table.rows:
+            row_text = " ".join(cell.text.strip() for cell in row.cells if cell.text.strip())
+            if row_text:
+                texts.append(row_text)
+    
+    return texts
+
+def parse_image(path: Path) -> List[str]:
+    if not HAS_OCR:
+        raise RuntimeError("PIL and pytesseract are required for image OCR. "
+                         "Install: pip install Pillow pytesseract")
+    
+    img = Image.open(path)
+    text = pytesseract.image_to_string(img)
+    
+    lines = [line.strip() for line in text.split('\n') if line.strip()]
+    return lines
+
+def parse_file(path: Path) -> List[str]:
+    ext = path.suffix.lower()
+    
+    if ext == ".txt":
+        return parse_txt(path)
+    elif ext == ".csv":
+        return parse_csv(path)
+    elif ext == ".pdf":
+        return parse_pdf(path)
+    elif ext in [".docx", ".doc"]:
+        return parse_docx(path)
+    elif ext in [".png", ".jpg", ".jpeg", ".tiff", ".bmp"]:
+        return parse_image(path)
+    else:
+        raise ValueError(f"Unsupported file format: {ext}")
 
 # --------------------------
 # Data loader
 # --------------------------
+def _c12_transform_text(text: str) -> str:
+    if not (USE_C12_NORMALIZE and EXT_C12_OK):
+        return text
+
+    from tempfile import NamedTemporaryFile
+    try:
+        with NamedTemporaryFile("w+", suffix=".txt", delete=True, encoding="utf-8") as tmp:
+            tmp.write(text)
+            tmp.flush()
+            data_dir = C12_DATA_DIR if C12_DATA_DIR else os.getcwd()
+            res = c12mod.extract_c1_and_c2(tmp.name, data_dir)
+            return c12mod.transform_text(text, res.get("c1", {}), res.get("c2", {}))
+    except Exception:
+        return text
+
 def load_dataset(path: str) -> Tuple[List[str], List[str]]:
-    p = Path(path)
+    p = Path(path).resolve()
     if not p.exists():
-        raise FileNotFoundError(f"Dataset not found at: {p}. "
-                                f"Pass correct path via DATA_PATH env or --data argument.")
-    texts: List[str] = []
-    labels: List[str] = []
-    with p.open("r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            texts.append(line)
-            labels.append(heuristic_label(line))
+        alternatives = [
+            Path(path),
+            Path.cwd() / path,
+            Path(__file__).parent / path,
+        ]
+        for alt in alternatives:
+            if alt.exists():
+                p = alt.resolve()
+                break
+        else:
+            raise FileNotFoundError(
+                f"Dataset not found at: {path}\n"
+                f"Tried absolute path: {Path(path).resolve()}\n"
+                f"Current directory: {Path.cwd()}\n"
+                f"Pass correct path via DATA_PATH env or --data argument."
+            )
+    
+    print(f"Loading dataset from: {p} (format: {p.suffix})")
+    texts = parse_file(p)
+    
     if not texts:
-        raise ValueError("Dataset is empty after stripping blank lines.")
+        raise ValueError("Dataset is empty after parsing.")
+    
+    labels = [heuristic_label(text) for text in texts]
+    
+    print(f"Loaded {len(texts)} text samples")
     return texts, labels
 
 # --------------------------
@@ -155,11 +405,13 @@ class RuleFeatureizer(BaseEstimator, TransformerMixin):
             for k in self.pattern_keys:
                 p = PATTERNS[k]
                 matches = p.findall(text)
-                row.append(int(bool(matches)))  # presence
-                row.append(len(matches))        # count
+                row.append(int(bool(matches)))
+                row.append(len(matches))
+            
             def has_any(words):
                 tl = text.lower()
                 return int(any(w in tl for w in words))
+            
             row.extend([
                 has_any(["credit score","income","account balance","masked pin","biometric"]),
                 has_any(["agreement","supplier","customer","standing order","payment order","overdraft"]),
@@ -173,40 +425,38 @@ class RuleFeatureizer(BaseEstimator, TransformerMixin):
 # Feature builders
 # --------------------------
 def build_features(use_hash: bool = False) -> FeatureUnion:
-    """
-    Text features + rule features.
-    - TF-IDF with unicode-friendly tokenization
-    - Fallback to HashingVectorizer (no vocabulary step) if TF-IDF fails
-    """
     rules = RuleFeatureizer()
+    spacy_prep = SpacyPreprocessor()
 
     if use_hash:
         bow = HashingVectorizer(
             n_features=2**16,
             alternate_sign=False,
-            lowercase=True,
-            token_pattern=r"(?u)\b[\w'-]+\b",
-            strip_accents='unicode',
+            lowercase=False,
+            token_pattern=r"(?u)\b\w+\b",
         )
-        return FeatureUnion([("bow", bow), ("rules", rules)])
-
+        return FeatureUnion([
+            ("bow", Pipeline([("spacy", spacy_prep), ("vectorizer", bow)])),
+            ("rules", rules)
+        ])
+    
     tfidf = TfidfVectorizer(
         ngram_range=(1, NGRAM_MAX),
         min_df=MIN_DF,
         max_df=MAX_DF,
-        lowercase=True,
-        token_pattern=r"(?u)\b[\w'-]+\b",  # keep words like “Smith’s”, “Q4-2024”
-        strip_accents='unicode',
-        stop_words=None,
+        lowercase=False,
+        token_pattern=r"(?u)\b\w+\b",
     )
-    return FeatureUnion([("tfidf", tfidf), ("rules", rules)])
+    return FeatureUnion([
+        ("tfidf", Pipeline([("spacy", spacy_prep), ("vectorizer", tfidf)])),
+        ("rules", rules)
+    ])
 
 # --------------------------
 # Classifier chooser
 # --------------------------
 def build_classifier(name: str):
     if name == "logreg":
-        # simple + reliable
         return LogisticRegression(max_iter=300, solver="lbfgs", multi_class="auto", random_state=RANDOM_STATE)
     if name == "rf":
         return RandomForestClassifier(n_estimators=300, random_state=RANDOM_STATE, class_weight="balanced")
@@ -225,7 +475,7 @@ class TrainResult:
 
 def train_and_eval(data_path: str) -> TrainResult:
     texts, labels = load_dataset(data_path)
-    # Stratified split; if it fails (e.g., too few samples in a class), fall back to standard split
+    
     try:
         X_train, X_test, y_train, y_test = train_test_split(
             texts, labels, test_size=TEST_SIZE, random_state=RANDOM_STATE, stratify=labels
@@ -237,7 +487,6 @@ def train_and_eval(data_path: str) -> TrainResult:
 
     clf = build_classifier(MODEL_CHOICE)
 
-    # Try TF-IDF first, then fallback to hashing if vocabulary errors happen
     use_hash = False
     try:
         pipe = Pipeline([("features", build_features(use_hash)), ("clf", clf)])
@@ -278,7 +527,7 @@ def main(argv: List[str] = None):
 
     if "--train" in argv or len(argv) == 0:
         res = train_and_eval(data_path)
-        print("=== Sensitivity Classifier (Hybrid: rules + TF-IDF + rules) ===")
+        print("\n=== Sensitivity Classifier (Hybrid: rules + TF-IDF + ML) ===")
         print(f"Model: {MODEL_CHOICE}")
         print(f"Data:  {data_path}")
         print("\n--- Classification Report ---")
@@ -288,8 +537,13 @@ def main(argv: List[str] = None):
         print(f"\nModel saved to: {res.model_path}")
     else:
         print("Usage:")
-        print("  DATA_PATH=/path/to/raw_prompts.txt MODEL=logreg python ml_setup.py --train")
-        print("  python ml_setup.py --train --data /path/to/raw_prompts.txt")
+        print("  python ml_setup.py --train --data /path/to/file.[txt|csv|pdf|docx|png|jpg]")
+        print("  DATA_PATH=/path/to/file.csv MODEL=logreg python ml_setup.py --train")
+        print("\nSupported formats: TXT, CSV, PDF, DOCX, PNG, JPG, JPEG")
+        print("\nEnvironment variables:")
+        print("  DATA_PATH: Path to input file")
+        print("  MODEL: logreg (default) | rf")
+        print("  CSV_TEXT_COLUMN: Specific column name for CSV (default: concatenate all)")
 
 if __name__ == "__main__":
     main()

@@ -30,7 +30,7 @@ for candidate in ("ml_setup_chatgpt", "ml_setup"):
 def load_model(path: Path):
     if not path.exists():
         raise FileNotFoundError(f"Model not found at: {path}")
-    data = joblib.load(str(path))  # now succeeds
+    data = joblib.load(str(path))  
     pipe = data["pipeline"]
     labels = data.get("labels", ["C1","C2","C3","C4"])
     return pipe, labels
