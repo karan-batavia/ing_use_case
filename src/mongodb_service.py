@@ -501,14 +501,15 @@ class MongoDBService:
             return None
 
         try:
-            query: Dict[str, Any] = {}
+            record: Optional[Dict[str, Any]] = None
+
             if session_id:
-                query["session_id"] = session_id
+                record = self.redactions.find_one({"session_id": session_id})
 
-            redacted_hash = hashlib.sha256(scrubbed_text.encode("utf-8")).hexdigest()
-            query["redacted_hash"] = redacted_hash
+            if not record:
+                redacted_hash = hashlib.sha256(scrubbed_text.encode("utf-8")).hexdigest()
+                record = self.redactions.find_one({"redacted_hash": redacted_hash})
 
-            record = self.redactions.find_one(query)
             if not record:
                 return None
 

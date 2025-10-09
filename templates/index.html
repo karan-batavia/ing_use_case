@@ -55,32 +55,27 @@
   .card-locked input,
   .card-locked textarea{pointer-events:none}
   .card-locked button{pointer-events:auto}
-  .prompt-locked{background:var(--navy-900);color:#fff;border:1px solid rgba(0,20,114,.35)}
+  .prompt-locked{background:var(--navy-900);color:#fff;border:1px solid rgba(0,20,114,.35);min-height:220px;max-height:320px;overflow-y:auto;resize:vertical;pointer-events:auto;cursor:default}
+  .card-locked textarea.prompt-locked{pointer-events:auto}
+  .card-locked .output{pointer-events:auto}
   .prompt-locked::placeholder{color:rgba(255,255,255,.6)}
     label{display:block;font-size:.92rem;color:var(--muted);margin-bottom:6px}
     input,textarea,select{width:100%;padding:12px 14px;border:1px solid var(--border);
       border-radius:12px;background:#fff;font-size:14px;outline:none;transition:box-shadow .15s,border-color .15s}
     textarea{min-height:160px;resize:vertical}
-    input:focus,textarea:focus,select:focus{border-color:var(--ing-orange);box-shadow:0 0 0 4px var(--ring)}
+  input:focus,textarea:focus,select:focus{border-color:var(--ing-orange);box-shadow:0 0 0 4px var(--ring)}
+  textarea::-webkit-scrollbar{width:8px}
+  textarea::-webkit-scrollbar-thumb{background:rgba(255,255,255,.35);border-radius:999px}
+  textarea::-webkit-scrollbar-track{background:rgba(0,0,0,.08);border-radius:999px}
     .btn-block{width:100%;justify-content:center}
     .kpi{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
     .pill{background:#fff;color:var(--navy-900);border:1px solid var(--border);padding:8px 12px;border-radius:999px;font-weight:600}
     .pill--orange{background:#fff1e9;color:var(--ing-orange);border-color:rgba(255,98,0,.25)}
-    .output{background:#0d246f;color:#fff;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px;min-height:120px;white-space:pre-wrap}
+  .output{background:#0d246f;color:#fff;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px;min-height:160px;max-height:340px;white-space:pre-wrap;overflow-y:auto}
     .footer{text-align:center;color:var(--muted);margin-top:38px;font-size:.9rem}
     a.link{color:var(--ing-orange);text-decoration:none} a.link:hover{text-decoration:underline}
     .prediction-row { display:flex; gap:18px; align-items:flex-start; margin-top:18px; }
     .prediction-col { flex:1; }
-    .stats-card{margin-top:28px;}
-    .stats-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:16px}
-    .stat-tile{border:1px solid var(--border);border-radius:14px;padding:16px;background:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px}
-    .stat-code{font-size:1rem;font-weight:700;color:var(--ing-orange);}
-    .stat-count{font-size:2rem;font-weight:700;color:var(--navy-900);line-height:1}
-    .stat-desc{font-size:.9rem;color:var(--muted);flex:1}
-    .stat-metrics{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap:2px}
-    .stat-metrics span{display:flex;justify-content:space-between}
-    .stats-status{font-size:.85rem;color:var(--muted)}
     @media(max-width:768px){.prediction-row{flex-direction:column;}}
   </style>
 </head>
@@ -179,7 +174,7 @@
         <p class="locked-note">Interactive prompting is disabled in the UI. Use the API endpoints instead.</p>
         <div class="navy-panel card" style="margin-top:12px">
           <div class="hint">Prediction</div>
-          <textarea id="predict-output" class="output" readonly spellcheck="false" tabindex="-1" style="min-height:140px; caret-color: transparent;"></textarea>
+          <textarea id="predict-output" class="output" readonly spellcheck="false" tabindex="0" style="caret-color: transparent;"></textarea>
         </div>
       </div>
 
@@ -187,18 +182,10 @@
         <h3>De-Scrubbed Result</h3>
         <div class="navy-panel card" style="margin-top:12px">
           <div class="hint">Re-composed (placeholders restored)</div>
-          <textarea id="descrub-output" class="output" readonly spellcheck="false" tabindex="-1" style="min-height:140px; caret-color: transparent;"></textarea>
+          <textarea id="descrub-output" class="output" readonly spellcheck="false" tabindex="0" style="caret-color: transparent;"></textarea>
         </div>
       </div>
     </div>
-
-    <section class="card stats-card">
-      <div class="stats-header">
-        <h3>Sensitivity category coverage</h3>
-        <span class="stats-status" id="category-stats-status">Loading statistics…</span>
-      </div>
-      <div class="stats-grid" id="category-stats"></div>
-    </section>
 
     <p class="footer">© ING – Prompt Scrubber UI • Need raw API? Open <a class="link" href="/docs">/docs</a></p>
   </div>
@@ -219,8 +206,6 @@
     const userEmail = document.getElementById("user-email");
     const userRole = document.getElementById("user-role");
     const predictPrompt = document.getElementById("predict-prompt");
-    const statsContainer = document.getElementById("category-stats");
-    const statsStatus = document.getElementById("category-stats-status");
   const auditOpenBtn = document.getElementById("audit-open-btn");
   const auditDownloadBtn = document.getElementById("audit-download-btn");
 
@@ -234,72 +219,12 @@
     const descrubOutput = document.getElementById("descrub-output");
     let currentScrubSessionId = null;
 
-    [predictOutput, descrubOutput].forEach((el) => {
-      el.addEventListener("focus", () => el.blur());
-    });
-
   predictPrompt.setAttribute("readonly", "true");
+  predictPrompt.setAttribute("tabindex", "0");
   predictModel.setAttribute("disabled", "true");
 
     auditOpenBtn.style.display = "none";
     auditDownloadBtn.style.display = "none";
-
-    const MASK_METADATA = {
-      EMAIL: { label: "Email addresses", placeholder: "[EMAIL]" },
-      PHONE_EU: { label: "Phone numbers", placeholder: "[PHONE]" },
-      SSN_LIKE: { label: "SSN-like identifiers", placeholder: "[SSN]" },
-      IBAN: { label: "IBANs", placeholder: "[IBAN]" },
-      ACCOUNT_NUM: { label: "Account numbers", placeholder: "[ACCOUNT_NUMBER]" },
-      AMOUNT: { label: "Amounts", placeholder: "[AMOUNT]" },
-      DOB: { label: "Dates of birth", placeholder: "[DATE_OF_BIRTH]" },
-      NATIONAL_ID: { label: "National IDs", placeholder: "[NATIONAL_ID]" },
-      BIOMETRIC: { label: "Biometric references", placeholder: "[BIOMETRIC_DATA]" },
-    };
-
-    function resetMaskSummary() {
-      statsContainer.innerHTML = "";
-      statsStatus.textContent = "Run a prediction to see sensitive masks.";
-      statsStatus.style.color = "#59657a";
-    }
-
-    function renderMaskSummary(summary) {
-      statsContainer.innerHTML = "";
-
-      const entries = Object.entries(summary || {})
-        .filter(([, count]) => Number.isFinite(count) && count > 0)
-        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-
-      if (!entries.length) {
-        statsStatus.textContent = "No sensitive masks detected in the last prompt.";
-        statsStatus.style.color = "#59657a";
-        return;
-      }
-
-      const total = entries.reduce((acc, [, count]) => acc + count, 0);
-      statsStatus.textContent = `Detected ${total} sensitive fragment${total !== 1 ? "s" : ""} in the last prompt.`;
-      statsStatus.style.color = "#001a72";
-
-      entries.forEach(([maskType, count]) => {
-        const meta = MASK_METADATA[maskType] || {
-          label: maskType.replace(/_/g, " "),
-          placeholder: "–",
-        };
-
-        const tile = document.createElement("div");
-        tile.className = "stat-tile";
-        tile.innerHTML = `
-          <span class="stat-code">${maskType}</span>
-          <span class="stat-count">${count}</span>
-          <span class="stat-desc">${meta.label}</span>
-          <div class="stat-metrics">
-            <span><span>Placeholder</span><strong>${meta.placeholder}</strong></span>
-          </div>
-        `;
-        statsContainer.appendChild(tile);
-      });
-    }
-
-    resetMaskSummary();
 
     // Toggle register/login cards
     document.getElementById("show-register").onclick = () => {
@@ -309,7 +234,6 @@
     document.getElementById("show-login").onclick = () => {
       authCard.style.display = "block";
       registerCard.style.display = "none";
-      resetMaskSummary();
     };
 
     // Register
@@ -408,7 +332,6 @@
       currentScrubSessionId = null;
       predictOutput.value = "";
       descrubOutput.value = "";
-      resetMaskSummary();
       auditOpenBtn.style.display = "none";
       auditDownloadBtn.style.display = "none";
     });
@@ -518,8 +441,6 @@
       try {
         predictOutput.value = "Generating...";
         descrubOutput.value = "";
-        statsStatus.textContent = "Analyzing prompt for sensitive masks…";
-        statsStatus.style.color = "#59657a";
 
         const response = await fetch("/predict", {
           method: "POST",
@@ -541,15 +462,13 @@
 
         predictOutput.value = payload.prediction || "";
 
-        renderMaskSummary(payload.mask_summary || {});
-
         if (!currentScrubSessionId) {
           descrubOutput.value = "No scrub session available. Scrub text first.";
           return;
         }
 
-        const textToRestore = predictPrompt.value || "";
-        if (!textToRestore) {
+        const predictionToRestore = predictOutput.value || "";
+        if (!predictionToRestore) {
           descrubOutput.value = "Nothing to de-scrub.";
           return;
         }
@@ -562,7 +481,7 @@
               "Authorization": "Bearer " + token,
             },
             body: JSON.stringify({
-              text: textToRestore,
+              text: predictionToRestore,
               session_id: currentScrubSessionId,
             }),
           });
@@ -582,9 +501,6 @@
         predictOutput.value = "";
         descrubOutput.value = "";
         alert(err.message || "Prediction failed");
-        statsStatus.textContent = "Unable to analyze sensitive masks.";
-        statsStatus.style.color = "#d13438";
-        statsContainer.innerHTML = "";
       }
     });
 

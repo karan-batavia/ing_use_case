@@ -119,6 +119,8 @@ class PredictionResponse(BaseModel):
     session_id: str
     processed_at: datetime
     mask_summary: Dict[str, int] = Field(default_factory=dict)
+    category: Optional[str] = None
+    category_distribution: Dict[str, float] = Field(default_factory=dict)
 
 
 class CategoryStat(BaseModel):
@@ -452,6 +454,23 @@ async def predict(
         classifier = get_classifier_service()
         incoming_session = payload.session_id
 
+        prompt_mask_summary: Dict[str, int] = {}
+        classification_result = None
+        if incoming_session:
+            stored_redaction = mongodb_service.get_redaction_record_by_session(incoming_session)
+            if stored_redaction:
+                for detection in stored_redaction.get("detections", []) or []:
+                    mask_type = detection.get("type")
+                    if mask_type:
+                        prompt_mask_summary[mask_type] = prompt_mask_summary.get(mask_type, 0) + 1
+
+                original_text = stored_redaction.get("original_text")
+                if original_text:
+                    try:
+                        classification_result = classifier.classify_text(original_text)
+                    except Exception as classify_err:
+                        print(f"[PREDICT] Classification failed for session {incoming_session}: {classify_err}")
+
         session_id = incoming_session or str(uuid.uuid4())
         raw_prediction = await asyncio.wait_for(
             gemini.generate_prediction(
@@ -467,14 +486,35 @@ async def predict(
         redaction = classifier.redact_sensitive_info(raw_prediction)
         prediction = redaction.redacted_text
 
+        mask_summary = prompt_mask_summary or (redaction.detection_summary or {})
+
+        if classification_result is None:
+            classification_source = payload.prompt or prediction
+            if classification_source:
+                try:
+                    classification_result = classifier.classify_text(classification_source)
+                except Exception as classify_err:
+                    print(f"[PREDICT] Classification failed: {classify_err}")
+
+        category_prediction = None
+        category_distribution: Dict[str, float] = {}
+        if classification_result:
+            category_prediction = classification_result.prediction
+            category_distribution = classification_result.probabilities or {}
+
         base = current_user.get("email", "user").replace("@", "_")
         pred_path = save_document("prediction", f"{base}_pred", prediction)
 
         updates = {
             "prediction_file": pred_path,
-            "mask_summary": redaction.detection_summary,
+            "mask_summary": mask_summary,
             "prediction_model": payload.model_name,
         }
+
+        if category_prediction:
+            updates["category_prediction"] = category_prediction
+        if category_distribution:
+            updates["category_distribution"] = category_distribution
 
         updated = False
         if incoming_session:
@@ -493,8 +533,10 @@ async def predict(
                 "scrubbed_file": "",
                 "prediction_file": pred_path,
                 "descrubbed_file": "",
-                "mask_summary": redaction.detection_summary,
+                "mask_summary": mask_summary,
                 "prediction_model": payload.model_name,
+                "category_prediction": category_prediction,
+                "category_distribution": category_distribution,
             })
 
         return PredictionResponse(
@@ -503,7 +545,9 @@ async def predict(
             success=True,
             session_id=session_id,
             processed_at=datetime.now(),
-            mask_summary=redaction.detection_summary or {},
+            mask_summary=mask_summary,
+            category=category_prediction,
+            category_distribution=category_distribution,
         )
     except asyncio.TimeoutError:
         raise HTTPException(status_code=504, detail="Prediction timed out")
