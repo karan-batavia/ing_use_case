@@ -32,6 +32,7 @@ class TokenResponse(BaseModel):
     access_token: str
     token_type: str
     user_id: str
+    role: str
 
 
 class TokenData(BaseModel):
@@ -55,6 +56,7 @@ class UserCreate(BaseModel):
     password: str
     full_name: Optional[str] = None
     is_admin: bool = False
+    role: Optional[str] = "user"
 
     @field_validator("password")
     def validate_password(cls, v):

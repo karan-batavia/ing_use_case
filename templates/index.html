@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ING Prompt Scrubber</title>
+  <link rel="icon" href="/static/img/ing.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ing-orange:#ff6200; --ing-orange-600:#e65900; --ing-orange-700:#c94f00;
+      --navy-900:#001a72; --peach-50:#fff3ec; --peach-100:#ffe8dc; --peach-200:#ffe0d0;
+      --bg:var(--peach-100); --card:#fff; --text:#1a2433; --muted:#59657a; --border:rgba(0,0,0,.08);
+      --ring:rgba(255,98,0,.35); --shadow:0 10px 30px rgba(0,0,0,.08); --radius:16px;
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);
+      background:linear-gradient(180deg,var(--peach-200) 0%,var(--peach-50) 100%);}
+    .page{max-width:1200px;margin:0 auto;padding:28px 18px 60px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:700;color:var(--navy-900)}
+    .brand .dot{width:10px;height:10px;border-radius:99px;background:var(--ing-orange)}
+    .logo{height:32px;object-fit:contain}
+    .rightbar{display:flex;align-items:center;gap:10px}
+    .user-pill{display:none;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);
+      padding:8px 12px;border-radius:999px;color:var(--navy-900);font-weight:600}
+    .role{font-size:.85rem;color:var(--muted);font-weight:500}
+    .btn{appearance:none;border:none;cursor:pointer;border-radius:999px;padding:10px 16px;font-weight:600;
+      display:inline-flex;align-items:center;gap:.5rem;transition:transform .06s,box-shadow .15s,background .15s}
+    .btn-primary{background:var(--ing-orange);color:#fff;box-shadow:0 6px 16px rgba(255,98,0,.35)}
+    .btn-primary:hover{background:var(--ing-orange-600)}
+    .btn-ghost{background:transparent;color:var(--navy-900);border:1px dashed rgba(0,0,0,.15)}
+    .btn-quiet{background:#fff;border:1px solid var(--border);color:var(--navy-900)}
+    .btn:active{transform:translateY(1px)}
+    .btn-small{padding:8px 12px}
+    .hero{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;
+      border:1px solid var(--border);background:#fff7f1;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .hero h1{margin:0;font-size:clamp(20px,2vw,26px);color:var(--ing-orange)}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin-top:20px}
+    .col-3{grid-column:span 3} .col-4{grid-column:span 4}
+    .col-6{grid-column:span 6} .col-8{grid-column:span 8} .col-12{grid-column:span 12}
+    @media (max-width:1024px){.col-3,.col-4,.col-6,.col-8{grid-column:span 12}}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .card h3{margin:0 0 10px;font-size:18px;font-weight:700;color:var(--navy-900)}
+    .hint{color:var(--muted);font-size:.92rem}
+  .navy-panel{background:var(--navy-900);color:#fff;border-color:rgba(255,255,255,.12)}
+  .card-locked{background:var(--card);color:var(--text);border-color:var(--border);box-shadow:var(--shadow)}
+  .card-locked h3{color:var(--navy-900)}
+  .card-locked label{color:var(--muted)}
+  .card-locked input,
+  .card-locked button{background:#fff;color:var(--navy-900);border:1px solid var(--border)}
+  .card-locked .locked-note{color:var(--muted);font-size:.9rem;margin-top:8px}
+  .card-locked button{cursor:pointer;opacity:1;pointer-events:auto}
+  .card-locked input,
+  .card-locked textarea{pointer-events:none}
+  .card-locked button{pointer-events:auto}
+  .prompt-locked{background:var(--navy-900);color:#fff;border:1px solid rgba(0,20,114,.35)}
+  .prompt-locked::placeholder{color:rgba(255,255,255,.6)}
+    label{display:block;font-size:.92rem;color:var(--muted);margin-bottom:6px}
+    input,textarea,select{width:100%;padding:12px 14px;border:1px solid var(--border);
+      border-radius:12px;background:#fff;font-size:14px;outline:none;transition:box-shadow .15s,border-color .15s}
+    textarea{min-height:160px;resize:vertical}
+    input:focus,textarea:focus,select:focus{border-color:var(--ing-orange);box-shadow:0 0 0 4px var(--ring)}
+    .btn-block{width:100%;justify-content:center}
+    .kpi{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+    .pill{background:#fff;color:var(--navy-900);border:1px solid var(--border);padding:8px 12px;border-radius:999px;font-weight:600}
+    .pill--orange{background:#fff1e9;color:var(--ing-orange);border-color:rgba(255,98,0,.25)}
+    .output{background:#0d246f;color:#fff;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px;min-height:120px;white-space:pre-wrap}
+    .footer{text-align:center;color:var(--muted);margin-top:38px;font-size:.9rem}
+    a.link{color:var(--ing-orange);text-decoration:none} a.link:hover{text-decoration:underline}
+    .prediction-row { display:flex; gap:18px; align-items:flex-start; margin-top:18px; }
+    .prediction-col { flex:1; }
+    .stats-card{margin-top:28px;}
+    .stats-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:16px}
+    .stat-tile{border:1px solid var(--border);border-radius:14px;padding:16px;background:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px}
+    .stat-code{font-size:1rem;font-weight:700;color:var(--ing-orange);}
+    .stat-count{font-size:2rem;font-weight:700;color:var(--navy-900);line-height:1}
+    .stat-desc{font-size:.9rem;color:var(--muted);flex:1}
+    .stat-metrics{font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+    .stat-metrics span{display:flex;justify-content:space-between}
+    .stats-status{font-size:.85rem;color:var(--muted)}
+    @media(max-width:768px){.prediction-row{flex-direction:column;}}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div class="brand"><span class="dot"></span><span>Prompt&nbsp;Scrubber</span></div>
+      <div class="rightbar">
+        <div id="user-pill" class="user-pill">
+          <img src="/static/img/ing.png" alt="ING" style="height:16px" />
+          <span id="user-email">signed@out</span>
+          <span class="role" id="user-role">guest</span>
+        </div>
+        <button id="logout-btn" class="btn btn-quiet btn-small" style="display:none">Logout</button>
+        <img class="logo" src="/static/img/ing.png" alt="ING">
+      </div>
+    </div>
+
+    <section class="hero">
+      <div>
+        <h1>The de-scrubbing process</h1>
+        <p class="hint">Scrub before LLMs, keep mappings in MongoDB, re-compose safely.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-ghost" href="/docs">API docs</a>
+        <button id="audit-open-btn" class="btn btn-primary">Open Audit Log</button>
+        <button id="audit-download-btn" class="btn btn-ghost">Download Log</button>
+      </div>
+    </section>
+
+    <div class="grid">
+      <!-- Sign in -->
+      <div class="card col-4" id="auth-card">
+        <h3>Sign in</h3>
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="you@company.com" />
+        <label for="password" style="margin-top:10px">Password</label>
+        <input id="password" type="password" placeholder="••••••••" />
+        <button id="login-btn" class="btn btn-primary btn-block" style="margin-top:12px">Get Token</button>
+        <div class="hint" style="margin-top:10px">Token is reused for all API calls.</div>
+        <div id="login-status" class="hint" style="margin-top:10px"></div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:16px 0">
+        <button id="show-register" class="btn btn-ghost btn-block">Need an account? Create one</button>
+      </div>
+
+      <!-- Create account -->
+      <div class="card col-4" id="register-card" style="display:none">
+        <h3>Create account</h3>
+        <label for="reg-name">Full name</label>
+        <input id="reg-name" type="text" placeholder="Jane Doe" />
+        <label for="reg-email" style="margin-top:10px">Email</label>
+        <input id="reg-email" type="email" placeholder="jane@company.com" />
+        <label for="reg-role" style="margin-top:10px">Role</label>
+        <select id="reg-role">
+          <option value="user" selected>User</option>
+          <option value="auditor">Auditor</option>
+          <option value="admin">Admin</option>
+        </select>
+        <label for="reg-pass" style="margin-top:10px">Password</label>
+        <input id="reg-pass" type="password" placeholder="••••••••" />
+        <button id="register-btn" class="btn btn-primary btn-block" style="margin-top:12px">Create Account</button>
+        <div id="register-status" class="hint" style="margin-top:10px"></div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:16px 0">
+        <button id="show-login" class="btn btn-ghost btn-block">Back to sign in</button>
+      </div>
+    </div>
+
+    <!-- Row 2: Scrub Text & File -->
+    <div class="grid">
+      <div class="card col-6">
+        <h3>Scrub Text (via /scrub)</h3>
+        <label for="scrub-input">Input text</label>
+        <textarea id="scrub-input" placeholder="Paste customer text here…"></textarea>
+        <button id="scrub-btn" class="btn btn-primary" style="margin-top:10px">Scrub Text</button>
+      </div>
+
+      <div class="card col-6">
+        <h3>Scrub File (via /scrub-file)</h3>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <input id="file-input" type="file" />
+          <button id="scrub-file-btn" class="btn btn-primary">Upload & Scrub</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: Prediction + De-scrub -->
+    <div class="prediction-row">
+      <div class="card prediction-col card-locked">
+        <h3>LLM Prediction (via /predict)</h3>
+        <label for="predict-prompt">Prompt</label>
+  <textarea id="predict-prompt" class="prompt-locked" placeholder="Ask the model something…"></textarea>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px">
+          <input id="predict-model" type="text" value="gemini-pro" style="max-width:260px" />
+          <button id="predict-btn" class="btn btn-primary">Generate</button>
+        </div>
+        <p class="locked-note">Interactive prompting is disabled in the UI. Use the API endpoints instead.</p>
+        <div class="navy-panel card" style="margin-top:12px">
+          <div class="hint">Prediction</div>
+          <textarea id="predict-output" class="output" readonly spellcheck="false" tabindex="-1" style="min-height:140px; caret-color: transparent;"></textarea>
+        </div>
+      </div>
+
+      <div class="card prediction-col">
+        <h3>De-Scrubbed Result</h3>
+        <div class="navy-panel card" style="margin-top:12px">
+          <div class="hint">Re-composed (placeholders restored)</div>
+          <textarea id="descrub-output" class="output" readonly spellcheck="false" tabindex="-1" style="min-height:140px; caret-color: transparent;"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <section class="card stats-card">
+      <div class="stats-header">
+        <h3>Sensitivity category coverage</h3>
+        <span class="stats-status" id="category-stats-status">Loading statistics…</span>
+      </div>
+      <div class="stats-grid" id="category-stats"></div>
+    </section>
+
+    <p class="footer">© ING – Prompt Scrubber UI • Need raw API? Open <a class="link" href="/docs">/docs</a></p>
+  </div>
+
+  <script>
+    // Elements
+    const authCard = document.getElementById("auth-card");
+    const registerCard = document.getElementById("register-card");
+    const loginBtn = document.getElementById("login-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+    const registerBtn = document.getElementById("register-btn");
+    const registerStatus = document.getElementById("register-status");
+    const registerEmail = document.getElementById("reg-email");
+    const registerPassword = document.getElementById("reg-pass");
+    const registerName = document.getElementById("reg-name");
+    const registerRole = document.getElementById("reg-role");
+    const userPill = document.getElementById("user-pill");
+    const userEmail = document.getElementById("user-email");
+    const userRole = document.getElementById("user-role");
+    const predictPrompt = document.getElementById("predict-prompt");
+    const statsContainer = document.getElementById("category-stats");
+    const statsStatus = document.getElementById("category-stats-status");
+  const auditOpenBtn = document.getElementById("audit-open-btn");
+  const auditDownloadBtn = document.getElementById("audit-download-btn");
+
+    const scrubBtn = document.getElementById("scrub-btn");
+    const scrubInput = document.getElementById("scrub-input");
+    const scrubFileBtn = document.getElementById("scrub-file-btn");
+    const fileInput = document.getElementById("file-input");
+    const predictBtn = document.getElementById("predict-btn");
+    const predictOutput = document.getElementById("predict-output");
+    const predictModel = document.getElementById("predict-model");
+    const descrubOutput = document.getElementById("descrub-output");
+    let currentScrubSessionId = null;
+
+    [predictOutput, descrubOutput].forEach((el) => {
+      el.addEventListener("focus", () => el.blur());
+    });
+
+  predictPrompt.setAttribute("readonly", "true");
+  predictModel.setAttribute("disabled", "true");
+
+    auditOpenBtn.style.display = "none";
+    auditDownloadBtn.style.display = "none";
+
+    const MASK_METADATA = {
+      EMAIL: { label: "Email addresses", placeholder: "[EMAIL]" },
+      PHONE_EU: { label: "Phone numbers", placeholder: "[PHONE]" },
+      SSN_LIKE: { label: "SSN-like identifiers", placeholder: "[SSN]" },
+      IBAN: { label: "IBANs", placeholder: "[IBAN]" },
+      ACCOUNT_NUM: { label: "Account numbers", placeholder: "[ACCOUNT_NUMBER]" },
+      AMOUNT: { label: "Amounts", placeholder: "[AMOUNT]" },
+      DOB: { label: "Dates of birth", placeholder: "[DATE_OF_BIRTH]" },
+      NATIONAL_ID: { label: "National IDs", placeholder: "[NATIONAL_ID]" },
+      BIOMETRIC: { label: "Biometric references", placeholder: "[BIOMETRIC_DATA]" },
+    };
+
+    function resetMaskSummary() {
+      statsContainer.innerHTML = "";
+      statsStatus.textContent = "Run a prediction to see sensitive masks.";
+      statsStatus.style.color = "#59657a";
+    }
+
+    function renderMaskSummary(summary) {
+      statsContainer.innerHTML = "";
+
+      const entries = Object.entries(summary || {})
+        .filter(([, count]) => Number.isFinite(count) && count > 0)
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+      if (!entries.length) {
+        statsStatus.textContent = "No sensitive masks detected in the last prompt.";
+        statsStatus.style.color = "#59657a";
+        return;
+      }
+
+      const total = entries.reduce((acc, [, count]) => acc + count, 0);
+      statsStatus.textContent = `Detected ${total} sensitive fragment${total !== 1 ? "s" : ""} in the last prompt.`;
+      statsStatus.style.color = "#001a72";
+
+      entries.forEach(([maskType, count]) => {
+        const meta = MASK_METADATA[maskType] || {
+          label: maskType.replace(/_/g, " "),
+          placeholder: "–",
+        };
+
+        const tile = document.createElement("div");
+        tile.className = "stat-tile";
+        tile.innerHTML = `
+          <span class="stat-code">${maskType}</span>
+          <span class="stat-count">${count}</span>
+          <span class="stat-desc">${meta.label}</span>
+          <div class="stat-metrics">
+            <span><span>Placeholder</span><strong>${meta.placeholder}</strong></span>
+          </div>
+        `;
+        statsContainer.appendChild(tile);
+      });
+    }
+
+    resetMaskSummary();
+
+    // Toggle register/login cards
+    document.getElementById("show-register").onclick = () => {
+      authCard.style.display = "none";
+      registerCard.style.display = "block";
+    };
+    document.getElementById("show-login").onclick = () => {
+      authCard.style.display = "block";
+      registerCard.style.display = "none";
+      resetMaskSummary();
+    };
+
+    // Register
+    registerBtn.addEventListener("click", async () => {
+      const email = (registerEmail.value || "").trim();
+      const password = registerPassword.value || "";
+      const fullName = (registerName.value || "").trim();
+      const role = (registerRole.value || "user").trim() || "user";
+
+      if (!email || !password) {
+        registerStatus.textContent = "Email and password are required";
+        registerStatus.style.color = "#d13438";
+        return;
+      }
+
+      registerStatus.textContent = "Creating account...";
+      registerStatus.style.color = "#001a72";
+
+      try {
+        const response = await fetch("/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            password,
+            full_name: fullName || undefined,
+            role,
+          }),
+        });
+
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          const message = payload.detail || payload.error || "Registration failed";
+          throw new Error(message);
+        }
+
+        registerStatus.textContent = "Account created. You can sign in now.";
+        registerStatus.style.color = "#107c10";
+        registerEmail.value = "";
+        registerPassword.value = "";
+        registerName.value = "";
+        registerRole.value = "user";
+
+        authCard.style.display = "block";
+        registerCard.style.display = "none";
+      } catch (err) {
+        registerStatus.textContent = err.message || "Registration failed";
+        registerStatus.style.color = "#d13438";
+      }
+    });
+
+    // Login
+    loginBtn.addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const statusDiv = document.getElementById("login-status");
+
+      try {
+        const res = await fetch("/auth/login", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({email,password})
+        });
+        if(!res.ok) throw await res.json();
+        const data = await res.json();
+        localStorage.setItem("token", data.access_token);
+
+        // Show user pill & logout, hide auth card
+        authCard.style.display = "none";
+        registerCard.style.display = "none";
+        userPill.style.display = "flex";
+        logoutBtn.style.display = "inline-flex";
+        userEmail.textContent = email;
+        const normalizedRole = (data.role || "user").toLowerCase();
+        userRole.textContent = normalizedRole;
+
+  const canViewAudit = normalizedRole === "admin";
+        auditOpenBtn.style.display = canViewAudit ? "inline-flex" : "none";
+        auditDownloadBtn.style.display = canViewAudit ? "inline-flex" : "none";
+
+        statusDiv.textContent = "";
+      } catch(err) {
+        statusDiv.textContent = err.detail || "Login failed";
+      }
+    });
+
+    // Logout
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("token");
+      authCard.style.display = "block";
+      registerCard.style.display = "none";
+      userPill.style.display = "none";
+      logoutBtn.style.display = "none";
+      scrubInput.value = "";
+      predictPrompt.value = "";
+      currentScrubSessionId = null;
+      predictOutput.value = "";
+      descrubOutput.value = "";
+      resetMaskSummary();
+      auditOpenBtn.style.display = "none";
+      auditDownloadBtn.style.display = "none";
+    });
+
+    // Scrub Text -> put result in LLM prompt
+    scrubBtn.addEventListener("click", async () => {
+      const text = scrubInput.value;
+      const token = localStorage.getItem("token");
+      if(!token) return alert("Login required");
+
+      const res = await fetch("/scrub", {
+        method: "POST",
+        headers: {"Content-Type":"application/json","Authorization":"Bearer "+token},
+        body: JSON.stringify({text})
+      });
+      if(!res.ok) return alert("Scrub failed");
+      const data = await res.json();
+      predictPrompt.value = data.scrubbed_text;
+      currentScrubSessionId = data.session_id || null;
+    });
+
+    // Open Audit Log
+    auditOpenBtn.addEventListener("click", async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return alert("Login required");
+
+      try {
+        const response = await fetch("/audit/log", {
+          headers: { Authorization: "Bearer " + token },
+        });
+
+        if (!response.ok) {
+          const payload = await response.json().catch(() => ({}));
+          const message = payload.detail || payload.error || "Unable to open audit log";
+          throw new Error(message);
+        }
+
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        window.open(url, "_blank", "noopener");
+        setTimeout(() => URL.revokeObjectURL(url), 60_000);
+      } catch (error) {
+        alert(error.message || "Unable to open audit log");
+      }
+    });
+
+    // Download Audit Log
+    auditDownloadBtn.addEventListener("click", async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return alert("Login required");
+
+      try {
+        const response = await fetch("/audit/log/download", {
+          headers: { Authorization: "Bearer " + token },
+        });
+
+        if (!response.ok) {
+          const payload = await response.json().catch(() => ({}));
+          const message = payload.detail || payload.error || "Unable to download audit log";
+          throw new Error(message);
+        }
+
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = "audit_log.ndjson";
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 60_000);
+      } catch (error) {
+        alert(error.message || "Unable to download audit log");
+      }
+    });
+
+
+    // Scrub File -> put result in LLM prompt
+    scrubFileBtn.addEventListener("click", async () => {
+      const file = fileInput.files[0];
+      if(!file) return alert("Choose a file");
+      const token = localStorage.getItem("token");
+      if(!token) return alert("Login required");
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/scrub-file", {
+        method: "POST",
+        headers: {"Authorization":"Bearer "+token},
+        body: formData
+      });
+      if(!res.ok) return alert("File scrub failed");
+      const data = await res.json();
+      predictPrompt.value = data.scrubbed_text;
+      currentScrubSessionId = data.session_id || null;
+    });
+
+    // Generate prediction (and optional de-scrub for admins)
+    predictBtn.addEventListener("click", async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return alert("Login required");
+
+      const prompt = (predictPrompt.value || "").trim();
+      if (!prompt) return alert("Enter a prompt first");
+
+      try {
+        predictOutput.value = "Generating...";
+        descrubOutput.value = "";
+        statsStatus.textContent = "Analyzing prompt for sensitive masks…";
+        statsStatus.style.color = "#59657a";
+
+        const response = await fetch("/predict", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+          },
+          body: JSON.stringify({
+            prompt,
+            model_name: (predictModel.value || "").trim() || undefined,
+            session_id: currentScrubSessionId || undefined,
+          }),
+        });
+
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(payload.detail || "Prediction failed");
+        }
+
+        predictOutput.value = payload.prediction || "";
+
+        renderMaskSummary(payload.mask_summary || {});
+
+        if (!currentScrubSessionId) {
+          descrubOutput.value = "No scrub session available. Scrub text first.";
+          return;
+        }
+
+        const textToRestore = predictPrompt.value || "";
+        if (!textToRestore) {
+          descrubOutput.value = "Nothing to de-scrub.";
+          return;
+        }
+
+        try {
+          const descrubResponse = await fetch("/descrub", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token,
+            },
+            body: JSON.stringify({
+              text: textToRestore,
+              session_id: currentScrubSessionId,
+            }),
+          });
+
+          const descrubPayload = await descrubResponse.json().catch(() => ({}));
+          if (descrubResponse.ok) {
+            descrubOutput.value = descrubPayload.descrubbed_text || "";
+          } else if (descrubResponse.status === 404) {
+            descrubOutput.value = "No matching scrubbed text found to restore.";
+          } else {
+            descrubOutput.value = descrubPayload.detail || "Unable to de-scrub";
+          }
+        } catch (deErr) {
+          descrubOutput.value = deErr.message || "Unable to de-scrub";
+        }
+      } catch (err) {
+        predictOutput.value = "";
+        descrubOutput.value = "";
+        alert(err.message || "Prediction failed");
+        statsStatus.textContent = "Unable to analyze sensitive masks.";
+        statsStatus.style.color = "#d13438";
+        statsContainer.innerHTML = "";
+      }
+    });
+
+  </script>
+</body>
+</html>

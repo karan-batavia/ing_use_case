@@ -1,0 +1,264 @@
+<!doctype html><html><head><meta charset='utf-8'><title>Audit Log</title>
+<style>
+body{font-family:Inter,system-ui,Arial,sans-serif;background:#fff7f1;color:#1a2433;padding:28px;}
+h2{color:#ff6200;margin-bottom:12px;}
+table{width:100%;border-collapse:collapse;box-shadow:0 4px 12px rgba(0,0,0,0.1);border-radius:12px;overflow:hidden;}
+th,td{padding:10px 14px;text-align:left;}
+th{background:#001a72;color:white;font-weight:600;}
+tr:nth-child(even){background:#fff3ec;}
+tr:hover{background:#ffe0d0;transition:0.2s;}
+a{color:#ff6200;text-decoration:none;font-weight:600;}
+a:hover{text-decoration:underline;}
+.footer{margin-top:20px;color:#59657a;font-size:0.9rem;text-align:center;}
+</style></head><body>
+<h2>Audit Log (137 entries)</h2>
+<table>
+<tr><th>Timestamp</th><th>Action</th><th>User</th><th>Original</th><th>Scrubbed</th><th>Prediction</th><th>Descrubbed</th><th>Client IP</th></tr>
+<tr><td>2025-10-09T22:29:28.829362+00:00</td><td>login</td><td>meand@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:27:44.706663+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:24:09.604792+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/ing_20251010_002409.png' target='_blank'>ing_20251010_002409.png</a></td><td><a href='/audit/file/scrubbed/ing_scrubbed_20251010_002409.txt' target='_blank'>ing_scrubbed_20251010_002409.txt</a></td><td><a href='/audit/file/prediction/20251010_002415_janedoe_becode.be_pred.txt' target='_blank'>20251010_002415_janedoe_becode.be_pred.txt</a></td><td><a href='/audit/file/descrubbed/20251010_002415_janedoe_becode.be_descrub.txt' target='_blank'>20251010_002415_janedoe_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T22:23:55.781128+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:23:02.887626+00:00</td><td>login</td><td>meand@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:21:48.681916+00:00</td><td>login</td><td>meand@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:21:38.621516+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:21:27.945603+00:00</td><td>login</td><td>elobid@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:20:59.077635+00:00</td><td>login</td><td>meand@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:20:47.622728+00:00</td><td>login</td><td>elobid@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:20:35.988537+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:20:19.560991+00:00</td><td>login</td><td>elobid@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:17:12.384486+00:00</td><td>login</td><td>meand@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:16:46.005225+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:13:58.630661+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/document.png' target='_blank'>document.png</a></td><td><a href='/audit/file/scrubbed/document_scrubbed.txt' target='_blank'>document_scrubbed.txt</a></td><td><a href='/audit/file/prediction/20251010_001407_janedoe_becode.be_pred.txt' target='_blank'>20251010_001407_janedoe_becode.be_pred.txt</a></td><td><a href='/audit/file/descrubbed/20251010_001407_janedoe_becode.be_descrub.txt' target='_blank'>20251010_001407_janedoe_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T22:13:34.081218+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251010_001334_janedoe_becode.be_orig.txt' target='_blank'>20251010_001334_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251010_001334_janedoe_becode.be_scrub.txt' target='_blank'>20251010_001334_janedoe_becode.be_scrub.txt</a></td><td><a href='/audit/file/prediction/20251010_001342_janedoe_becode.be_pred.txt' target='_blank'>20251010_001342_janedoe_becode.be_pred.txt</a></td><td><a href='/audit/file/descrubbed/20251010_001342_janedoe_becode.be_descrub.txt' target='_blank'>20251010_001342_janedoe_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T22:13:29.844680+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:11:27.193940+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251010_001127_janedoe_becode.be_orig.txt' target='_blank'>20251010_001127_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251010_001127_janedoe_becode.be_scrub.txt' target='_blank'>20251010_001127_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:11:07.800747+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:07:29.387507+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:07:20.948637+00:00</td><td>login</td><td>meand@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:04:50.785952+00:00</td><td>register</td><td>meand@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:04:01.704113+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T22:03:41.276282+00:00</td><td>scrub_text</td><td>elobid@becode.be</td><td><a href='/audit/file/original/20251010_000341_elobid_becode.be_orig.txt' target='_blank'>20251010_000341_elobid_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251010_000341_elobid_becode.be_scrub.txt' target='_blank'>20251010_000341_elobid_becode.be_scrub.txt</a></td><td><a href='/audit/file/prediction/20251010_000346_elobid_becode.be_pred.txt' target='_blank'>20251010_000346_elobid_becode.be_pred.txt</a></td><td><a href='/audit/file/descrubbed/20251010_000346_elobid_becode.be_descrub.txt' target='_blank'>20251010_000346_elobid_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T22:03:27.851997+00:00</td><td>login</td><td>elobid@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T21:45:59.388307+00:00</td><td>scrub_text</td><td>elobid@becode.be</td><td><a href='/audit/file/original/20251009_234559_elobid_becode.be_orig.txt' target='_blank'>20251009_234559_elobid_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_234559_elobid_becode.be_scrub.txt' target='_blank'>20251009_234559_elobid_becode.be_scrub.txt</a></td><td><a href='/audit/file/prediction/20251009_234606_elobid_becode.be_pred.txt' target='_blank'>20251009_234606_elobid_becode.be_pred.txt</a></td><td><a href='/audit/file/descrubbed/20251009_234606_elobid_becode.be_descrub.txt' target='_blank'>20251009_234606_elobid_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T21:45:48.226046+00:00</td><td>login</td><td>elobid@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T21:36:28.247812+00:00</td><td>scrub_text</td><td>elobid@becode.be</td><td><a href='/audit/file/original/20251009_233628_elobid_becode.be_orig.txt' target='_blank'>20251009_233628_elobid_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_233628_elobid_becode.be_scrub.txt' target='_blank'>20251009_233628_elobid_becode.be_scrub.txt</a></td><td><a href='/audit/file/prediction/20251009_233640_elobid_becode.be_pred.txt' target='_blank'>20251009_233640_elobid_becode.be_pred.txt</a></td><td><a href='/audit/file/descrubbed/20251009_233640_elobid_becode.be_descrub.txt' target='_blank'>20251009_233640_elobid_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T21:35:58.396197+00:00</td><td>login</td><td>elobid@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T21:22:49.387943+00:00</td><td>scrub_file</td><td>elobid@becode.be</td><td><a href='/audit/file/original/ing_20251009_232249.png' target='_blank'>ing_20251009_232249.png</a></td><td><a href='/audit/file/scrubbed/ing_scrubbed_20251009_232249.txt' target='_blank'>ing_scrubbed_20251009_232249.txt</a></td><td><a href='/audit/file/prediction/20251009_232254_elobid_becode.be_pred.txt' target='_blank'>20251009_232254_elobid_becode.be_pred.txt</a></td><td><a href='/audit/file/descrubbed/20251009_232254_elobid_becode.be_descrub.txt' target='_blank'>20251009_232254_elobid_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T21:22:22.161061+00:00</td><td>login</td><td>elobid@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T21:21:38.177541+00:00</td><td>register</td><td>elobid@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T21:16:59.911147+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/ing.png' target='_blank'>ing.png</a></td><td><a href='/audit/file/scrubbed/ing_scrubbed.txt' target='_blank'>ing_scrubbed.txt</a></td><td><a href='/audit/file/prediction/20251009_231703_janedoe_becode.be_pred.txt' target='_blank'>20251009_231703_janedoe_becode.be_pred.txt</a></td><td><a href='/audit/file/descrubbed/20251009_231703_janedoe_becode.be_descrub.txt' target='_blank'>20251009_231703_janedoe_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T21:16:36.240118+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_231636_janedoe_becode.be_orig.txt' target='_blank'>20251009_231636_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_231636_janedoe_becode.be_scrub.txt' target='_blank'>20251009_231636_janedoe_becode.be_scrub.txt</a></td><td><a href='/audit/file/prediction/20251009_231641_janedoe_becode.be_pred.txt' target='_blank'>20251009_231641_janedoe_becode.be_pred.txt</a></td><td><a href='/audit/file/descrubbed/20251009_231641_janedoe_becode.be_descrub.txt' target='_blank'>20251009_231641_janedoe_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T21:16:19.488250+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T21:03:26.035760+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_230326_janedoe_becode.be_orig.txt' target='_blank'>20251009_230326_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_230326_janedoe_becode.be_scrub.txt' target='_blank'>20251009_230326_janedoe_becode.be_scrub.txt</a></td><td><a href='/audit/file/prediction/20251009_230329_janedoe_becode.be_pred.txt' target='_blank'>20251009_230329_janedoe_becode.be_pred.txt</a></td><td><a href='/audit/file/descrubbed/20251009_230329_janedoe_becode.be_descrub.txt' target='_blank'>20251009_230329_janedoe_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T21:02:39.768164+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_230239_janedoe_becode.be_orig.txt' target='_blank'>20251009_230239_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_230239_janedoe_becode.be_scrub.txt' target='_blank'>20251009_230239_janedoe_becode.be_scrub.txt</a></td><td><a href='/audit/file/prediction/20251009_230244_janedoe_becode.be_pred.txt' target='_blank'>20251009_230244_janedoe_becode.be_pred.txt</a></td><td><a href='/audit/file/descrubbed/20251009_230244_janedoe_becode.be_descrub.txt' target='_blank'>20251009_230244_janedoe_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T21:02:26.597345+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:57:15.797853+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td></td><td><a href='/audit/file/prediction/20251009_225715_janedoe_becode.be_pred.txt' target='_blank'>20251009_225715_janedoe_becode.be_pred.txt</a></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:57:08.328535+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_225708_janedoe_becode.be_orig.txt' target='_blank'>20251009_225708_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_225708_janedoe_becode.be_scrub.txt' target='_blank'>20251009_225708_janedoe_becode.be_scrub.txt</a></td><td></td><td><a href='/audit/file/descrubbed/20251009_225715_janedoe_becode.be_descrub.txt' target='_blank'>20251009_225715_janedoe_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T20:56:58.041107+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:33:23.027949+00:00</td><td>descrub</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td><a href='/audit/file/descrubbed/20251009_223323_janedoe_becode.be_descrub.txt' target='_blank'>20251009_223323_janedoe_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T20:33:22.992698+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td></td><td><a href='/audit/file/prediction/20251009_223322_janedoe_becode.be_pred.txt' target='_blank'>20251009_223322_janedoe_becode.be_pred.txt</a></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:33:20.241754+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_223320_janedoe_becode.be_orig.txt' target='_blank'>20251009_223320_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_223320_janedoe_becode.be_scrub.txt' target='_blank'>20251009_223320_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:32:57.517284+00:00</td><td>descrub</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td><a href='/audit/file/descrubbed/20251009_223257_janedoe_becode.be_descrub.txt' target='_blank'>20251009_223257_janedoe_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T20:32:57.481088+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td></td><td><a href='/audit/file/prediction/20251009_223257_janedoe_becode.be_pred.txt' target='_blank'>20251009_223257_janedoe_becode.be_pred.txt</a></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:32:52.764611+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_223252_janedoe_becode.be_orig.txt' target='_blank'>20251009_223252_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_223252_janedoe_becode.be_scrub.txt' target='_blank'>20251009_223252_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:32:43.837092+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:26:01.884917+00:00</td><td>descrub</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td><a href='/audit/file/descrubbed/20251009_222601_janedoe_becode.be_descrub.txt' target='_blank'>20251009_222601_janedoe_becode.be_descrub.txt</a></td><td></td></tr>
+<tr><td>2025-10-09T20:26:01.848660+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td></td><td><a href='/audit/file/prediction/20251009_222601_janedoe_becode.be_pred.txt' target='_blank'>20251009_222601_janedoe_becode.be_pred.txt</a></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:25:56.966876+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_222556_janedoe_becode.be_orig.txt' target='_blank'>20251009_222556_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_222556_janedoe_becode.be_scrub.txt' target='_blank'>20251009_222556_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:25:48.286240+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:17:07.338980+00:00</td><td>descrub</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_221707_janedoe_becode.be_descrub.txt' target='_blank'>20251009_221707_janedoe_becode.be_descrub.txt</a></td><td></td><td><a href='/audit/file/descrubbed/Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.
+' target='_blank'>Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.
+</a></td><td></td></tr>
+<tr><td>2025-10-09T20:17:07.293956+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_221707_janedoe_becode.be_pred.txt' target='_blank'>20251009_221707_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:17:02.369466+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_221702_janedoe_becode.be_orig.txt' target='_blank'>20251009_221702_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_221702_janedoe_becode.be_scrub.txt' target='_blank'>20251009_221702_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:16:58.787240+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:14:14.120215+00:00</td><td>descrub</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_221414_janedoe_becode.be_descrub.txt' target='_blank'>20251009_221414_janedoe_becode.be_descrub.txt</a></td><td></td><td><a href='/audit/file/descrubbed/Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.
+' target='_blank'>Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.
+</a></td><td></td></tr>
+<tr><td>2025-10-09T20:14:14.079509+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_221414_janedoe_becode.be_pred.txt' target='_blank'>20251009_221414_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:14:11.508518+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_221411_janedoe_becode.be_orig.txt' target='_blank'>20251009_221411_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_221411_janedoe_becode.be_scrub.txt' target='_blank'>20251009_221411_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:14:07.404349+00:00</td><td>descrub</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_221407_janedoe_becode.be_descrub.txt' target='_blank'>20251009_221407_janedoe_becode.be_descrub.txt</a></td><td></td><td><a href='/audit/file/descrubbed/your_image.png" # ® change this path
+
+if not os.path.exists(image_path):
+raise FileNotFoundError(f" X Image not found: {image_path}")
+
+B Preprocess image (optional but improves accuracy)' target='_blank'>your_image.png" # ® change this path
+
+if not os.path.exists(image_path):
+raise FileNotFoundError(f" X Image not found: {image_path}")
+
+B Preprocess image (optional but improves accuracy)</a></td><td></td></tr>
+<tr><td>2025-10-09T20:14:07.360688+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_221407_janedoe_becode.be_pred.txt' target='_blank'>20251009_221407_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:14:03.670689+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_221403_janedoe_becode.be_orig.txt' target='_blank'>20251009_221403_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_221403_janedoe_becode.be_scrub.txt' target='_blank'>20251009_221403_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:13:49.076454+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_221349_janedoe_becode.be_pred.txt' target='_blank'>20251009_221349_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:13:40.621459+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_221340_janedoe_becode.be_orig.txt' target='_blank'>20251009_221340_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_221340_janedoe_becode.be_scrub.txt' target='_blank'>20251009_221340_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:13:36.775269+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:07:41.001580+00:00</td><td>descrub</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_220740_janedoe_becode.be_descrub.txt' target='_blank'>20251009_220740_janedoe_becode.be_descrub.txt</a></td><td></td><td><a href='/audit/file/descrubbed/Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.
+
+' target='_blank'>Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.
+
+</a></td><td></td></tr>
+<tr><td>2025-10-09T20:07:40.956855+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_220740_janedoe_becode.be_pred.txt' target='_blank'>20251009_220740_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:07:23.073017+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_220723_janedoe_becode.be_orig.txt' target='_blank'>20251009_220723_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_220723_janedoe_becode.be_scrub.txt' target='_blank'>20251009_220723_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:05:15.690795+00:00</td><td>descrub</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_220515_janedoe_becode.be_descrub.txt' target='_blank'>20251009_220515_janedoe_becode.be_descrub.txt</a></td><td></td><td><a href='/audit/file/descrubbed/Customer Contact & Billing
+
+All values below are synthetic and for testing PII detection only.
+
+Contact
+
+Name: John Doe
+
+Email: john.doe@company.com
+
+Phone: (555) 123-4567
+
+Alt Phone (intl): +1 555 123 4567
+
+Address: 221B Baker Street, London NW1 6XE, UK
+Date of Birth: 1990-07-21
+
+National ID: ID: BE123456789
+
+SSN-like: 123-45-6789
+
+Accounts & Payments
+
+IBAN: BE68 5390 0754 7034
+
+Account Ref: acct 123456
+
+Invoice Amount: € 1,250.00
+
+Standing order reference: SO-2024-08
+
+Notes
+
+* Customer prefers email contact.
+
++ Move funds via SEPA transfer next month.
+
+* Review policy & SOP updates during next governance cycle.
+Last updated: 2024-12-01' target='_blank'>Customer Contact & Billing
+
+All values below are synthetic and for testing PII detection only.
+
+Contact
+
+Name: John Doe
+
+Email: john.doe@company.com
+
+Phone: (555) 123-4567
+
+Alt Phone (intl): +1 555 123 4567
+
+Address: 221B Baker Street, London NW1 6XE, UK
+Date of Birth: 1990-07-21
+
+National ID: ID: BE123456789
+
+SSN-like: 123-45-6789
+
+Accounts & Payments
+
+IBAN: BE68 5390 0754 7034
+
+Account Ref: acct 123456
+
+Invoice Amount: € 1,250.00
+
+Standing order reference: SO-2024-08
+
+Notes
+
+* Customer prefers email contact.
+
++ Move funds via SEPA transfer next month.
+
+* Review policy & SOP updates during next governance cycle.
+Last updated: 2024-12-01</a></td><td></td></tr>
+<tr><td>2025-10-09T20:05:15.641868+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_220515_janedoe_becode.be_pred.txt' target='_blank'>20251009_220515_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:05:12.792696+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_220512_janedoe_becode.be_orig.txt' target='_blank'>20251009_220512_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_220512_janedoe_becode.be_scrub.txt' target='_blank'>20251009_220512_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:04:36.521665+00:00</td><td>descrub</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_220436_janedoe_becode.be_descrub.txt' target='_blank'>20251009_220436_janedoe_becode.be_descrub.txt</a></td><td></td><td><a href='/audit/file/descrubbed/Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.
+' target='_blank'>Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.
+</a></td><td></td></tr>
+<tr><td>2025-10-09T20:04:36.423771+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_220436_janedoe_becode.be_pred.txt' target='_blank'>20251009_220436_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:04:32.528565+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_220432_janedoe_becode.be_orig.txt' target='_blank'>20251009_220432_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_220432_janedoe_becode.be_scrub.txt' target='_blank'>20251009_220432_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:04:20.998391+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_220420_janedoe_becode.be_pred.txt' target='_blank'>20251009_220420_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:04:11.526908+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_220411_janedoe_becode.be_orig.txt' target='_blank'>20251009_220411_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_220411_janedoe_becode.be_scrub.txt' target='_blank'>20251009_220411_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:04:00.548141+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:00:44.693535+00:00</td><td>descrub</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_220044_janedoe_becode.be_descrub.txt' target='_blank'>20251009_220044_janedoe_becode.be_descrub.txt</a></td><td></td><td><a href='/audit/file/descrubbed/Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.
+' target='_blank'>Bundle technical definitions for 'Virtual Machine' (last 2025-04-19), 'IaaS' (last 2025-06-27), and 'Encryption' (last 2025-04-08). Provide one sentence each plus a usage tip.
+</a></td><td></td></tr>
+<tr><td>2025-10-09T20:00:44.646847+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_220044_janedoe_becode.be_pred.txt' target='_blank'>20251009_220044_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:00:40.871510+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_220040_janedoe_becode.be_orig.txt' target='_blank'>20251009_220040_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_220040_janedoe_becode.be_scrub.txt' target='_blank'>20251009_220040_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T20:00:32.967160+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:58:46.296613+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_215846_janedoe_becode.be_pred.txt' target='_blank'>20251009_215846_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:58:41.064559+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_215841_janedoe_becode.be_orig.txt' target='_blank'>20251009_215841_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_215841_janedoe_becode.be_scrub.txt' target='_blank'>20251009_215841_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:58:02.133870+00:00</td><td>descrub</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_215802_janedoe_becode.be_descrub.txt' target='_blank'>20251009_215802_janedoe_becode.be_descrub.txt</a></td><td></td><td><a href='/audit/file/descrubbed/your_image.png" # ® change this path
+
+if not os.path.exists(image_path):
+raise FileNotFoundError(f" X Image not found: {image_path}")
+
+B Preprocess image (optional but improves accuracy)' target='_blank'>your_image.png" # ® change this path
+
+if not os.path.exists(image_path):
+raise FileNotFoundError(f" X Image not found: {image_path}")
+
+B Preprocess image (optional but improves accuracy)</a></td><td></td></tr>
+<tr><td>2025-10-09T19:58:02.091747+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_215802_janedoe_becode.be_pred.txt' target='_blank'>20251009_215802_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:57:56.488563+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_215756_janedoe_becode.be_orig.txt' target='_blank'>20251009_215756_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_215756_janedoe_becode.be_scrub.txt' target='_blank'>20251009_215756_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:57:45.152850+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:55:04.192789+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_215504_janedoe_becode.be_pred.txt' target='_blank'>20251009_215504_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:54:59.454953+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_215459_janedoe_becode.be_orig.txt' target='_blank'>20251009_215459_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_215459_janedoe_becode.be_scrub.txt' target='_blank'>20251009_215459_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:54:44.984781+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:53:34.716502+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:48:52.514500+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_214852_janedoe_becode.be_pred.txt' target='_blank'>20251009_214852_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:48:50.021797+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_214850_janedoe_becode.be_orig.txt' target='_blank'>20251009_214850_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_214850_janedoe_becode.be_scrub.txt' target='_blank'>20251009_214850_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:48:38.669263+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:45:39.112598+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_214539_janedoe_becode.be_pred.txt' target='_blank'>20251009_214539_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:45:36.183917+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_214536_janedoe_becode.be_orig.txt' target='_blank'>20251009_214536_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_214536_janedoe_becode.be_scrub.txt' target='_blank'>20251009_214536_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:44:44.085048+00:00</td><td>predict</td><td>janedoe@becode.be</td><td></td><td><a href='/audit/file/scrubbed/20251009_214444_janedoe_becode.be_pred.txt' target='_blank'>20251009_214444_janedoe_becode.be_pred.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:44:37.521309+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_214437_janedoe_becode.be_orig.txt' target='_blank'>20251009_214437_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_214437_janedoe_becode.be_scrub.txt' target='_blank'>20251009_214437_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:44:33.178573+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:42:18.590450+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_214218_janedoe_becode.be_orig.txt' target='_blank'>20251009_214218_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_214218_janedoe_becode.be_scrub.txt' target='_blank'>20251009_214218_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:41:54.444161+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_214154_janedoe_becode.be_orig.txt' target='_blank'>20251009_214154_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_214154_janedoe_becode.be_scrub.txt' target='_blank'>20251009_214154_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T19:41:01.654883+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T12:31:41.846777+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_123141_janedoe_becode.be_orig.txt' target='_blank'>20251009_123141_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_123141_janedoe_becode.be_scrub.txt' target='_blank'>20251009_123141_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T12:31:39.149624+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_123139_janedoe_becode.be_orig.txt' target='_blank'>20251009_123139_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_123139_janedoe_becode.be_scrub.txt' target='_blank'>20251009_123139_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T12:19:26.120637+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_121926_janedoe_becode.be_orig.txt' target='_blank'>20251009_121926_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_121926_janedoe_becode.be_scrub.txt' target='_blank'>20251009_121926_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T12:19:17.984315+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T10:02:32.467139+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_120232_janedoe_becode.be_orig.txt' target='_blank'>20251009_120232_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_120232_janedoe_becode.be_scrub.txt' target='_blank'>20251009_120232_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T10:02:19.834484+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T09:48:19.142095+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_114819_janedoe_becode.be_orig.txt' target='_blank'>20251009_114819_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_114819_janedoe_becode.be_scrub.txt' target='_blank'>20251009_114819_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T09:48:06.858634+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:40:14.080574+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_104014_janedoe_becode.be_orig.txt' target='_blank'>20251009_104014_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_104014_janedoe_becode.be_scrub.txt' target='_blank'>20251009_104014_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:40:02.809388+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:39:00.990120+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_103900_janedoe_becode.be_orig.txt' target='_blank'>20251009_103900_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_103900_janedoe_becode.be_scrub.txt' target='_blank'>20251009_103900_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:38:09.032073+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_103809_janedoe_becode.be_orig.txt' target='_blank'>20251009_103809_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_103809_janedoe_becode.be_scrub.txt' target='_blank'>20251009_103809_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:37:57.149434+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:34:17.010193+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_103417_janedoe_becode.be_orig.txt' target='_blank'>20251009_103417_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_103417_janedoe_becode.be_scrub.txt' target='_blank'>20251009_103417_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:33:34.266015+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_103334_janedoe_becode.be_orig.txt' target='_blank'>20251009_103334_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_103334_janedoe_becode.be_scrub.txt' target='_blank'>20251009_103334_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:33:20.241680+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:20:37.487668+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:13:48.772308+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:13:28.629173+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:11:14.507181+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:10:58.807906+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:07:56.580214+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_100756_janedoe_becode.be_orig.txt' target='_blank'>20251009_100756_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_100756_janedoe_becode.be_scrub.txt' target='_blank'>20251009_100756_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T08:07:41.230146+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T07:59:49.021329+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_095949_janedoe_becode.be_orig.txt' target='_blank'>20251009_095949_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_095949_janedoe_becode.be_scrub.txt' target='_blank'>20251009_095949_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T07:59:08.639240+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_095908_janedoe_becode.be_orig.txt' target='_blank'>20251009_095908_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_095908_janedoe_becode.be_scrub.txt' target='_blank'>20251009_095908_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T07:58:52.582568+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T07:58:42.139293+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T05:28:42.362911+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_072842_janedoe_becode.be_orig.txt' target='_blank'>20251009_072842_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_072842_janedoe_becode.be_scrub.txt' target='_blank'>20251009_072842_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T05:25:28.222325+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_072528_janedoe_becode.be_orig.txt' target='_blank'>20251009_072528_janedoe_becode.be_orig.txt</a></td><td><a href='/audit/file/scrubbed/20251009_072528_janedoe_becode.be_scrub.txt' target='_blank'>20251009_072528_janedoe_becode.be_scrub.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-09T05:15:38.335344+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-08T22:39:14.308790+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_003914_Jane_Doe_document.txt' target='_blank'>20251009_003914_Jane_Doe_document.txt</a></td><td><a href='/audit/file/scrubbed/20251009_003914_Jane_Doe_document.txt' target='_blank'>20251009_003914_Jane_Doe_document.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-08T22:36:50.194354+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_003650_original_Jane_Doe_20251009_003650.txt' target='_blank'>20251009_003650_original_Jane_Doe_20251009_003650.txt</a></td><td><a href='/audit/file/scrubbed/20251009_003650_scrubbed_Jane_Doe_20251009_003650.txt' target='_blank'>20251009_003650_scrubbed_Jane_Doe_20251009_003650.txt</a></td><td></td><td></td><td>127.0.0.1</td></tr>
+<tr><td>2025-10-08T22:30:56.893065+00:00</td><td>scrub_file</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_003056_Jane_Doe_requirements.txt' target='_blank'>20251009_003056_Jane_Doe_requirements.txt</a></td><td><a href='/audit/file/scrubbed/20251009_003056_Jane_Doe_requirements.txt' target='_blank'>20251009_003056_Jane_Doe_requirements.txt</a></td><td></td><td></td><td></td></tr>
+<tr><td>2025-10-08T22:29:59.240228+00:00</td><td>scrub_text</td><td>janedoe@becode.be</td><td><a href='/audit/file/original/20251009_002959_original_Jane_Doe_20251009_002959.txt' target='_blank'>20251009_002959_original_Jane_Doe_20251009_002959.txt</a></td><td><a href='/audit/file/scrubbed/20251009_002959_scrubbed_Jane_Doe_20251009_002959.txt' target='_blank'>20251009_002959_scrubbed_Jane_Doe_20251009_002959.txt</a></td><td></td><td></td><td>127.0.0.1</td></tr>
+<tr><td>2025-10-08T22:29:56.132036+00:00</td><td>login</td><td>janedoe@becode.be</td><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+<p class='footer'>© ING – Audit Log • Click filenames to view contents</p>
+</body></html>

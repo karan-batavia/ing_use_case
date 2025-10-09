@@ -1,119 +1,116 @@
-from typing import Union, Dict, Any, List, Optional
-from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, status
-from fastapi.responses import StreamingResponse
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from pydantic import BaseModel
+from __future__ import annotations
+
+from typing import Dict, Any, List, Optional
+from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, status, Request
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field
+from dotenv import load_dotenv
 import uvicorn
 import os
 import uuid
 import asyncio
-import subprocess
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from fastapi.templating import Jinja2Templates
+# --- project services
 from src.mongodb_service import MongoDBService
 from src.dependencies import get_current_user, get_current_admin
 from src.gemini_service import get_gemini_service
 from src.sensitivity_classifier import get_classifier_service
+
+# file handlers
 from src.file_handler.docx_to_txt import DOCXToTextConverter
 from src.file_handler.html_to_txt import HTMLToTextConverter
 from src.file_handler.read_pdf_file import PDFToTextConverter
 from src.file_handler.read_png_file import ImageToTextConverter
-from src.file_handler.write_docx_file import DOCXWriter
-from src.file_handler.write_pdf_file import PDFWriter
-from src.file_handler.write_html_file import HTMLWriter
-from src.file_handler.write_txt_file import TXTWriter
+
+# auth
 from src.auth import (
-    Token,
     TokenResponse,
-    User,
     UserCreate,
     UserLogin,
     UserInDB,
     verify_password,
     get_password_hash,
     create_access_token,
-    verify_token,
-    verify_admin_token,
-    authenticate_user,
     ACCESS_TOKEN_EXPIRE_MINUTES,
 )
 
-# Initialize FastAPI app
+# audit
+from src.audit_log import (
+    save_document,
+    append_audit_event,
+    build_client_info,
+    init_audit_env,
+    update_audit_event,
+    NDJSON_LOG,
+    HTML_LOG,
+    ORIGINAL_DIR,
+    SCRUBBED_DIR,
+    PREDICTION_DIR,
+    DESCRUBBED_DIR,
+)
+
+# =========================
+# Paths & FastAPI init
+# =========================
+BASE_DIR   = Path(__file__).resolve().parent
+STATIC_DIR = BASE_DIR / "static"          # <— absolute
+TMP_DIR    = BASE_DIR / "tmp"
+TEMPLATES_DIR = BASE_DIR / "templates"
+templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+TMP_DIR.mkdir(exist_ok=True)
+
+env_path = Path(__file__).parent / ".env"
+load_dotenv(dotenv_path=env_path)
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
 app = FastAPI(
     title="ING Prompt Scrubber API",
-    description="API for text scrubbing and anonymization",
-    version="1.0.0",
+    description="API for scrubbing, AI predictions, and descrubbing.",
+    version="2.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
 
-# Initialize services
+# Mount /static using an absolute path
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
 mongodb_service = MongoDBService()
 
-
-# Pydantic models for request/response
+# =========================
+# Models
+# =========================
 class TextScrubRequest(BaseModel):
     text: str
 
-
 class TextScrubResponse(BaseModel):
     scrubbed_text: str
+    matches_found: int
     original_length: int
     scrubbed_length: int
-    matches_found: int
     reduction_percentage: float
     processed_at: datetime
-    # Sensitivity classification fields
-    original_classification: Optional[str] = None
-    scrubbed_classification: Optional[str] = None
-    classification_confidence: Optional[float] = None
-    classification_explanation: Optional[str] = None
-    classification_available: bool = False
+    success: bool
+    session_id: Optional[str] = None
 
+class DescrubRequest(BaseModel):
+    text: str
+    session_id: Optional[str] = None
 
-class HealthResponse(BaseModel):
-    status: str
-    mongodb_connected: bool
-    timestamp: datetime
-
-
-# File upload models
-class FileUploadResponse(BaseModel):
-    filename: str
-    file_type: str
-    file_size: int
-    extracted_text: str
-    text_length: int
+class DescrubResponse(BaseModel):
+    descrubbed_text: str
+    success: bool
     processed_at: datetime
-
-
-class FileScrubResponse(BaseModel):
-    filename: str
-    file_type: str
-    file_size: int
-    original_text: str
-    scrubbed_text: str
-    original_length: int
-    scrubbed_length: int
-    matches_found: int
-    reduction_percentage: float
-    matches_detected: Dict[str, List[str]]
-    processed_at: datetime
-
-
-class FileDownloadInfo(BaseModel):
-    download_url: str
-    filename: str
-    file_type: str
-    expires_at: datetime
-
 
 class PredictionRequest(BaseModel):
     prompt: str
     context: Optional[str] = None
-    model_name: Optional[str] = "gemini-pro"  # Stable Gemini model
-    max_tokens: Optional[int] = 150  # Reduced for faster responses
-    temperature: Optional[float] = 0.3  # Lower for faster, more focused responses
-
+    model_name: Optional[str] = "gemini-pro"
+    max_tokens: Optional[int] = 200
+    temperature: Optional[float] = 0.4
+    session_id: Optional[str] = None
 
 class PredictionResponse(BaseModel):
     prediction: str
@@ -121,702 +118,481 @@ class PredictionResponse(BaseModel):
     success: bool
     session_id: str
     processed_at: datetime
+    mask_summary: Dict[str, int] = Field(default_factory=dict)
 
 
-# Sensitivity Classification Models
-class ClassifyRequest(BaseModel):
-    text: str
+class CategoryStat(BaseModel):
+    id: str
+    description: str
+    support: int
+    precision: Optional[float] = None
+    recall: Optional[float] = None
+    f1_score: Optional[float] = None
 
 
-class ClassifyResponse(BaseModel):
-    prediction: str
-    probabilities: Dict[str, float]
-    confidence: float
-    explanation: str
-    success: bool
+class CategoryStatsResponse(BaseModel):
+    accuracy: Optional[float] = None
+    categories: List[CategoryStat]
 
-
-class RedactRequest(BaseModel):
-    text: str
-
-
-class Detection(BaseModel):
-    type: str
-    original: str
-    placeholder: str
-
-
-class RedactResponse(BaseModel):
+class FileScrubResponse(BaseModel):
+    filename: str
+    scrubbed_text: str
     original_text: str
-    redacted_text: str
-    detections: List[Detection]
-    total_redacted: int
-    detection_summary: Dict[str, int]
+    matches_found: int
+    reduction_percentage: float
+    processed_at: datetime
     success: bool
+    session_id: Optional[str] = None
 
+# =========================
+# Startup: ensure audit env
+# =========================
+@app.on_event("startup")
+def _startup():
+    init_audit_env()  # ensures logs folder, NDJSON + HTML exist
 
-class TrainModelRequest(BaseModel):
-    data_file: str = "raw_prompts.txt"
-    model_type: str = "logreg"
-    test_size: float = 0.2
-    ngram_max: int = 2
-    random_seed: int = 42
-
-
-class TrainModelResponse(BaseModel):
-    success: bool
-    message: str
-    metrics: Optional[Dict[str, Any]] = None
-    error: Optional[str] = None
-
-
-class ModelMetricsResponse(BaseModel):
-    accuracy: float
-    precision: Dict[str, float]
-    recall: Dict[str, float]
-    f1_score: Dict[str, float]
-    support: Dict[str, int]
-    confusion_matrix: List[List[int]]
-    available: bool
-
-
-@app.get("/", response_model=Dict[str, str])
-def read_root():
-    """Root endpoint with API information"""
+# =========================
+# Root & health
+# =========================
+@app.get("/", response_class=HTMLResponse)
+def serve_frontend(request: Request):
+    index_path = TEMPLATES_DIR / "index.html"
+    if index_path.exists():
+        return templates.TemplateResponse("index.html", {"request": request})
     return {
         "message": "ING Prompt Scrubber API",
-        "version": "1.0.0",
+        "version": "2.0.0",
         "docs": "/docs",
         "health": "/health",
     }
 
+@app.get("/health")
+def health():
+    return {
+        "status": "ok",
+        "mongodb_connected": mongodb_service.is_connected(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }
 
-@app.get("/health", response_model=HealthResponse)
-def health_check():
-    """Health check endpoint"""
-    return HealthResponse(
-        status="healthy",
-        mongodb_connected=mongodb_service.is_connected(),
-        timestamp=datetime.now(),
-    )
-
-
-@app.post("/predict", response_model=PredictionResponse)
-async def generate_prediction(
-    request: PredictionRequest, current_user: Dict[str, Any] = Depends(get_current_user)
-):
-    """
-    Generate a prediction using Gemini AI based on prompt and context.
-    Requires user authentication.
-    """
-    try:
-        # Get Gemini service instance
-        gemini_service = get_gemini_service()
-
-        # Generate session ID for this request
-        session_id = str(uuid.uuid4())
-
-        # Generate prediction using Gemini with timeout
-        try:
-            prediction_text = await asyncio.wait_for(
-                gemini_service.generate_prediction(
-                    prompt=request.prompt,
-                    context=request.context,
-                    model_name=request.model_name,
-                    max_tokens=request.max_tokens,
-                    temperature=request.temperature,
-                ),
-                timeout=30.0,
-            )
-        except asyncio.TimeoutError:
-            raise HTTPException(
-                status_code=504,
-                detail="AI generation timed out. Please try a shorter prompt or try again later.",
-            )
-
-        # Log the prediction request for the current user
-        mongodb_service.log_interaction(
-            session_id=session_id,
-            user_id=current_user["user_id"],
-            action="prediction_generated",
-            details={
-                "prompt_length": len(request.prompt),
-                "context_provided": bool(request.context),
-                "model_used": request.model_name or "llama3.2:1b",
-                "endpoint": "/predict",
-            },
-        )
-
-        return PredictionResponse(
-            prediction=prediction_text,
-            model_used=request.model_name or "llama3.2:1b",
-            success=True,
-            session_id=session_id,
-            processed_at=datetime.now(),
-        )
-
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        raise HTTPException(
-            status_code=500, detail=f"Error generating prediction: {str(e)}"
-        )
-
-
-# Authentication Routes
+# =========================
+# Auth
+# =========================
 @app.post("/auth/register", response_model=Dict[str, str])
-def register(user: UserCreate):
-    """Register a new user"""
+def register(user: UserCreate, request: Request):
     if not mongodb_service.is_connected():
         raise HTTPException(status_code=503, detail="Database not available")
 
-    # Hash the password
     hashed_password = get_password_hash(user.password)
-
-    # Create user in database
     result = mongodb_service.create_user(
         email=user.email,
         hashed_password=hashed_password,
         full_name=user.full_name,
-        is_admin=user.is_admin,
+        is_admin=getattr(user, "is_admin", False),
+        role=getattr(user, "role", "user"),
     )
-
     if not result["success"]:
-        if "already exists" in result["error"]:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Email already registered",
-            )
-        else:
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Failed to create user",
-            )
+        raise HTTPException(status_code=400, detail=result["error"])
 
+    ci = build_client_info(request)
+    append_audit_event({
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        **ci,
+        "action": "register",
+        "user_email": user.email,
+        "user_name": user.full_name or "",
+        "original_file": "",
+        "scrubbed_file": "",
+        "descrubbed_file": "",
+        "prediction_file": "",
+    })
     return {"message": "User registered successfully", "user_id": result["user_id"]}
 
-
 @app.post("/auth/login", response_model=TokenResponse)
-def login(user_credentials: UserLogin):
-    """Login user and return JWT token"""
+def login(user_credentials: UserLogin, request: Request):
     if not mongodb_service.is_connected():
         raise HTTPException(status_code=503, detail="Database not available")
 
-    # Get user from database
     user_data = mongodb_service.get_user_by_email(user_credentials.email)
     if not user_data:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+        raise HTTPException(status_code=401, detail="Invalid email or password")
 
     user_in_db = UserInDB(**user_data)
-
-    # Verify password
     if not verify_password(user_credentials.password, user_in_db.hashed_password):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+        raise HTTPException(status_code=401, detail="Invalid email or password")
 
-    # Check if user is active
-    if not user_in_db.is_active:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Inactive user"
-        )
-
-    # Update last login
-    mongodb_service.update_last_login(user_credentials.email)
-
-    # Ensure we have a user_id (fallback in case migration failed)
     user_id = user_data.get("user_id", user_data.get("_id", "unknown"))
+    role = user_data.get("role", "user")
 
-    # Create access token with user_id in payload
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user_in_db.email, "user_id": user_id},
-        expires_delta=access_token_expires,
+        data={"sub": user_in_db.email, "user_id": user_id, "role": role},
+        expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
     )
+
+    ci = build_client_info(request)
+    append_audit_event({
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        **ci,
+        "action": "login",
+        "user_email": user_in_db.email,
+        "user_name": user_in_db.full_name or "",
+        "original_file": "",
+        "scrubbed_file": "",
+    })
 
     return {
         "access_token": access_token,
         "token_type": "bearer",
         "user_id": user_id,
+        "role": role,
     }
 
-
-@app.get("/stats/user/{user_id}")
-def get_user_stats(user_id: str, admin_user: dict = Depends(get_current_admin)):
-    """Get statistics for a specific user (Admin only)"""
-    if not mongodb_service.is_connected():
-        raise HTTPException(status_code=503, detail="Database not available")
-
-    stats = mongodb_service.get_user_stats(user_id)
-    if not stats:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    return stats
-
-
-@app.get("/stats/sessions")
-def get_recent_sessions(limit: int = 10, admin_user: dict = Depends(get_current_admin)):
-    """Get recent session statistics (Admin only)"""
-    if not mongodb_service.is_connected():
-        raise HTTPException(status_code=503, detail="Database not available")
-
-    # This would need to be implemented in mongodb_service
-    return {"message": "Recent sessions endpoint - implementation needed"}
-
-
-# File Upload Endpoints
-@app.post("/upload", response_model=FileUploadResponse)
-async def upload_file(
-    file: UploadFile = File(...), current_user: dict = Depends(get_current_user)
+# =========================
+# Scrub / Descrub
+# =========================
+@app.post("/scrub", response_model=TextScrubResponse)
+async def scrub_text(
+    payload: TextScrubRequest,
+    request: Request,
+    current_user: Dict[str, Any] = Depends(get_current_user),
 ):
-    """Upload and extract text from file (Authenticated users only)"""
     try:
-        # Validate filename
-        if not file.filename:
-            raise HTTPException(status_code=400, detail="Filename is required")
+        classifier = get_classifier_service()
+        redaction = classifier.redact_sensitive_info(payload.text)
 
-        # Check file type
-        allowed_types = {
-            "text/plain": "txt",
-            "application/pdf": "pdf",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
-            "text/html": "html",
-            "image/png": "png",
-            "image/jpeg": "jpg",
-            "image/jpg": "jpg",
-        }
+        scrubbed_text = redaction.redacted_text
+        matches_found = redaction.total_redacted
+        orig_len = len(payload.text)
+        scrub_len = len(scrubbed_text)
+        reduction = round((1 - scrub_len / orig_len) * 100, 2) if orig_len else 0
 
-        file_extension = (
-            file.filename.lower().split(".")[-1] if "." in file.filename else ""
+        session_id = mongodb_service.create_session(current_user["user_id"], "scrub")
+
+        mongodb_service.save_redaction_record(
+            session_id=session_id,
+            user_id=current_user["user_id"],
+            original_text=payload.text,
+            redacted_text=scrubbed_text,
+            detections=redaction.detections,
         )
-        content_type = file.content_type or ""
 
-        if content_type not in allowed_types and file_extension not in [
-            "txt",
-            "pdf",
-            "docx",
-            "html",
-            "htm",
-            "png",
-            "jpg",
-            "jpeg",
-        ]:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Unsupported file type. Supported: PDF, DOCX, TXT, HTML, PNG, JPG",
-            )
+        base = current_user.get("email", "user").replace("@", "_")
+        orig_path = save_document("original", f"{base}_orig", payload.text)
+        scrubbed_path = save_document("scrubbed", f"{base}_scrub", scrubbed_text)
 
-        # Read file content
-        file_content = await file.read()
-        file_size = len(file_content)
+        ci = build_client_info(request)
+        append_audit_event({
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            **ci,
+            "action": "scrub_text",
+            "session_id": session_id,
+            "user_email": current_user.get("email", ""),
+            "user_name": current_user.get("full_name", ""),
+            "original_file": orig_path,
+            "scrubbed_file": scrubbed_path,
+        })
 
-        # Generate unique temp filename
-        temp_filename = f"temp_{uuid.uuid4().hex[:8]}_{file.filename}"
-        temp_file_path = f"/tmp/{temp_filename}"
-
-        # Save temporary file
-        with open(temp_file_path, "wb") as temp_file:
-            temp_file.write(file_content)
-
-        extracted_text = ""
-
-        try:
-            # Extract text based on file type
-            if content_type == "text/plain" or file_extension == "txt":
-                with open(temp_file_path, "r", encoding="utf-8") as f:
-                    extracted_text = f.read()
-
-            elif content_type == "application/pdf" or file_extension == "pdf":
-                converter = PDFToTextConverter()
-                extracted_text = converter.extract_text_from_pdf(temp_file_path)
-
-            elif (
-                content_type
-                == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                or file_extension == "docx"
-            ):
-                converter = DOCXToTextConverter()
-                temp_txt_path = temp_file_path.replace(".docx", ".txt")
-                success = converter.convert_docx_to_txt(temp_file_path, temp_txt_path)
-                if success:
-                    with open(temp_txt_path, "r", encoding="utf-8") as f:
-                        extracted_text = f.read()
-                    os.remove(temp_txt_path)
-
-            elif content_type == "text/html" or file_extension in ["html", "htm"]:
-                converter = HTMLToTextConverter(
-                    clean_whitespace=True, remove_empty_lines=True
-                )
-                temp_txt_path = temp_file_path.replace(".html", ".txt").replace(
-                    ".htm", ".txt"
-                )
-                success = converter.convert_html_to_txt(temp_file_path, temp_txt_path)
-                if success:
-                    with open(temp_txt_path, "r", encoding="utf-8") as f:
-                        extracted_text = f.read()
-                    os.remove(temp_txt_path)
-
-            elif content_type.startswith("image/") or file_extension in [
-                "png",
-                "jpg",
-                "jpeg",
-            ]:
-                converter = ImageToTextConverter(
-                    languages="eng+fra+nld", preprocess=True  # English, French, Dutch
-                )
-                extracted_text = converter.extract_text_from_image(temp_file_path)
-
-            if not extracted_text:
-                raise HTTPException(
-                    status_code=400, detail="Could not extract text from file"
-                )
-
-        finally:
-            # Clean up temp file
-            if os.path.exists(temp_file_path):
-                os.remove(temp_file_path)
-
-        return FileUploadResponse(
-            filename=file.filename,
-            file_type=content_type or f"file/{file_extension}",
-            file_size=file_size,
-            extracted_text=extracted_text,
-            text_length=len(extracted_text),
+        return TextScrubResponse(
+            scrubbed_text=scrubbed_text,
+            matches_found=matches_found,
+            original_length=orig_len,
+            scrubbed_length=scrub_len,
+            reduction_percentage=reduction,
             processed_at=datetime.now(),
+            success=True,
+            session_id=session_id,
         )
-
-    except HTTPException:
-        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
-
+        raise HTTPException(status_code=500, detail=f"Scrubbing failed: {e}")
 
 @app.post("/scrub-file", response_model=FileScrubResponse)
 async def scrub_file(
-    file: UploadFile = File(...), current_user: dict = Depends(get_current_user)
+    file: UploadFile = File(...),
+    request: Request = None,
+    current_user: Dict[str, Any] = Depends(get_current_user),
 ):
-    """Upload file, extract text, and scrub sensitive information (Authenticated users only)"""
     try:
-        # First extract text from file (reuse upload logic)
-        upload_response = await upload_file(file, current_user)
+        content = await file.read()
+        original_path = Path(file.filename or "uploaded_file")
+        ext = (original_path.suffix or "").lower()
+        ext_clean = ext.lstrip(".")
+        tmp_path = TMP_DIR / f"{uuid.uuid4().hex[:8]}_{original_path.name or 'upload'}"
+        with open(tmp_path, "wb") as f:
+            f.write(content)
 
-        # Extract user_id from the authenticated user data
-        authenticated_user_id = current_user.get(
-            "user_id", current_user.get("_id", "unknown")
+        # extract text
+        if ext_clean == "pdf":
+            text = PDFToTextConverter().extract_text_from_pdf(str(tmp_path))
+        elif ext_clean == "docx":
+            conv = DOCXToTextConverter()
+            tmp_txt = tmp_path.with_suffix(".txt")
+            text = ""
+            if conv.convert_docx_to_txt(str(tmp_path), str(tmp_txt)):
+                text = tmp_txt.read_text(encoding="utf-8", errors="ignore")
+                tmp_txt.unlink(missing_ok=True)
+        elif ext_clean in {"html", "htm"}:
+            conv = HTMLToTextConverter()
+            tmp_txt = tmp_path.with_suffix(".txt")
+            text = ""
+            if conv.convert_html_to_txt(str(tmp_path), str(tmp_txt)):
+                text = tmp_txt.read_text(encoding="utf-8", errors="ignore")
+                tmp_txt.unlink(missing_ok=True)
+        elif ext_clean in {"png", "jpg", "jpeg"}:
+            text = ImageToTextConverter(languages="eng+fra+nld").extract_text_from_image(str(tmp_path))
+        else:
+            text = content.decode("utf-8", errors="ignore")
+        tmp_path.unlink(missing_ok=True)
+
+        classifier = get_classifier_service()
+        redaction = classifier.redact_sensitive_info(text)
+        scrubbed_text = redaction.redacted_text
+        matches_found = redaction.total_redacted
+
+        orig_len = len(text)
+        scrub_len = len(scrubbed_text)
+        reduction = round((1 - scrub_len / orig_len) * 100, 2) if orig_len else 0
+
+        session_id = mongodb_service.create_session(current_user["user_id"], "scrub-file")
+        mongodb_service.save_redaction_record(
+            session_id=session_id,
+            user_id=current_user["user_id"],
+            original_text=text,
+            redacted_text=scrubbed_text,
+            detections=redaction.detections,
+        )
+        original_stem = original_path.stem or current_user.get("email", "user").replace("@", "_")
+        orig_filename = original_path.name or f"{original_stem}{ext or '.bin'}"
+        scrub_ext = ext if ext in {".txt"} else ".txt"
+        scrub_filename = f"{original_stem}_scrubbed{scrub_ext}"
+
+        orig_path = save_document(
+            "original",
+            original_stem,
+            content,
+            ext=ext or ".bin",
+            filename=orig_filename,
+        )
+        scrubbed_path = save_document(
+            "scrubbed",
+            f"{original_stem}_scrubbed",
+            scrubbed_text,
+            ext=scrub_ext,
+            filename=scrub_filename,
         )
 
-        # Create session for authenticated user
-        session_id = mongodb_service.create_session(authenticated_user_id, "api")
-
-        # Scrub the extracted text using sensitivity classifier
-        classifier_service = get_classifier_service()
-        redaction_result = classifier_service.redact_sensitive_info(
-            upload_response.extracted_text
-        )
-        scrubbed_text = redaction_result.redacted_text
-
-        # Extract matches information from redaction result
-        matches = {
-            detection_type: [
-                d["original"]
-                for d in redaction_result.detections
-                if d["type"] == detection_type
-            ]
-            for detection_type in redaction_result.detection_summary.keys()
-        }
-
-        # Calculate metrics
-        original_length = len(upload_response.extracted_text)
-        scrubbed_length = len(scrubbed_text)
-        matches_found = redaction_result.total_redacted
-
-        reduction_percentage = (
-            round((1 - scrubbed_length / original_length) * 100, 2)
-            if original_length > 0
-            else 0
-        )
-
-        # Log the interaction
-        mongodb_service.log_interaction(
-            session_id,
-            authenticated_user_id,
-            "api_file_scrubbing",
-            {
-                "filename": file.filename,
-                "file_type": upload_response.file_type,
-                "file_size": upload_response.file_size,
-                "input_length": original_length,
-                "output_length": scrubbed_length,
-                "matches_found": matches_found,
-                "reduction_percentage": reduction_percentage,
-                "endpoint": "/scrub-file",
-            },
-        )
+        ci = build_client_info(request)
+        append_audit_event({
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            **ci,
+            "action": "scrub_file",
+            "session_id": session_id,
+            "user_email": current_user.get("email", ""),
+            "user_name": current_user.get("full_name", ""),
+            "original_file": orig_path,
+            "scrubbed_file": scrubbed_path,
+        })
 
         return FileScrubResponse(
-            filename=file.filename or "unknown_file",
-            file_type=upload_response.file_type,
-            file_size=upload_response.file_size,
-            original_text=upload_response.extracted_text,
+            filename=file.filename,
             scrubbed_text=scrubbed_text,
-            original_length=original_length,
-            scrubbed_length=scrubbed_length,
+            original_text=text,
             matches_found=matches_found,
-            reduction_percentage=reduction_percentage,
-            matches_detected=matches,
+            reduction_percentage=reduction,
+            processed_at=datetime.now(),
+            success=True,
+            session_id=session_id,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing file: {e}")
+
+@app.post("/descrub", response_model=DescrubResponse)
+async def descrub_text(
+    payload: DescrubRequest,
+    request: Request,
+    current_user: Dict[str, Any] = Depends(get_current_user),
+):
+    try:
+        restored = mongodb_service.descrub_text(payload.text, payload.session_id)
+        if not restored:
+            raise HTTPException(status_code=404, detail="No mapping found for descrubbing")
+
+        base = current_user.get("email", "user").replace("@", "_")
+        descrub_path = save_document("descrubbed", f"{base}_descrub", restored)
+
+        if payload.session_id:
+            updated = update_audit_event(
+                payload.session_id,
+                {
+                    "descrubbed_file": descrub_path,
+                },
+            )
+            if not updated:
+                print(f"[AUDIT] No audit entry updated for session {payload.session_id}")
+
+        return DescrubResponse(
+            descrubbed_text=restored,
+            success=True,
             processed_at=datetime.now(),
         )
-
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Descrubbing failed: {e}")
 
-
-# Sensitivity Classification Endpoints
-@app.post("/classify", response_model=ClassifyResponse)
-async def classify_text(
-    request: ClassifyRequest, current_user: Dict[str, Any] = Depends(get_current_user)
+# =========================
+# Prediction
+# =========================
+@app.post("/predict", response_model=PredictionResponse)
+async def predict(
+    payload: PredictionRequest,
+    request: Request,
+    current_user: Dict[str, Any] = Depends(get_current_user),
 ):
-    """
-    Classify text sensitivity level (C1-C4).
-    Requires user authentication.
-    """
     try:
-        classifier_service = get_classifier_service()
+        gemini = get_gemini_service()
+        classifier = get_classifier_service()
+        incoming_session = payload.session_id
 
-        if not classifier_service.is_model_available():
-            raise HTTPException(
-                status_code=503,
-                detail="Classification model not available. Please train the model first.",
-            )
-
-        # Classify the text
-        result = classifier_service.classify_text(request.text)
-
-        # Log the classification
-        mongodb_service = MongoDBService()
-        session_id = str(uuid.uuid4())
-
-        mongodb_service.log_interaction(
-            session_id=session_id,
-            user_id=current_user["user_id"],
-            action="text_classified",
-            details={
-                "text_length": len(request.text),
-                "prediction": result.prediction,
-                "confidence": result.confidence,
-                "endpoint": "/classify",
-            },
+        session_id = incoming_session or str(uuid.uuid4())
+        raw_prediction = await asyncio.wait_for(
+            gemini.generate_prediction(
+                prompt=payload.prompt,
+                context=payload.context,
+                model_name=payload.model_name,
+                max_tokens=payload.max_tokens,
+                temperature=payload.temperature,
+            ),
+            timeout=30.0,
         )
 
-        return ClassifyResponse(
-            prediction=result.prediction,
-            probabilities=result.probabilities,
-            confidence=result.confidence,
-            explanation=result.explanation,
+        redaction = classifier.redact_sensitive_info(raw_prediction)
+        prediction = redaction.redacted_text
+
+        base = current_user.get("email", "user").replace("@", "_")
+        pred_path = save_document("prediction", f"{base}_pred", prediction)
+
+        updates = {
+            "prediction_file": pred_path,
+            "mask_summary": redaction.detection_summary,
+            "prediction_model": payload.model_name,
+        }
+
+        updated = False
+        if incoming_session:
+            updated = update_audit_event(incoming_session, updates)
+
+        if not updated:
+            ci = build_client_info(request)
+            append_audit_event({
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                **ci,
+                "action": "predict",
+                "session_id": session_id,
+                "user_email": current_user.get("email", ""),
+                "user_name": current_user.get("full_name", ""),
+                "original_file": "",
+                "scrubbed_file": "",
+                "prediction_file": pred_path,
+                "descrubbed_file": "",
+                "mask_summary": redaction.detection_summary,
+                "prediction_model": payload.model_name,
+            })
+
+        return PredictionResponse(
+            prediction=prediction,
+            model_used=payload.model_name,
             success=True,
-        )
-
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error classifying text: {str(e)}")
-
-
-@app.post("/redact", response_model=RedactResponse)
-async def redact_sensitive_data(
-    request: RedactRequest, current_user: Dict[str, Any] = Depends(get_current_user)
-):
-    """
-    Redact sensitive information from text.
-    Requires user authentication.
-    """
-    try:
-        classifier_service = get_classifier_service()
-
-        # Redact sensitive information
-        result = classifier_service.redact_sensitive_info(request.text)
-
-        # Log the redaction
-        mongodb_service = MongoDBService()
-        session_id = str(uuid.uuid4())
-
-        mongodb_service.log_interaction(
             session_id=session_id,
-            user_id=current_user["user_id"],
-            action="text_redacted",
-            details={
-                "text_length": len(request.text),
-                "total_redacted": result.total_redacted,
-                "detection_types": list(result.detection_summary.keys()),
-                "endpoint": "/redact",
-            },
+            processed_at=datetime.now(),
+            mask_summary=redaction.detection_summary or {},
         )
-
-        # Convert detections to Pydantic models
-        detections = [
-            Detection(
-                type=d["type"], original=d["original"], placeholder=d["placeholder"]
-            )
-            for d in result.detections
-        ]
-
-        return RedactResponse(
-            original_text=result.original_text,
-            redacted_text=result.redacted_text,
-            detections=detections,
-            total_redacted=result.total_redacted,
-            detection_summary=result.detection_summary,
-            success=True,
-        )
-
+    except asyncio.TimeoutError:
+        raise HTTPException(status_code=504, detail="Prediction timed out")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error redacting text: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Prediction failed: {e}")
+
+# =========================
+# Category statistics
+# =========================
 
 
-@app.post("/train-model", response_model=TrainModelResponse)
-async def train_classification_model(
-    request: TrainModelRequest,
-    current_user: Dict[str, Any] = Depends(get_current_admin),
+@app.get("/stats/categories", response_model=CategoryStatsResponse)
+def get_category_statistics():
+    classifier = get_classifier_service()
+    metrics = classifier.get_model_metrics()
+    category_info = classifier.get_category_info()
+
+    categories: List[CategoryStat] = []
+    for code, description in category_info.items():
+        precision = metrics.precision.get(code) if metrics else None
+        recall = metrics.recall.get(code) if metrics else None
+        f1 = metrics.f1_score.get(code) if metrics else None
+        support = metrics.support.get(code, 0) if metrics else 0
+
+        categories.append(
+            CategoryStat(
+                id=code,
+                description=description,
+                support=int(support),
+                precision=round(precision, 4) if precision is not None else None,
+                recall=round(recall, 4) if recall is not None else None,
+                f1_score=round(f1, 4) if f1 is not None else None,
+            )
+        )
+
+    accuracy = None
+    if metrics and metrics.accuracy is not None:
+        accuracy = round(metrics.accuracy, 4)
+
+    return CategoryStatsResponse(accuracy=accuracy, categories=categories)
+
+# =========================
+# Audit viewers
+# =========================
+@app.get("/audit/log")
+def get_audit_log(
+    current_admin: Dict[str, Any] = Depends(get_current_admin),
 ):
-    """
-    Train the sensitivity classification model.
-    Requires admin authentication.
-    """
-    try:
-        import subprocess
-        import sys
+    if not os.path.exists(HTML_LOG):
+        raise HTTPException(status_code=404, detail="Audit log not found")
+    return FileResponse(HTML_LOG, media_type="text/html")
 
-        # Set environment variables for training
-        env = os.environ.copy()
-        env["MODEL"] = request.model_type
-        env["DATA_PATH"] = request.data_file
-        env["TEST_SIZE"] = str(request.test_size)
-        env["NGRAM_MAX"] = str(request.ngram_max)
-        env["SEED"] = str(request.random_seed)
+@app.get("/audit/ndjson")
+def get_audit_ndjson(
+    current_admin: Dict[str, Any] = Depends(get_current_admin),
+):
+    if not os.path.exists(NDJSON_LOG):
+        raise HTTPException(status_code=404, detail="Audit NDJSON not found")
+    return FileResponse(NDJSON_LOG, media_type="application/x-ndjson")
 
-        # Run training script
-        result = subprocess.run(
-            [sys.executable, "ml_setup.py", "--train"],
-            capture_output=True,
-            text=True,
-            env=env,
-            timeout=300,  # 5 minute timeout
-        )
+@app.get("/audit/log/download")
+def download_audit_log(
+    current_admin: Dict[str, Any] = Depends(get_current_admin),
+):
+    if not os.path.exists(NDJSON_LOG):
+        raise HTTPException(status_code=404, detail="Audit NDJSON not found")
+    return FileResponse(NDJSON_LOG, media_type="application/x-ndjson", filename="audit_log.ndjson")
 
-        # Log the training attempt
-        mongodb_service = MongoDBService()
-        session_id = str(uuid.uuid4())
+@app.get("/audit/file/{kind}/{filename}")
+def get_audit_file(
+    kind: str,
+    filename: str,
+    current_admin: Dict[str, Any] = Depends(get_current_admin),
+):
+    base_dirs = {
+        "original": ORIGINAL_DIR,
+        "scrubbed": SCRUBBED_DIR,
+        "prediction": PREDICTION_DIR,
+        "descrubbed": DESCRUBBED_DIR,
+    }
+    if kind not in base_dirs:
+        raise HTTPException(status_code=400, detail="Invalid file type")
+    file_path = base_dirs[kind] / filename
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="File not found")
+    return FileResponse(file_path, media_type="text/plain", filename=filename)
 
-        mongodb_service.log_interaction(
-            session_id=session_id,
-            user_id=current_user["user_id"],
-            action="model_training",
-            details={
-                "model_type": request.model_type,
-                "data_file": request.data_file,
-                "success": result.returncode == 0,
-                "endpoint": "/train-model",
-            },
-        )
-
-        if result.returncode == 0:
-            # Parse metrics from output if available
-            metrics = None
-            try:
-                # Try to load metrics file if created
-                classifier_service = get_classifier_service()
-                classifier_service._load_model()  # Reload model
-                model_metrics = classifier_service.get_model_metrics()
-                if model_metrics:
-                    metrics = {
-                        "accuracy": model_metrics.accuracy,
-                        "precision": model_metrics.precision,
-                        "recall": model_metrics.recall,
-                        "f1_score": model_metrics.f1_score,
-                    }
-            except Exception:
-                pass
-
-            return TrainModelResponse(
-                success=True, message="Model trained successfully", metrics=metrics
-            )
-        else:
-            return TrainModelResponse(
-                success=False,
-                message="Model training failed",
-                error=result.stderr or result.stdout,
-            )
-
-    except subprocess.TimeoutExpired:
-        return TrainModelResponse(
-            success=False,
-            message="Training timeout exceeded (5 minutes)",
-            error="Training took too long",
-        )
-    except FileNotFoundError:
-        return TrainModelResponse(
-            success=False,
-            message="Training script not found",
-            error="ml_setup.py not found in current directory",
-        )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error training model: {str(e)}")
-
-
-@app.get("/model-metrics", response_model=ModelMetricsResponse)
-async def get_model_metrics(current_user: Dict[str, Any] = Depends(get_current_user)):
-    """
-    Get model performance metrics.
-    Requires user authentication.
-    """
-    try:
-        classifier_service = get_classifier_service()
-        model_metrics = classifier_service.get_model_metrics()
-
-        if model_metrics is None:
-            return ModelMetricsResponse(
-                accuracy=0.0,
-                precision={},
-                recall={},
-                f1_score={},
-                support={},
-                confusion_matrix=[],
-                available=False,
-            )
-
-        return ModelMetricsResponse(
-            accuracy=model_metrics.accuracy,
-            precision=model_metrics.precision,
-            recall=model_metrics.recall,
-            f1_score=model_metrics.f1_score,
-            support=model_metrics.support,
-            confusion_matrix=model_metrics.confusion_matrix,
-            available=True,
-        )
-
-    except Exception as e:
-        raise HTTPException(
-            status_code=500, detail=f"Error getting model metrics: {str(e)}"
-        )
-
-
-@app.get("/classification-categories", response_model=Dict[str, str])
-async def get_classification_categories():
-    """
-    Get information about classification categories.
-    Public endpoint.
-    """
-    classifier_service = get_classifier_service()
-    return classifier_service.get_category_info()
-
-
+# =========================
+# Main
+# =========================
 if __name__ == "__main__":
-    uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True, log_level="info")
+    uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)

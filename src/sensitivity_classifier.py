@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 from sklearn.base import BaseEstimator, TransformerMixin
 from dataclasses import dataclass
+from src.rule_featureizer import RuleFeatureizer 
 
 logger = logging.getLogger(__name__)
 
@@ -150,11 +151,23 @@ class ModelMetrics:
     confusion_matrix: List[List[int]]
 
 
+
 class SensitivityClassifierService:
     """Service for sensitivity classification and redaction"""
 
     def __init__(self, model_path: str = "sensitivity_classifier.joblib"):
-        self.model_path = Path(model_path)
+        # Try to resolve the model path robustly
+        root_dir = Path(__file__).resolve().parent  # src/
+        possible_paths = [
+            Path(model_path),                            # relative (fallback)
+            root_dir / model_path,                       # src/sensitivity_classifier.joblib
+            root_dir.parent / model_path,                # ing_use_case/sensitivity_classifier.joblib
+            root_dir.parent / "logs" / model_path,       # ing_use_case/logs/sensitivity_classifier.joblib
+        ]
+
+        # Pick the first one that exists
+        self.model_path = next((p for p in possible_paths if p.exists()), possible_paths[0])
+
         self.pipeline = None
         self.labels = None
         self._load_model()
@@ -170,19 +183,18 @@ class SensitivityClassifierService:
     def _load_model(self):
         """Load the trained model"""
         if not self.model_path.exists():
-            logger.warning(f"Model file not found: {self.model_path}")
+            logger.warning(f"[CLASSIFIER] Model file not found at: {self.model_path.resolve()}")
             return
 
         try:
             data = joblib.load(self.model_path)
-            self.pipeline = data["pipeline"]
-            self.labels = data["labels"]
-            logger.info("Sensitivity classifier model loaded successfully")
+            self.pipeline = data.get("pipeline")
+            self.labels = data.get("labels")
+            logger.info(f"[CLASSIFIER] Loaded model successfully from: {self.model_path}")
         except Exception as e:
-            logger.error(f"Error loading model: {e}")
+            logger.error(f"[CLASSIFIER] Error loading model: {e}")
             self.pipeline = None
             self.labels = None
-
     def is_model_available(self) -> bool:
         """Check if model is loaded and available"""
         return self.pipeline is not None and self.labels is not None
