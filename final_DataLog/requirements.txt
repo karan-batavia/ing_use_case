@@ -1,0 +1,19 @@
+streamlit>=1.20.0
+scikit-learn>=1.2.0
+tensorflow>=2.9.0
+numpy>=1.23.0
+joblib>=1.2.0
+presidio-analyzer>=2.1.0
+datafog>=0.1.0
+PyPDF2>=3.0.0
+pytest>=7.0.0
+openai>=1.0.0
+
+# Notes:
+# - `tensorflow` provides Keras (used via `tensorflow.keras`). TensorFlow is a large package
+#   with specific system requirements (CUDA/cuDNN for GPU). If you don't need TensorFlow,
+#   consider removing `deepnn` parts or pin a CPU-only wheel.
+# - `datafog` was inferred from `from datafog import DataFog`. If this is an internal or
+#   private package, replace `datafog` with the correct package name or install it locally.
+# - `presidio-analyzer` is the pip name for Microsoft Presidio Analyzer (imported as `presidio_analyzer`).
+pymongo>=4.0.0

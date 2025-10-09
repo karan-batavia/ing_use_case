@@ -1,0 +1,13 @@
+{
+  "mongodb": {
+    "uri": "mongodb://localhost:27017/",
+    "database": "ing_document_processing",
+    "collection": "processing_logs"
+  },
+  "logging": {
+    "level": "INFO",
+    "log_file": "document_processing.log",
+    "max_file_size": 10485760,
+    "backup_count": 5
+  }
+}
