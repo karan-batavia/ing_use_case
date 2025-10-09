@@ -1,5 +1,14 @@
 from typing import Union, Dict, Any, List, Optional
-from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, status, Request
+from fastapi import (
+    FastAPI,
+    HTTPException,
+    Depends,
+    UploadFile,
+    File,
+    status,
+    Request,
+    Form,
+)
 from fastapi.responses import StreamingResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, field_validator
@@ -1268,7 +1277,9 @@ async def upload_file(
 async def scrub_file(
     file: UploadFile = File(...),
     current_user: dict = Depends(get_current_user),
-    request: FileScrubRequest = FileScrubRequest(),
+    session_id: Optional[str] = Form(None),
+    output_format: Optional[str] = Form("text"),
+    sensitivity_level: Optional[str] = Form(None),
     audit_context: AuditContext = Depends(get_request_context),
 ):
     """Upload file, extract text, and scrub sensitive information (Authenticated users only)"""
@@ -1284,13 +1295,13 @@ async def scrub_file(
         )
 
         # Use provided session_id or create new one for workflow consistency
-        session_id = request.session_id or mongodb_service.create_session(
+        session_id = session_id or mongodb_service.create_session(
             authenticated_user_id, "api"
         )
 
         # Scrub the extracted text using enhanced model with user access level filtering
         user_access_level = (
-            request.sensitivity_level or "C4"
+            sensitivity_level or "C4"
         )  # Default to full redaction (no access)
 
         # Use enhanced model if available, fallback to legacy
@@ -1359,7 +1370,7 @@ async def scrub_file(
                 "detections": detections,
                 "total_redacted": total_redacted,
                 "file_size": upload_response.file_size,
-                "sensitivity_level": request.sensitivity_level,
+                "sensitivity_level": sensitivity_level,
             },
             audit_context=audit_context,
             endpoint="/scrub-file",
@@ -1398,7 +1409,7 @@ async def scrub_file(
                 "matches_found": matches_found,
                 "reduction_percentage": reduction_percentage,
                 "detection_summary": detection_summary,
-                "sensitivity_level": request.sensitivity_level,
+                "sensitivity_level": sensitivity_level,
                 "endpoint": "/scrub-file",
             },
         )
@@ -1428,7 +1439,9 @@ async def scrub_file(
 @app.post("/scrub-file-download")
 async def scrub_file_download(
     file: UploadFile = File(...),
-    request: FileScrubRequest = FileScrubRequest(),
+    session_id: Optional[str] = Form(None),
+    output_format: Optional[str] = Form("text"),
+    sensitivity_level: Optional[str] = Form(None),
     current_user: dict = Depends(get_current_user),
     audit_context: AuditContext = Depends(get_request_context),
 ):
@@ -1453,7 +1466,14 @@ async def scrub_file_download(
             raise HTTPException(status_code=400, detail="Filename is required")
 
         # First scrub the file (pass audit_context via dependency)
-        scrub_response = await scrub_file(file, current_user, request, audit_context)
+        scrub_response = await scrub_file(
+            file=file,
+            current_user=current_user,
+            session_id=session_id,
+            output_format=output_format,
+            sensitivity_level=sensitivity_level,
+            audit_context=audit_context,
+        )
 
         # Get file extension for processing
         file_extension = (
