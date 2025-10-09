@@ -34,6 +34,8 @@ from src.file_handler.write_docx_file import DOCXWriter
 from src.file_handler.write_pdf_file import PDFWriter
 from src.file_handler.write_html_file import HTMLWriter
 from src.file_handler.write_txt_file import TXTWriter
+from src.image_redaction_service import get_image_redaction_service
+from src.pdf_redaction_service import get_pdf_redaction_service
 from src.auth import (
     Token,
     TokenResponse,
@@ -523,8 +525,6 @@ class FileUploadResponse(BaseModel):
 
 
 class FileScrubRequest(BaseModel):
-    session_id: Optional[str] = None
-    output_format: Optional[str] = "text"  # "text", "original", "both"
     sensitivity_level: Optional[str] = (
         None  # User's access level: C1, C2, C3, C4 - if None, uses full redaction (no access)
     )
@@ -582,14 +582,6 @@ class PredictionResponse(BaseModel):
 # Sensitivity Classification Models
 class ClassifyRequest(BaseModel):
     text: str
-
-
-class ClassifyResponse(BaseModel):
-    prediction: str
-    probabilities: Dict[str, float]
-    confidence: float
-    explanation: str
-    success: bool
 
 
 class RedactRequest(BaseModel):
@@ -712,12 +704,6 @@ class DescrubResponse(BaseModel):
     restored_text: str
     detections_restored: int
     message: str
-
-
-class RedactionRecordsResponse(BaseModel):
-    success: bool
-    records: List[Dict[str, Any]]
-    total_count: int
 
 
 @app.get("/", response_model=Dict[str, str])
@@ -1104,13 +1090,73 @@ def get_user_stats(user_id: str, admin_user: dict = Depends(get_current_admin)):
 
 
 @app.get("/stats/sessions")
-def get_recent_sessions(limit: int = 10, admin_user: dict = Depends(get_current_admin)):
-    """Get recent session statistics (Admin only)"""
+def get_recent_sessions(
+    limit: int = 10, 
+    action_filter: Optional[str] = None,
+    user_id_filter: Optional[str] = None,
+    admin_user: dict = Depends(get_current_admin)
+):
+    """
+    Get recent session statistics and interactions (Admin only)
+    
+    Args:
+        limit: Maximum number of records to return (default: 10, max: 100)
+        action_filter: Filter by specific action (e.g., 'text_redacted', 'file_redacted')
+        user_id_filter: Filter by specific user ID
+    """
     if not mongodb_service.is_connected():
         raise HTTPException(status_code=503, detail="Database not available")
 
-    # This would need to be implemented in mongodb_service
-    return {"message": "Recent sessions endpoint - implementation needed"}
+    try:
+        # Limit the maximum number of records to prevent large responses
+        limit = min(limit, 100)
+        
+        # Get filtered interactions based on parameters
+        if action_filter or user_id_filter:
+            # Use the more specific filtering method
+            if action_filter == "text_redacted":
+                interactions = mongodb_service.get_redaction_records(
+                    user_id=user_id_filter, limit=limit
+                )
+            else:
+                # For other action filters, use get_all_interactions and filter
+                all_interactions = mongodb_service.get_all_interactions(limit=limit * 2)  # Get more to filter
+                interactions = []
+                for interaction in all_interactions:
+                    if len(interactions) >= limit:
+                        break
+                    if action_filter and interaction.get("action") != action_filter:
+                        continue
+                    if user_id_filter and interaction.get("user_id") != user_id_filter:
+                        continue
+                    interactions.append(interaction)
+        else:
+            # Get all interactions (existing behavior)
+            interactions = mongodb_service.get_all_interactions(limit=limit)
+
+        # Format the response to be compatible with the Streamlit logs display
+        formatted_logs = []
+        for interaction in interactions:
+            formatted_log = {
+                "session_id": interaction.get("session_id", ""),
+                "user_id": interaction.get("user_id", ""),
+                "action": interaction.get("action", ""),
+                "timestamp": interaction.get("timestamp", ""),
+                "details": interaction.get("details", {}),
+            }
+            formatted_logs.append(formatted_log)
+
+        return {
+            "success": True,
+            "logs": formatted_logs,
+            "total_count": len(formatted_logs),
+            "limit": limit,
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Error retrieving sessions: {str(e)}"
+        )
 
 
 # File Upload Endpoints
@@ -1273,31 +1319,48 @@ async def upload_file(
         raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
 
 
-@app.post("/scrub-file", response_model=FileScrubResponse)
-async def scrub_file(
+@app.post("/scrub-file-download")
+async def scrub_file_download(
     file: UploadFile = File(...),
-    current_user: dict = Depends(get_current_user),
-    session_id: Optional[str] = Form(None),
-    output_format: Optional[str] = Form("text"),
     sensitivity_level: Optional[str] = Form(None),
+    current_user: dict = Depends(get_current_user),
     audit_context: AuditContext = Depends(get_request_context),
 ):
-    """Upload file, extract text, and scrub sensitive information (Authenticated users only)"""
-    try:
-        # Audit context is provided by dependency injection
+    """
+    Upload file, scrub sensitive information, and download the scrubbed file.
 
-        # First extract text from file (reuse upload logic)
-        upload_response = await upload_file(file, current_user)
+    Automatic Format Preservation:
+    - PDF → Scrubbed PDF (preserves document layout with visual redaction annotations)
+    - DOCX → Scrubbed DOCX (preserves original format)
+    - TXT → Scrubbed TXT (preserves original format)
+    - HTML → Scrubbed HTML (preserves original format)
+    - CSV → Scrubbed CSV (preserves original format)
+    - Images (PNG/JPG) → Scrubbed image (preserves visual layout with redaction boxes)
+
+    The system automatically detects the input file format and preserves it in the output.
+    PDFs and images use professional in-place redaction with black boxes/annotations
+    over sensitive text, preserving the original layout and visual structure.
+    A session ID is automatically created for tracking purposes.
+    """
+    try:
+        import io
 
         # Extract user_id from the authenticated user data
         authenticated_user_id = current_user.get(
             "user_id", current_user.get("_id", "unknown")
         )
 
-        # Use provided session_id or create new one for workflow consistency
-        session_id = session_id or mongodb_service.create_session(
-            authenticated_user_id, "api"
-        )
+        # Create session_id for workflow consistency
+        session_id = mongodb_service.create_session(authenticated_user_id, "api")
+
+        # Validate filename
+        if not file.filename:
+            raise HTTPException(status_code=400, detail="Filename is required")
+
+        # Extract text from file first (reuse upload logic)
+        # Reset file pointer
+        await file.seek(0)
+        upload_response = await upload_file(file, current_user)
 
         # Scrub the extracted text using enhanced model with user access level filtering
         user_access_level = (
@@ -1373,7 +1436,7 @@ async def scrub_file(
                 "sensitivity_level": sensitivity_level,
             },
             audit_context=audit_context,
-            endpoint="/scrub-file",
+            endpoint="/scrub-file-download",
         )
 
         # Extract matches information from detections
@@ -1410,69 +1473,25 @@ async def scrub_file(
                 "reduction_percentage": reduction_percentage,
                 "detection_summary": detection_summary,
                 "sensitivity_level": sensitivity_level,
-                "endpoint": "/scrub-file",
+                "endpoint": "/scrub-file-download",
             },
         )
 
-        return FileScrubResponse(
-            filename=file.filename or "unknown_file",
+        # Create scrub response object for compatibility
+        class ScrubResponse:
+            def __init__(self, scrubbed_text, filename, file_type, file_size, original_text):
+                self.scrubbed_text = scrubbed_text
+                self.filename = filename
+                self.file_type = file_type
+                self.file_size = file_size
+                self.original_text = original_text
+
+        scrub_response = ScrubResponse(
+            scrubbed_text=scrubbed_text,
+            filename=file.filename,
             file_type=upload_response.file_type,
             file_size=upload_response.file_size,
-            original_text=upload_response.extracted_text,
-            scrubbed_text=scrubbed_text,
-            original_length=original_length,
-            scrubbed_length=scrubbed_length,
-            matches_found=matches_found,
-            reduction_percentage=reduction_percentage,
-            matches_detected=matches,
-            processed_at=datetime.now(),
-            session_id=session_id,
-            download_url=None,  # Will be implemented with file download functionality
-        )
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
-
-
-@app.post("/scrub-file-download")
-async def scrub_file_download(
-    file: UploadFile = File(...),
-    session_id: Optional[str] = Form(None),
-    output_format: Optional[str] = Form("text"),
-    sensitivity_level: Optional[str] = Form(None),
-    current_user: dict = Depends(get_current_user),
-    audit_context: AuditContext = Depends(get_request_context),
-):
-    """
-    Upload file, scrub sensitive information, and download the scrubbed file.
-
-    Format preservation:
-    - PDF → Scrubbed PDF (preserves original format)
-    - DOCX → Scrubbed DOCX (preserves original format)
-    - TXT → Scrubbed TXT (preserves original format)
-    - HTML → Scrubbed HTML (preserves original format)
-    - CSV → Scrubbed CSV (preserves original format)
-    - Images (PNG/JPG) → Scrubbed text file (cannot preserve image format)
-
-    Note: Images are converted to text files since visual redaction is not supported.
-    """
-    try:
-        import io
-
-        # Validate filename
-        if not file.filename:
-            raise HTTPException(status_code=400, detail="Filename is required")
-
-        # First scrub the file (pass audit_context via dependency)
-        scrub_response = await scrub_file(
-            file=file,
-            current_user=current_user,
-            session_id=session_id,
-            output_format=output_format,
-            sensitivity_level=sensitivity_level,
-            audit_context=audit_context,
+            original_text=upload_response.extracted_text
         )
 
         # Get file extension for processing
@@ -1505,20 +1524,121 @@ async def scrub_file_download(
             content_type = "text/csv"
 
         elif file_extension == "pdf":
-            # Use PDFWriter to create scrubbed PDF
-            writer = PDFWriter()
-            file_bytes = writer.create_pdf_from_text(scrub_response.scrubbed_text)
-            content_type = "application/pdf"
+            # Use in-place PDF redaction to preserve document layout
+            pdf_redaction_service = get_pdf_redaction_service()
+
+            # Create temporary file for redacted PDF
+            temp_redacted_path = f"/tmp/redacted_{uuid.uuid4().hex[:8]}.pdf"
+
+            try:
+                # Get original PDF path from upload process
+                temp_original_path = f"/tmp/temp_{uuid.uuid4().hex[:8]}_{file.filename}"
+
+                # Save uploaded file temporarily for PDF processing
+                file.file.seek(0)  # Reset file pointer
+                file_content = await file.read()
+                with open(temp_original_path, "wb") as temp_file:
+                    temp_file.write(file_content)
+
+                # Get classifier service for redaction
+                classifier_service = get_classifier_service()
+
+                # Perform in-place PDF redaction
+                redaction_result_pdf = pdf_redaction_service.redact_pdf(
+                    temp_original_path, classifier_service, temp_redacted_path
+                )
+
+                if redaction_result_pdf["success"] and os.path.exists(
+                    temp_redacted_path
+                ):
+                    # Read the redacted PDF
+                    with open(temp_redacted_path, "rb") as f:
+                        file_bytes = f.read()
+                    content_type = "application/pdf"
+                    scrubbed_filename = f"scrubbed_{file.filename}"
+                else:
+                    # Fallback to text-based PDF if redaction fails
+                    error_msg = redaction_result_pdf.get("error", "Unknown error")
+                    print(
+                        f"PDF redaction failed ({error_msg}), falling back to text-based PDF"
+                    )
+                    writer = PDFWriter()
+                    file_bytes = writer.create_pdf_from_text(
+                        scrub_response.scrubbed_text
+                    )
+                    content_type = "application/pdf"
+                    scrubbed_filename = f"scrubbed_{file.filename}"
+
+                # Clean up temporary files
+                for temp_path in [temp_original_path, temp_redacted_path]:
+                    if os.path.exists(temp_path):
+                        os.remove(temp_path)
+
+            except Exception as e:
+                # Fallback to text-based PDF if processing fails
+                print(f"PDF redaction failed: {str(e)}")
+                writer = PDFWriter()
+                file_bytes = writer.create_pdf_from_text(scrub_response.scrubbed_text)
+                content_type = "application/pdf"
+                scrubbed_filename = f"scrubbed_{file.filename}"
 
         elif file_extension in ["png", "jpg", "jpeg"]:
-            # For images, create a text file with extracted and scrubbed content
-            # Note: Cannot recreate original image with scrubbed text overlaid
-            # Instead, provide scrubbed text in a readable format
-            scrubbed_filename = f"scrubbed_text_from_{file.filename}.txt"
-            file_bytes = f"# Scrubbed text extracted from image: {file.filename}\n\n{scrub_response.scrubbed_text}".encode(
-                "utf-8"
-            )
-            content_type = "text/plain"
+            # For images, use in-place redaction to preserve visual layout
+            image_redaction_service = get_image_redaction_service()
+
+            # Create temporary file for redacted image
+            temp_redacted_path = f"/tmp/redacted_{uuid.uuid4().hex[:8]}.png"
+
+            try:
+                # Get original image path from upload process
+                temp_original_path = f"/tmp/temp_{uuid.uuid4().hex[:8]}_{file.filename}"
+
+                # Save uploaded file temporarily for image processing
+                file.file.seek(0)  # Reset file pointer
+                file_content = await file.read()
+                with open(temp_original_path, "wb") as temp_file:
+                    temp_file.write(file_content)
+
+                # Get classifier service for redaction
+                classifier_service = get_classifier_service()
+
+                # Perform in-place image redaction
+                redaction_result_img = image_redaction_service.redact_image(
+                    temp_original_path, classifier_service, temp_redacted_path
+                )
+
+                if redaction_result_img["success"] and os.path.exists(
+                    temp_redacted_path
+                ):
+                    # Read the redacted image
+                    with open(temp_redacted_path, "rb") as f:
+                        file_bytes = f.read()
+                    content_type = "image/png"
+                    scrubbed_filename = (
+                        f"scrubbed_{file.filename.rsplit('.', 1)[0]}.png"
+                    )
+                else:
+                    # Fallback to text if image redaction fails
+                    error_msg = redaction_result_img.get("error", "Unknown error")
+                    scrubbed_filename = f"scrubbed_text_from_{file.filename}.txt"
+                    file_bytes = f"# Scrubbed text extracted from image: {file.filename}\n# Note: Image redaction failed ({error_msg}), showing text instead\n\n{scrub_response.scrubbed_text}".encode(
+                        "utf-8"
+                    )
+                    content_type = "text/plain"
+
+                # Clean up temporary files
+                for temp_path in [temp_original_path, temp_redacted_path]:
+                    if os.path.exists(temp_path):
+                        os.remove(temp_path)
+
+            except Exception as e:
+                # Fallback to text if image processing fails
+                print(f"Image redaction failed: {str(e)}")
+                scrubbed_filename = f"scrubbed_text_from_{file.filename}.txt"
+                file_bytes = f"# Scrubbed text extracted from image: {file.filename}\n# Note: Image redaction failed, showing text instead\n\n{scrub_response.scrubbed_text}".encode(
+                    "utf-8"
+                )
+                content_type = "text/plain"
 
         else:
             # Default to text file for any other format
@@ -1541,57 +1661,6 @@ async def scrub_file_download(
         raise HTTPException(
             status_code=500, detail=f"Error creating scrubbed file: {str(e)}"
         )
-
-
-# Sensitivity Classification Endpoints
-@app.post("/classify", response_model=ClassifyResponse)
-async def classify_text(
-    request: ClassifyRequest, current_user: Dict[str, Any] = Depends(get_current_user)
-):
-    """
-    Classify text sensitivity level (C1-C4).
-    Requires user authentication.
-    """
-    try:
-        classifier_service = get_classifier_service()
-
-        if not classifier_service.is_model_available():
-            raise HTTPException(
-                status_code=503,
-                detail="Classification model not available. Please train the model first.",
-            )
-
-        # Classify the text
-        result = classifier_service.classify_text(request.text)
-
-        # Log the classification
-        mongodb_service = MongoDBService()
-        session_id = str(uuid.uuid4())
-
-        mongodb_service.log_interaction(
-            session_id=session_id,
-            user_id=current_user["user_id"],
-            action="text_classified",
-            details={
-                "text_length": len(request.text),
-                "prediction": result.prediction,
-                "confidence": result.confidence,
-                "endpoint": "/classify",
-            },
-        )
-
-        return ClassifyResponse(
-            prediction=result.prediction,
-            probabilities=result.probabilities,
-            confidence=result.confidence,
-            explanation=result.explanation,
-            success=True,
-        )
-
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error classifying text: {str(e)}")
 
 
 @app.get("/redact/info")
@@ -2186,32 +2255,6 @@ async def de_scrub_text(
     except Exception as e:
         raise HTTPException(
             status_code=500, detail=f"Error during de-scrubbing: {str(e)}"
-        )
-
-
-@app.get("/redaction-records", response_model=RedactionRecordsResponse)
-async def get_redaction_records(
-    user_id: Optional[str] = None,
-    limit: int = 50,
-    current_user: Dict[str, Any] = Depends(get_current_admin),
-):
-    """
-    Get list of redaction records from the database.
-    Admin only endpoint.
-    """
-    try:
-        # Limit the maximum number of records to prevent large responses
-        limit = min(limit, 100)
-
-        records = mongodb_service.get_redaction_records(user_id=user_id, limit=limit)
-
-        return RedactionRecordsResponse(
-            success=True, records=records, total_count=len(records)
-        )
-
-    except Exception as e:
-        raise HTTPException(
-            status_code=500, detail=f"Error retrieving redaction records: {str(e)}"
         )
 
 

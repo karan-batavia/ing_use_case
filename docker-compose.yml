@@ -73,6 +73,8 @@ services:
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/app
       - MONGODB_URL=mongodb://inguser:ingpassword@mongodb:27017/ing_prompt_scrubber?authSource=admin
+      # Docker environment indicator
+      - DOCKER_ENV=true
     command: streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0
     depends_on:
       - mongodb

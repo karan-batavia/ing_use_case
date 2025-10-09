@@ -225,6 +225,32 @@ class MongoDBService:
             self.logger.error(f"Error getting session interactions: {e}")
             return []
 
+    def get_all_interactions(
+        self, limit: int = 100, skip: int = 0
+    ) -> List[Dict[str, Any]]:
+        """Get all interactions with pagination support"""
+        if not self.is_connected():
+            return []
+
+        try:
+            interactions = list(
+                self.db.interactions.find()
+                .sort("timestamp", -1)  # Most recent first
+                .skip(skip)
+                .limit(limit)
+            )
+
+            # Remove MongoDB ObjectIds and convert to JSON serializable
+            for interaction in interactions:
+                if "_id" in interaction:
+                    interaction["_id"] = str(interaction["_id"])
+
+            return interactions
+
+        except Exception as e:
+            self.logger.error(f"Error getting all interactions: {e}")
+            return []
+
     def close_session(self, session_id: str):
         """Mark session as closed"""
         if not self.is_connected():
