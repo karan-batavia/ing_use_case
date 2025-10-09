@@ -10,6 +10,7 @@ import asyncio
 import subprocess
 import hashlib
 import json
+import logging
 from datetime import datetime, timedelta
 from src.mongodb_service import MongoDBService
 from src.dependencies import get_current_user, get_current_admin
@@ -51,6 +52,9 @@ app = FastAPI(
 
 # Initialize services
 mongodb_service = MongoDBService()
+
+# Initialize logger
+logger = logging.getLogger(__name__)
 
 # Initialize enhanced redaction model
 try:
@@ -513,7 +517,7 @@ class FileScrubRequest(BaseModel):
     session_id: Optional[str] = None
     output_format: Optional[str] = "text"  # "text", "original", "both"
     sensitivity_level: Optional[str] = (
-        None  # C1, C2, C3, C4 - if None, uses full redaction
+        None  # User's access level: C1, C2, C3, C4 - if None, uses full redaction (no access)
     )
 
     @field_validator("sensitivity_level")
@@ -582,7 +586,7 @@ class ClassifyResponse(BaseModel):
 class RedactRequest(BaseModel):
     text: str
     sensitivity_level: Optional[str] = (
-        None  # C1, C2, C3, C4 - if None, uses full redaction
+        None  # User's access level: C1, C2, C3, C4 - if None, uses full redaction (no access)
     )
     method: Optional[str] = "auto"  # auto, enhanced, legacy
 
@@ -1284,55 +1288,56 @@ async def scrub_file(
             authenticated_user_id, "api"
         )
 
-        # Scrub the extracted text using sensitivity classifier with level-based filtering
-        classifier_service = get_classifier_service()
+        # Scrub the extracted text using enhanced model with user access level filtering
+        user_access_level = (
+            request.sensitivity_level or "C4"
+        )  # Default to full redaction (no access)
 
-        # Define sensitivity level pattern mappings
-        sensitivity_patterns = {
-            "C1": [],  # No redaction for public information
-            "C2": ["EMAIL", "PHONE_EU"],  # Basic PII redaction
-            "C3": [
-                "EMAIL",
-                "PHONE_EU",
-                "IBAN",
-                "ACCOUNT_NUM",
-                "AMOUNT",
-            ],  # Add financial
-            "C4": None,  # Full redaction (all patterns)
-        }
+        # Use enhanced model if available, fallback to legacy
+        if enhanced_redaction_model is not None:
+            # Use enhanced model with access level support
+            try:
+                enhanced_result = enhanced_redaction_model.redact_text(
+                    upload_response.extracted_text, user_access_level=user_access_level
+                )
 
-        # Determine which patterns to use based on sensitivity level
-        if (
-            request.sensitivity_level
-            and request.sensitivity_level in sensitivity_patterns
-        ):
-            if request.sensitivity_level == "C1":
-                # No redaction for C1 (public)
-                scrubbed_text = upload_response.extracted_text
-                redaction_result = None
+                # Convert enhanced result to API format
                 detections = []
-                total_redacted = 0
                 detection_summary = {}
-            else:
-                # Custom redaction based on sensitivity level
-                patterns_to_use = sensitivity_patterns[request.sensitivity_level]
-                if patterns_to_use is None:
-                    # C4 - use full redaction
-                    redaction_result = classifier_service.redact_sensitive_info(
-                        upload_response.extracted_text
-                    )
-                else:
-                    # Custom redaction for C2, C3
-                    redaction_result = _redact_with_custom_patterns(
-                        upload_response.extracted_text, patterns_to_use
-                    )
 
+                for entity_detection in enhanced_result.detections:
+                    placeholder = f"[{entity_detection.label}]"
+
+                    detection = {
+                        "type": entity_detection.label,
+                        "original": entity_detection.text,
+                        "placeholder": placeholder,
+                        "method": "hybrid",  # Enhanced model uses hybrid approach
+                        "confidence": entity_detection.confidence,
+                    }
+                    detections.append(detection)
+
+                    # Update summary
+                    det_type = detection["type"]
+                    detection_summary[det_type] = detection_summary.get(det_type, 0) + 1
+
+                scrubbed_text = enhanced_result.redacted_text
+                total_redacted = len(detections)
+
+            except Exception as e:
+                logger.error(f"Enhanced redaction failed: {str(e)}")
+                # Fallback to legacy approach
+                classifier_service = get_classifier_service()
+                redaction_result = classifier_service.redact_sensitive_info(
+                    upload_response.extracted_text
+                )
                 scrubbed_text = redaction_result.redacted_text
                 detections = redaction_result.detections
                 total_redacted = redaction_result.total_redacted
                 detection_summary = redaction_result.detection_summary
         else:
-            # Default: full redaction if no sensitivity level specified
+            # Use legacy classifier service
+            classifier_service = get_classifier_service()
             redaction_result = classifier_service.redact_sensitive_info(
                 upload_response.extracted_text
             )
@@ -1579,19 +1584,22 @@ async def redact_sensitive_data(
     audit_context: AuditContext = Depends(get_request_context),
 ):
     """
-    Redact sensitive information from text using enhanced hybrid model with sensitivity level filtering.
+    Redact sensitive information from text using enhanced hybrid model with user access level filtering.
 
     Methods:
     - auto: Use enhanced model if available, fallback to legacy (recommended)
     - enhanced: Force enhanced model, error if unavailable
-    - legacy: Use legacy regex-only approach with sensitivity filtering
+    - legacy: Use legacy regex-only approach with access level filtering
 
-    Sensitivity levels:
-    - C1: Public information (minimal redaction - names, phones only)
-    - C2: Internal use (basic redaction - emails, phones, IDs)
-    - C3: Confidential (moderate redaction - adds financial data)
-    - C4: Highly sensitive (full redaction - all patterns)
-    - None: Full redaction using enhanced model (default)
+    User Access Levels (determines what data gets redacted):
+    - C1: Public access (redacts C2, C3, C4 data - shows only public info)
+    - C2: Internal access (redacts C3, C4 data - shows public + internal)
+    - C3: Confidential access (redacts C4 data - shows public + internal + confidential)
+    - C4: Highly privileged access (minimal redaction - sees most data)
+    - None: No access privileges (full redaction - default secure behavior)
+
+    Logic: Higher sensitivity data gets redacted if user doesn't have sufficient access level.
+    Example: C2 access user sees C1+C2 data, but C3+C4 data gets redacted.
 
     Requires user authentication.
     """
@@ -1617,13 +1625,13 @@ async def redact_sensitive_data(
         if use_enhanced:
             # Use enhanced model with sensitivity level support
             try:
-                # Map API sensitivity levels to enhanced model levels
-                enhanced_sensitivity = (
+                # Map API sensitivity levels to enhanced model user access levels
+                user_access_level = (
                     request.sensitivity_level or "C4"
                 )  # Default to full redaction
 
                 enhanced_result = enhanced_redaction_model.redact_text(
-                    request.text, sensitivity_level=enhanced_sensitivity
+                    request.text, user_access_level=user_access_level
                 )
 
                 # Convert enhanced result to API format with explainability
@@ -1675,53 +1683,61 @@ async def redact_sensitive_data(
 
             classifier_service = get_classifier_service()
 
-            # Define sensitivity level pattern mappings for legacy mode
-            sensitivity_patterns = {
-                "C1": ["PHONE_EU"],  # Minimal redaction
-                "C2": ["EMAIL", "PHONE_EU", "NATIONAL_ID"],  # Basic PII redaction
-                "C3": [
+            # Define access level pattern mappings for legacy mode
+            # Access level determines what gets redacted (higher sensitivity data)
+            access_level_patterns = {
+                "C1": [
                     "EMAIL",
                     "PHONE_EU",
+                    "NATIONAL_ID",
                     "IBAN",
                     "ACCOUNT_NUM",
                     "AMOUNT",
+                ],  # C1 access: redact C2, C3, C4 data (almost everything)
+                "C2": [
                     "NATIONAL_ID",
-                ],  # Add financial
-                "C4": None,  # Full redaction (all patterns)
+                    "IBAN",
+                    "ACCOUNT_NUM",
+                    "AMOUNT",
+                ],  # C2 access: redact C3, C4 data
+                "C3": [
+                    "IBAN",
+                    "ACCOUNT_NUM",
+                    "AMOUNT",
+                ],  # C3 access: redact C4 data only
+                "C4": [
+                    "AMOUNT"
+                ],  # C4 access: minimal redaction (only highest sensitivity)
             }
 
-            # Determine which patterns to use based on sensitivity level
-            if (
-                request.sensitivity_level
-                and request.sensitivity_level in sensitivity_patterns
-            ):
-                if request.sensitivity_level == "C1":
-                    # Minimal redaction for C1
-                    patterns_to_use = sensitivity_patterns["C1"]
+            # Determine which patterns to use based on user access level
+            user_access_level = (
+                request.sensitivity_level or "C1"
+            )  # Default to lowest access
+
+            if user_access_level in access_level_patterns:
+                patterns_to_use = access_level_patterns[user_access_level]
+                if patterns_to_use:
+                    # Custom redaction based on access level
                     result = _redact_with_custom_patterns(request.text, patterns_to_use)
                 else:
-                    # Custom redaction based on sensitivity level
-                    patterns_to_use = sensitivity_patterns[request.sensitivity_level]
-                    if patterns_to_use is None:
-                        # C4 - use full redaction
-                        result = classifier_service.redact_sensitive_info(request.text)
-                    else:
-                        # Custom redaction for C2, C3
-                        result = _redact_with_custom_patterns(
-                            request.text, patterns_to_use
-                        )
+                    # No patterns to redact - create a simple result with no redactions
+                    from types import SimpleNamespace
 
-                result_text = result.redacted_text
-                detections = result.detections
-                total_redacted = result.total_redacted
-                detection_summary = result.detection_summary
+                    result = SimpleNamespace(
+                        redacted_text=request.text,
+                        detections=[],
+                        total_redacted=0,
+                        detection_summary={},
+                    )
             else:
-                # Default: full redaction if no sensitivity level specified
+                # Default: full redaction for unknown access levels
                 result = classifier_service.redact_sensitive_info(request.text)
-                result_text = result.redacted_text
-                detections = result.detections
-                total_redacted = result.total_redacted
-                detection_summary = result.detection_summary
+
+            result_text = result.redacted_text
+            detections = result.detections
+            total_redacted = result.total_redacted
+            detection_summary = result.detection_summary
 
         # Generate session ID for this redaction
         session_id = str(uuid.uuid4())

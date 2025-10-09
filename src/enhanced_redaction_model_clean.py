@@ -430,18 +430,26 @@ class EnhancedRedactionModel:
         # Try to load existing model
         self.sensitivity_classifier.load_model()
 
-        # Sensitivity-based redaction rules
-        self.sensitivity_rules = {
-            "C1": [],  # No redaction for public info
-            "C2": ["EMAIL", "PHONE_EU"],  # Basic PII
-            "C3": [
-                "EMAIL",
-                "PHONE_EU",
-                "IBAN",
-                "ACCOUNT_NUMBER",
-                "AMOUNT",
-            ],  # Financial
-            "C4": None,  # All patterns (full redaction)
+        # Access level based redaction rules
+        # Key principle: if user has Cx access, they can see C1 through Cx data
+        # All data with higher classification gets redacted
+        self.access_level_rules = {
+            "C1": {  # C1 access: can only see public data
+                "allowed_levels": ["C1"],
+                "redact_patterns": ["EMAIL", "PHONE_EU", "IBAN", "ACCOUNT_NUMBER", "AMOUNT", "SSN_LIKE", "NATIONAL_ID", "BIOMETRIC", "TRANSACTION_ID"]
+            },
+            "C2": {  # C2 access: can see public + internal data
+                "allowed_levels": ["C1", "C2"], 
+                "redact_patterns": ["EMAIL", "PHONE_EU", "IBAN", "ACCOUNT_NUMBER", "AMOUNT", "SSN_LIKE", "NATIONAL_ID", "BIOMETRIC", "TRANSACTION_ID"]
+            },
+            "C3": {  # C3 access: can see public + internal + restricted data
+                "allowed_levels": ["C1", "C2", "C3"],
+                "redact_patterns": ["SSN_LIKE", "NATIONAL_ID", "BIOMETRIC"]  # Only C4 data gets redacted
+            },
+            "C4": {  # C4 access: can see all data
+                "allowed_levels": ["C1", "C2", "C3", "C4"],
+                "redact_patterns": []  # No redaction needed
+            }
         }
 
     def train(self, training_data: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -452,13 +460,13 @@ class EnhancedRedactionModel:
         return metrics
 
     def redact_text(
-        self, text: str, sensitivity_level: Optional[str] = None
+        self, text: str, user_access_level: Optional[str] = None, data_sensitivity: Optional[str] = None
     ) -> RedactionResult:
-        """Perform comprehensive text redaction"""
+        """Perform comprehensive text redaction based on user access level"""
 
-        # Step 1: Classify sensitivity if not provided
-        if sensitivity_level is None:
-            sensitivity_level, sensitivity_confidence = (
+        # Step 1: Classify data sensitivity if not provided
+        if data_sensitivity is None:
+            data_sensitivity, sensitivity_confidence = (
                 self.sensitivity_classifier.predict(text)
             )
         else:
@@ -471,9 +479,11 @@ class EnhancedRedactionModel:
         # Step 3: Merge and deduplicate detections
         all_detections = self._merge_detections(ner_detections + regex_detections)
 
-        # Step 4: Filter based on sensitivity level
-        filtered_detections = self._filter_by_sensitivity(
-            all_detections, sensitivity_level
+        # Step 4: Filter based on user access level
+        # If no user access level specified, assume C4 (full access)
+        effective_access_level = user_access_level or "C4"
+        filtered_detections = self._filter_by_access_level(
+            all_detections, effective_access_level, data_sensitivity
         )
 
         # Step 5: Apply redaction
@@ -487,7 +497,7 @@ class EnhancedRedactionModel:
             original_text=text,
             redacted_text=redacted_text,
             detections=filtered_detections,
-            sensitivity_level=sensitivity_level,
+            sensitivity_level=data_sensitivity,
             confidence=sensitivity_confidence,
             total_redacted=len(filtered_detections),
             detection_summary=detection_summary,
@@ -522,21 +532,33 @@ class EnhancedRedactionModel:
         merged.append(current)
         return merged
 
-    def _filter_by_sensitivity(
-        self, detections: List[EntityDetection], sensitivity_level: str
+    def _filter_by_access_level(
+        self, detections: List[EntityDetection], user_access_level: str, data_sensitivity: str
     ) -> List[EntityDetection]:
-        """Filter detections based on sensitivity level"""
-        if sensitivity_level == "C1":
-            return []
-
-        if sensitivity_level not in self.sensitivity_rules:
+        """Filter detections based on user access level and data sensitivity
+        
+        Logic: 
+        - If user has C1 access: can only see C1 data, all else gets redacted
+        - If user has C2 access: can see C1+C2 data, C3+C4 gets redacted  
+        - If user has C3 access: can see C1+C2+C3 data, only C4 gets redacted
+        - If user has C4 access: can see all data, no redaction needed
+        """
+        
+        if user_access_level not in self.access_level_rules:
+            # Default to most restrictive if unknown access level
+            user_access_level = "C1"
+        
+        access_config = self.access_level_rules[user_access_level]
+        allowed_levels = access_config["allowed_levels"]
+        
+        # If the data sensitivity is within user's access level, apply pattern-based redaction
+        if data_sensitivity in allowed_levels:
+            # Apply specific pattern redaction rules for this access level
+            redact_patterns = access_config["redact_patterns"]
+            return [d for d in detections if d.label in redact_patterns]
+        else:
+            # Data sensitivity exceeds user access - redact everything
             return detections
-
-        allowed_types = self.sensitivity_rules[sensitivity_level]
-        if allowed_types is None:
-            return detections
-
-        return [d for d in detections if d.label in allowed_types]
 
     def _apply_redaction(self, text: str, detections: List[EntityDetection]) -> str:
         """Apply redaction to text"""
@@ -620,14 +642,27 @@ if __name__ == "__main__":
     ING Bank
     """
 
-    result = model.redact_text(test_text)
-
-    print("Original text:")
+    # Test with different access levels
+    print("=" * 60)
+    print("ENHANCED REDACTION MODEL - ACCESS LEVEL TESTING")
+    print("=" * 60)
+    
+    print("\nOriginal text:")
     print(test_text)
-    print("\nRedacted text:")
-    print(result.redacted_text)
-    print(f"\nSensitivity level: {result.sensitivity_level}")
-    print(f"Confidence: {result.confidence:.2f}")
-    print(f"Total redacted: {result.total_redacted}")
-    print(f"Detection summary: {result.detection_summary}")
-    print(f"Method summary: {result.method_summary}")
+    
+    # Test different user access levels
+    access_levels = ["C1", "C2", "C3", "C4"]
+    
+    for access_level in access_levels:
+        result = model.redact_text(test_text, user_access_level=access_level)
+        
+        print(f"\n{'='*50}")
+        print(f"USER ACCESS LEVEL: {access_level}")
+        print(f"DATA SENSITIVITY: {result.sensitivity_level}")
+        print(f"CONFIDENCE: {result.confidence:.2f}")
+        print(f"{'='*50}")
+        print(f"Redacted text:")
+        print(result.redacted_text)
+        print(f"Total redacted: {result.total_redacted}")
+        print(f"Detection summary: {result.detection_summary}")
+        print(f"Method summary: {result.method_summary}")
