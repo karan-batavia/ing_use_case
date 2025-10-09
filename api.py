@@ -1433,8 +1433,17 @@ async def scrub_file_download(
     audit_context: AuditContext = Depends(get_request_context),
 ):
     """
-    Upload file, scrub sensitive information, and download the scrubbed file in original format.
-    Supports PDF, DOCX, TXT, HTML, CSV formats.
+    Upload file, scrub sensitive information, and download the scrubbed file.
+
+    Format preservation:
+    - PDF → Scrubbed PDF (preserves original format)
+    - DOCX → Scrubbed DOCX (preserves original format)
+    - TXT → Scrubbed TXT (preserves original format)
+    - HTML → Scrubbed HTML (preserves original format)
+    - CSV → Scrubbed CSV (preserves original format)
+    - Images (PNG/JPG) → Scrubbed text file (cannot preserve image format)
+
+    Note: Images are converted to text files since visual redaction is not supported.
     """
     try:
         import io
@@ -1475,8 +1484,24 @@ async def scrub_file_download(
             file_bytes = scrub_response.scrubbed_text.encode("utf-8")
             content_type = "text/csv"
 
+        elif file_extension == "pdf":
+            # Use PDFWriter to create scrubbed PDF
+            writer = PDFWriter()
+            file_bytes = writer.create_pdf_from_text(scrub_response.scrubbed_text)
+            content_type = "application/pdf"
+
+        elif file_extension in ["png", "jpg", "jpeg"]:
+            # For images, create a text file with extracted and scrubbed content
+            # Note: Cannot recreate original image with scrubbed text overlaid
+            # Instead, provide scrubbed text in a readable format
+            scrubbed_filename = f"scrubbed_text_from_{file.filename}.txt"
+            file_bytes = f"# Scrubbed text extracted from image: {file.filename}\n\n{scrub_response.scrubbed_text}".encode(
+                "utf-8"
+            )
+            content_type = "text/plain"
+
         else:
-            # Default to text file
+            # Default to text file for any other format
             file_bytes = scrub_response.scrubbed_text.encode("utf-8")
             content_type = "text/plain"
 
