@@ -132,8 +132,9 @@ MAX_DF = float(os.environ.get("MAX_DF", "1.0"))
 CSV_TEXT_COLUMN = os.environ.get("CSV_TEXT_COLUMN")  # can be overridden by --text-col
 CSV_LABEL_COLUMN = os.environ.get("CSV_LABEL_COLUMN")  # can be overridden by --label-col
 
+
 # --------------------------
-# Patterns (for rules)
+# Patterns (for rules) — merge FALLBACK + regex_queries.ALL_PATTERNS
 # --------------------------
 FALLBACK_PATTERNS: Dict[str, str] = {
     "EMAIL": r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}",
@@ -146,11 +147,36 @@ FALLBACK_PATTERNS: Dict[str, str] = {
     "NATIONAL_ID": r"\bID[:\s-]?[A-Z0-9]{6,}\b",
     "BIOMETRIC": r"\b(FaceID|fingerprint|iris|biometric)\b",
 }
-def _compile_pat(v) -> re.Pattern:
-    if isinstance(v, re.Pattern):
-        return re.compile(v.pattern, re.IGNORECASE)
-    return re.compile(str(v), re.IGNORECASE)
-PATTERNS: Dict[str, re.Pattern] = {k: _compile_pat(v) for k, v in FALLBACK_PATTERNS.items()}
+
+# Try to import your richer bank-specific patterns
+_RX_ALL = None
+try:
+    from preprocessing.regex_queries  import ALL_PATTERNS as _RX_ALL  # if file is under src/
+except Exception:
+    try:
+        from preprocessing.regex_queries import ALL_PATTERNS as _RX_ALL   # if file is next to this script
+    except Exception:
+        _RX_ALL = None
+
+def _compile_ics(p) -> re.Pattern:
+    """Compile with IGNORECASE, whether input is str or compiled pattern."""
+    if isinstance(p, re.Pattern):
+        return re.compile(p.pattern, re.IGNORECASE)
+    return re.compile(str(p), re.IGNORECASE)
+
+def build_patterns() -> Dict[str, re.Pattern]:
+    merged: Dict[str, re.Pattern] = {}
+    # 1) start with fallbacks
+    for k, v in FALLBACK_PATTERNS.items():
+        merged[k.upper()] = _compile_ics(v)
+    # 2) overlay your ALL_PATTERNS if present (takes precedence)
+    if _RX_ALL:
+        for k, v in _RX_ALL.items():
+            k_up = str(k).upper()
+            merged[k_up] = _compile_ics(v)
+    return merged
+
+PATTERNS: Dict[str, re.Pattern] = build_patterns()
 
 # --------------------------
 # Labels + heuristics
