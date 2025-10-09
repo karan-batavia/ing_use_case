@@ -244,14 +244,164 @@ class RegexPatternMatcher:
         self.patterns = self._define_enhanced_patterns()
 
     def _define_enhanced_patterns(self) -> Dict[str, Dict]:
-        """Define comprehensive regex patterns for banking data"""
+        """Define comprehensive regex patterns for banking data based on detailed C1-C4 schema"""
         return {
-            "EMAIL": {
+            # =============================================================================
+            # C4 SECRET - Customer sensitive data, Authentication, Credit card fraud data
+            # =============================================================================
+            # Personal Sensitive Data (C4)
+            "ETHNIC_ORIGIN": {
                 "pattern": re.compile(
-                    r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", re.IGNORECASE
+                    r"\b(ethnicity|ethnic\s+origin|race|racial|black|white|caucasian|asian|african|hispanic|latino|indigenous|aboriginal|native|mixed\s+race|multiracial|biracial|italian|german|french|spanish|british|american|dutch|belgian|portuguese|greek|polish|romanian|hungarian|czech|slovak|bulgarian|croatian|serbian|slovenian|austrian|swiss|swedish|danish|norwegian|finnish|irish|scottish|welsh|russian|ukrainian|turkish|chinese|japanese|korean|indian|pakistani|bangladeshi|brazilian|argentinian|mexican|canadian|australian|south\s+african|arab|persian|jewish|roma|gypsy|inuit|maori)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.85,
+                "placeholder": "[ETHNIC_ORIGIN]",
+            },
+            "RELIGION": {
+                "pattern": re.compile(
+                    r"\b(religion|religious|christian|muslim|jewish|hindu|buddhist|atheist|catholic|protestant|orthodox|faith|belief|church|mosque|synagogue|temple)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.85,
+                "placeholder": "[RELIGIOUS_BELIEF]",
+            },
+            "POLITICAL_OPINION": {
+                "pattern": re.compile(
+                    r"\b(political|politics|party|democrat|republican|conservative|liberal|socialist|communist|votes|voting|election|campaign)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.80,
+                "placeholder": "[POLITICAL_OPINION]",
+            },
+            "HEALTH_DATA": {
+                "pattern": re.compile(
+                    r"\b(health|medical|disability|disease|illness|medication|treatment|diagnosis|hospital|doctor|patient|surgery|therapy)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.90,
+                "placeholder": "[HEALTH_DATA]",
+            },
+            "SEXUAL_ORIENTATION": {
+                "pattern": re.compile(
+                    r"\b(sexual\s+orientation|sexuality|heterosexual|homosexual|bisexual|transgender|lgbtq|gay|lesbian)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.90,
+                "placeholder": "[SEXUAL_ORIENTATION]",
+            },
+            "TRADE_UNION": {
+                "pattern": re.compile(
+                    r"\b(trade\s+union|union\s+member|labor\s+union|workers\s+union|union\s+card|collective\s+bargaining)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.85,
+                "placeholder": "[TRADE_UNION]",
+            },
+            "CRIMINAL_RECORD": {
+                "pattern": re.compile(
+                    r"\b(criminal|conviction|offence|arrest|jail|prison|court|guilty|crime|fraud|theft|felony|misdemeanor)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.90,
+                "placeholder": "[CRIMINAL_DATA]",
+            },
+            "GENETIC_DATA": {
+                "pattern": re.compile(
+                    r"\b(genetic|dna|chromosome|gene|hereditary|genome|mutation|genetic\s+test)\b",
+                    re.IGNORECASE,
                 ),
                 "confidence": 0.95,
-                "placeholder": "[EMAIL]",
+                "placeholder": "[GENETIC_DATA]",
+            },
+            "BIOMETRIC": {
+                "pattern": re.compile(
+                    r"\b(biometric|fingerprint|face\s*id|facial\s+recognition|iris\s+scan|voice\s+print|palm\s+print|retina|biometry)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.95,
+                "placeholder": "[BIOMETRIC_DATA]",
+            },
+            # Authentication Data (C4)
+            "PIN": {
+                "pattern": re.compile(r"\b(pin|PIN)[\s:]*\d{4,8}\b"),
+                "confidence": 0.98,
+                "placeholder": "[PIN]",
+            },
+            "PASSWORD": {
+                "pattern": re.compile(
+                    r"\b(password|passwd|pwd)[\s:]*[^\s]{4,}\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.95,
+                "placeholder": "[PASSWORD]",
+            },
+            # Credit Card and Fraud Data (C4)
+            "CREDIT_CARD": {
+                "pattern": re.compile(r"\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b"),
+                "confidence": 0.95,
+                "placeholder": "[CREDIT_CARD]",
+            },
+            "FRAUD_FLAG": {
+                "pattern": re.compile(
+                    r"\b(fraud|suspicious|risk\s+rating|warning|sanction|interdiction|blacklist|watchlist)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.85,
+                "placeholder": "[FRAUD_DATA]",
+            },
+            "WHISTLEBLOWER": {
+                "pattern": re.compile(
+                    r"\b(whistleblower|anonymous\s+report|internal\s+complaint|misconduct\s+report)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.90,
+                "placeholder": "[WHISTLEBLOWER]",
+            },
+            # =============================================================================
+            # C3 CONFIDENTIAL - Customer/Employee data, Financial data, Agreements
+            # =============================================================================
+            # Personal Identity Data (C3)
+            "FIRST_NAME": {
+                "pattern": re.compile(
+                    r"\b(first\s+name|given\s+name|forename)[\s:]*([A-Z][a-z]{1,20})\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.75,
+                "placeholder": "[FIRST_NAME]",
+            },
+            "LAST_NAME": {
+                "pattern": re.compile(
+                    r"\b(last\s+name|surname|family\s+name)[\s:]*([A-Z][a-z]{1,30})\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.75,
+                "placeholder": "[LAST_NAME]",
+            },
+            "CNP": {
+                "pattern": re.compile(r"\b(CNP|cnp)[\s:]*\d{13}\b"),
+                "confidence": 0.95,
+                "placeholder": "[CNP]",
+            },
+            "CIF": {
+                "pattern": re.compile(r"\b(CIF|cif)[\s:]*[A-Z0-9]{8,15}\b"),
+                "confidence": 0.95,
+                "placeholder": "[CIF]",
+            },
+            "ID_SERIES": {
+                "pattern": re.compile(
+                    r"\b(ID|id)\s+series[\s:]*[A-Z]{2}\d{6,8}\b", re.IGNORECASE
+                ),
+                "confidence": 0.90,
+                "placeholder": "[ID_SERIES]",
+            },
+            "POSTAL_ADDRESS": {
+                "pattern": re.compile(
+                    r"\b\d+\s+[A-Za-z\s]+(?:street|st|avenue|ave|road|rd|lane|ln|boulevard|blvd|drive|dr)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.80,
+                "placeholder": "[ADDRESS]",
             },
             "PHONE_EU": {
                 "pattern": re.compile(
@@ -260,6 +410,49 @@ class RegexPatternMatcher:
                 "confidence": 0.85,
                 "placeholder": "[PHONE]",
             },
+            "EMAIL": {
+                "pattern": re.compile(
+                    r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", re.IGNORECASE
+                ),
+                "confidence": 0.95,
+                "placeholder": "[EMAIL]",
+            },
+            "DATE_OF_BIRTH": {
+                "pattern": re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\b\d{2}/\d{2}/\d{4}\b"),
+                "confidence": 0.80,
+                "placeholder": "[DATE_OF_BIRTH]",
+            },
+            "AGE": {
+                "pattern": re.compile(
+                    r"\b(age|years\s+old)[\s:]*\d{1,3}\b", re.IGNORECASE
+                ),
+                "confidence": 0.70,
+                "placeholder": "[AGE]",
+            },
+            "MARITAL_STATUS": {
+                "pattern": re.compile(
+                    r"\b(marital\s+status|married|single|divorced|widowed|separated)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.80,
+                "placeholder": "[MARITAL_STATUS]",
+            },
+            "GENDER": {
+                "pattern": re.compile(
+                    r"\b(gender|male|female|m/f|sex)\b", re.IGNORECASE
+                ),
+                "confidence": 0.75,
+                "placeholder": "[GENDER]",
+            },
+            "CITIZENSHIP": {
+                "pattern": re.compile(
+                    r"\b(citizenship|nationality|citizen\s+of|national\s+of|born\s+in|from\s+(italy|germany|france|spain|uk|usa|netherlands|belgium|portugal|greece|poland|romania|hungary|czech\s+republic|slovakia|bulgaria|croatia|serbia|slovenia|austria|switzerland|sweden|denmark|norway|finland|ireland|scotland|wales|russia|ukraine|turkey|china|japan|korea|india|pakistan|bangladesh|brazil|argentina|mexico|canada|australia|south\s+africa))\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.80,
+                "placeholder": "[CITIZENSHIP]",
+            },
+            # Financial Data (C3)
             "IBAN": {
                 "pattern": re.compile(
                     r"\b[A-Z]{2}\d{2}[A-Z0-9]{11,30}\b", re.IGNORECASE
@@ -269,7 +462,7 @@ class RegexPatternMatcher:
             },
             "ACCOUNT_NUMBER": {
                 "pattern": re.compile(
-                    r"\b(?:acct|account)[\s:]*\d{4,}\b", re.IGNORECASE
+                    r"\b(?:account|acct)[\s:]*\d{4,}\b", re.IGNORECASE
                 ),
                 "confidence": 0.90,
                 "placeholder": "[ACCOUNT_NUMBER]",
@@ -282,28 +475,108 @@ class RegexPatternMatcher:
                 "confidence": 0.92,
                 "placeholder": "[AMOUNT]",
             },
+            "TRANSACTION_DATA": {
+                "pattern": re.compile(
+                    r"\b(transaction|payment|transfer|deposit|withdrawal)[\s:]*[A-Z0-9-]{6,}\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.85,
+                "placeholder": "[TRANSACTION_DATA]",
+            },
+            "CREDIT_HISTORY": {
+                "pattern": re.compile(
+                    r"\b(credit\s+score|credit\s+rating|fico|credit\s+history|creditworthiness)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.85,
+                "placeholder": "[CREDIT_HISTORY]",
+            },
+            # Employment Data (C3)
+            "EMPLOYMENT": {
+                "pattern": re.compile(
+                    r"\b(employer|employment|job\s+title|position|salary|income|occupation)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.75,
+                "placeholder": "[EMPLOYMENT_DATA]",
+            },
+            "EDUCATION": {
+                "pattern": re.compile(
+                    r"\b(education|degree|university|college|school|bachelor|master|phd|diploma)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.70,
+                "placeholder": "[EDUCATION]",
+            },
+            # Technical/Security Data (C3)
+            "IP_ADDRESS": {
+                "pattern": re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b"),
+                "confidence": 0.95,
+                "placeholder": "[IP_ADDRESS]",
+            },
+            "LOCATION_DATA": {
+                "pattern": re.compile(
+                    r"\b(latitude|longitude|GPS|coordinates|location)[\s:]*[-+]?\d+\.?\d*\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.85,
+                "placeholder": "[LOCATION_DATA]",
+            },
+            "SOURCE_CODE": {
+                "pattern": re.compile(
+                    r"\b(source\s+code|configuration|firewall\s+rule|access\s+list|system\s+log)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.80,
+                "placeholder": "[SYSTEM_CONFIG]",
+            },
+            # =============================================================================
+            # C2 RESTRICTED - Employee contact data, Product specs, Policies
+            # =============================================================================
+            "EMPLOYEE_CONTACT": {
+                "pattern": re.compile(
+                    r"\b(employee|staff|colleague)[\s:]*[A-Za-z\s]+(?:phone|email|contact)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.70,
+                "placeholder": "[EMPLOYEE_CONTACT]",
+            },
+            "PRODUCT_SPEC": {
+                "pattern": re.compile(
+                    r"\b(product\s+specification|system\s+development|calculation|legal\s+option)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.75,
+                "placeholder": "[PRODUCT_SPEC]",
+            },
+            "POLICY": {
+                "pattern": re.compile(
+                    r"\b(policy|guideline|process|procedure|SOP|standard\s+operating\s+procedure)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.70,
+                "placeholder": "[POLICY]",
+            },
+            "INFRASTRUCTURE": {
+                "pattern": re.compile(
+                    r"\b(hypervisor|ESX|storage|network\s+interface|VM|virtual\s+machine|CMDB)\b",
+                    re.IGNORECASE,
+                ),
+                "confidence": 0.80,
+                "placeholder": "[INFRASTRUCTURE]",
+            },
+            # =============================================================================
+            # Legacy patterns (maintaining compatibility)
+            # =============================================================================
             "SSN_LIKE": {
                 "pattern": re.compile(r"\b\d{6}[- ]?\d{2,4}[\.]?\d{0,2}\b"),
                 "confidence": 0.88,
                 "placeholder": "[SSN]",
             },
-            "DATE_OF_BIRTH": {
-                "pattern": re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\b\d{2}/\d{2}/\d{4}\b"),
-                "confidence": 0.80,
-                "placeholder": "[DATE_OF_BIRTH]",
-            },
             "NATIONAL_ID": {
                 "pattern": re.compile(r"\bID[:\s-]?[A-Z0-9]{6,}\b", re.IGNORECASE),
                 "confidence": 0.85,
                 "placeholder": "[NATIONAL_ID]",
-            },
-            "BIOMETRIC": {
-                "pattern": re.compile(
-                    r"\b(FaceID|fingerprint|iris|biometric|face\s?recognition)\b",
-                    re.IGNORECASE,
-                ),
-                "confidence": 0.95,
-                "placeholder": "[BIOMETRIC_DATA]",
             },
             "TRANSACTION_ID": {
                 "pattern": re.compile(
@@ -434,22 +707,133 @@ class EnhancedRedactionModel:
         # Key principle: if user has Cx access, they can see C1 through Cx data
         # All data with higher classification gets redacted
         self.access_level_rules = {
-            "C1": {  # C1 access: can only see public data
+            "C1": {  # C1 access: Public access only - redacts most sensitive data (C2, C3, C4)
                 "allowed_levels": ["C1"],
-                "redact_patterns": ["EMAIL", "PHONE_EU", "IBAN", "ACCOUNT_NUMBER", "AMOUNT", "SSN_LIKE", "NATIONAL_ID", "BIOMETRIC", "TRANSACTION_ID"]
+                "redact_patterns": [
+                    # C4 Secret data
+                    "ETHNIC_ORIGIN",
+                    "RELIGION",
+                    "POLITICAL_OPINION",
+                    "HEALTH_DATA",
+                    "SEXUAL_ORIENTATION",
+                    "TRADE_UNION",
+                    "CRIMINAL_RECORD",
+                    "GENETIC_DATA",
+                    "BIOMETRIC",
+                    "PIN",
+                    "PASSWORD",
+                    "CREDIT_CARD",
+                    "FRAUD_FLAG",
+                    "WHISTLEBLOWER",
+                    # C3 Confidential data
+                    "FIRST_NAME",
+                    "LAST_NAME",
+                    "CNP",
+                    "CIF",
+                    "ID_SERIES",
+                    "POSTAL_ADDRESS",
+                    "PHONE_EU",
+                    "EMAIL",
+                    "DATE_OF_BIRTH",
+                    "AGE",
+                    "MARITAL_STATUS",
+                    "GENDER",
+                    "CITIZENSHIP",
+                    "IBAN",
+                    "ACCOUNT_NUMBER",
+                    "AMOUNT",
+                    "TRANSACTION_DATA",
+                    "CREDIT_HISTORY",
+                    "EMPLOYMENT",
+                    "EDUCATION",
+                    "IP_ADDRESS",
+                    "LOCATION_DATA",
+                    "SOURCE_CODE",
+                    "SSN_LIKE",
+                    "NATIONAL_ID",
+                    "TRANSACTION_ID",
+                    # C2 Restricted data
+                    "EMPLOYEE_CONTACT",
+                    "PRODUCT_SPEC",
+                    "POLICY",
+                    "INFRASTRUCTURE",
+                ],
             },
-            "C2": {  # C2 access: can see public + internal data
-                "allowed_levels": ["C1", "C2"], 
-                "redact_patterns": ["EMAIL", "PHONE_EU", "IBAN", "ACCOUNT_NUMBER", "AMOUNT", "SSN_LIKE", "NATIONAL_ID", "BIOMETRIC", "TRANSACTION_ID"]
+            "C2": {  # C2 access: Internal access - redacts confidential and secret data (C3, C4)
+                "allowed_levels": ["C1", "C2"],
+                "redact_patterns": [
+                    # C4 Secret data
+                    "ETHNIC_ORIGIN",
+                    "RELIGION",
+                    "POLITICAL_OPINION",
+                    "HEALTH_DATA",
+                    "SEXUAL_ORIENTATION",
+                    "TRADE_UNION",
+                    "CRIMINAL_RECORD",
+                    "GENETIC_DATA",
+                    "BIOMETRIC",
+                    "PIN",
+                    "PASSWORD",
+                    "CREDIT_CARD",
+                    "FRAUD_FLAG",
+                    "WHISTLEBLOWER",
+                    # C3 Confidential data
+                    "FIRST_NAME",
+                    "LAST_NAME",
+                    "CNP",
+                    "CIF",
+                    "ID_SERIES",
+                    "POSTAL_ADDRESS",
+                    "PHONE_EU",
+                    "EMAIL",
+                    "DATE_OF_BIRTH",
+                    "AGE",
+                    "MARITAL_STATUS",
+                    "GENDER",
+                    "CITIZENSHIP",
+                    "IBAN",
+                    "ACCOUNT_NUMBER",
+                    "AMOUNT",
+                    "TRANSACTION_DATA",
+                    "CREDIT_HISTORY",
+                    "EMPLOYMENT",
+                    "EDUCATION",
+                    "IP_ADDRESS",
+                    "LOCATION_DATA",
+                    "SOURCE_CODE",
+                    "SSN_LIKE",
+                    "NATIONAL_ID",
+                    "TRANSACTION_ID",
+                ],
             },
-            "C3": {  # C3 access: can see public + internal + restricted data
+            "C3": {  # C3 access: Confidential access - redacts only secret data (C4)
                 "allowed_levels": ["C1", "C2", "C3"],
-                "redact_patterns": ["SSN_LIKE", "NATIONAL_ID", "BIOMETRIC"]  # Only C4 data gets redacted
+                "redact_patterns": [
+                    # Only C4 Secret data gets redacted
+                    "ETHNIC_ORIGIN",
+                    "RELIGION",
+                    "POLITICAL_OPINION",
+                    "HEALTH_DATA",
+                    "SEXUAL_ORIENTATION",
+                    "TRADE_UNION",
+                    "CRIMINAL_RECORD",
+                    "GENETIC_DATA",
+                    "BIOMETRIC",
+                    "PIN",
+                    "PASSWORD",
+                    "CREDIT_CARD",
+                    "FRAUD_FLAG",
+                    "WHISTLEBLOWER",
+                ],
             },
-            "C4": {  # C4 access: can see all data
+            "C4": {  # C4 access: Secret access - sees most data with minimal redaction
                 "allowed_levels": ["C1", "C2", "C3", "C4"],
-                "redact_patterns": []  # No redaction needed
-            }
+                "redact_patterns": [
+                    # Only extremely sensitive items might be redacted
+                    "PIN",
+                    "PASSWORD",  # Keep authentication data redacted even for C4 users
+                ],
+            },
         }
 
     def train(self, training_data: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -460,7 +844,10 @@ class EnhancedRedactionModel:
         return metrics
 
     def redact_text(
-        self, text: str, user_access_level: Optional[str] = None, data_sensitivity: Optional[str] = None
+        self,
+        text: str,
+        user_access_level: Optional[str] = None,
+        data_sensitivity: Optional[str] = None,
     ) -> RedactionResult:
         """Perform comprehensive text redaction based on user access level"""
 
@@ -533,24 +920,27 @@ class EnhancedRedactionModel:
         return merged
 
     def _filter_by_access_level(
-        self, detections: List[EntityDetection], user_access_level: str, data_sensitivity: str
+        self,
+        detections: List[EntityDetection],
+        user_access_level: str,
+        data_sensitivity: str,
     ) -> List[EntityDetection]:
         """Filter detections based on user access level and data sensitivity
-        
-        Logic: 
+
+        Logic:
         - If user has C1 access: can only see C1 data, all else gets redacted
-        - If user has C2 access: can see C1+C2 data, C3+C4 gets redacted  
+        - If user has C2 access: can see C1+C2 data, C3+C4 gets redacted
         - If user has C3 access: can see C1+C2+C3 data, only C4 gets redacted
         - If user has C4 access: can see all data, no redaction needed
         """
-        
+
         if user_access_level not in self.access_level_rules:
             # Default to most restrictive if unknown access level
             user_access_level = "C1"
-        
+
         access_config = self.access_level_rules[user_access_level]
         allowed_levels = access_config["allowed_levels"]
-        
+
         # If the data sensitivity is within user's access level, apply pattern-based redaction
         if data_sensitivity in allowed_levels:
             # Apply specific pattern redaction rules for this access level
@@ -646,16 +1036,16 @@ if __name__ == "__main__":
     print("=" * 60)
     print("ENHANCED REDACTION MODEL - ACCESS LEVEL TESTING")
     print("=" * 60)
-    
+
     print("\nOriginal text:")
     print(test_text)
-    
+
     # Test different user access levels
     access_levels = ["C1", "C2", "C3", "C4"]
-    
+
     for access_level in access_levels:
         result = model.redact_text(test_text, user_access_level=access_level)
-        
+
         print(f"\n{'='*50}")
         print(f"USER ACCESS LEVEL: {access_level}")
         print(f"DATA SENSITIVITY: {result.sensitivity_level}")
