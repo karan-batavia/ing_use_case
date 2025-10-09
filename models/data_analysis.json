@@ -1,0 +1,21 @@
+{
+  "total_samples": 200150,
+  "sensitivity_distribution": {
+    "LOW": 72029,
+    "HIGH": 79725,
+    "MEDIUM": 48246,
+    "C2": 100,
+    "C1": 50
+  },
+  "category_distribution": {
+    "general_banking": 200050,
+    "employee_data": 50,
+    "transaction_data": 50
+  },
+  "source_distribution": {
+    "large_csv": 200000,
+    "existing_csv_04_c2_employee_data.csv": 50,
+    "existing_csv_01_c1_product_offering_and_public_infp.csv": 50,
+    "existing_csv_07_c2_ing_transfer_orders (IBAN!).csv": 50
+  }
+}

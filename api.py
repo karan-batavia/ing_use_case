@@ -13,6 +13,7 @@ from src.mongodb_service import MongoDBService
 from src.dependencies import get_current_user, get_current_admin
 from src.gemini_service import get_gemini_service
 from src.sensitivity_classifier import get_classifier_service
+from src.enhanced_redaction_model_clean import create_enhanced_redaction_model
 from src.file_handler.docx_to_txt import DOCXToTextConverter
 from src.file_handler.html_to_txt import HTMLToTextConverter
 from src.file_handler.read_pdf_file import PDFToTextConverter
@@ -48,6 +49,14 @@ app = FastAPI(
 
 # Initialize services
 mongodb_service = MongoDBService()
+
+# Initialize enhanced redaction model
+try:
+    enhanced_redaction_model = create_enhanced_redaction_model()
+    print("✅ Enhanced redaction model loaded successfully")
+except Exception as e:
+    print(f"⚠️  Enhanced redaction model failed to load: {e}")
+    enhanced_redaction_model = None
 
 
 # Pydantic models for request/response
@@ -141,6 +150,8 @@ class ClassifyResponse(BaseModel):
 
 class RedactRequest(BaseModel):
     text: str
+    sensitivity_level: Optional[str] = "C3"  # Default to C3 (standard business)
+    method: Optional[str] = "auto"  # auto, enhanced, legacy
 
 
 class Detection(BaseModel):
@@ -157,6 +168,11 @@ class RedactResponse(BaseModel):
     total_redacted: int
     detection_summary: Dict[str, int]
     success: bool
+    # Enhanced model fields
+    sensitivity_level: Optional[str] = None
+    method_used: Optional[str] = None
+    confidence_scores: Optional[Dict[str, float]] = None
+    entities_found: Optional[List[str]] = None
 
 
 class TrainModelRequest(BaseModel):
@@ -665,56 +681,116 @@ async def classify_text(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error classifying text: {str(e)}")
 
-
 @app.post("/redact", response_model=RedactResponse)
 async def redact_sensitive_data(
     request: RedactRequest, current_user: Dict[str, Any] = Depends(get_current_user)
 ):
     """
-    Redact sensitive information from text.
+    Redact sensitive information from text using enhanced model.
+    Supports sensitivity levels (C1, C2, C3, C4) and multiple methods.
     Requires user authentication.
     """
     try:
-        classifier_service = get_classifier_service()
+        session_id = str(uuid.uuid4())
+        method_used = request.method
 
-        # Redact sensitive information
-        result = classifier_service.redact_sensitive_info(request.text)
+        # Determine which redaction method to use
+        if method_used == "legacy" or (
+            method_used == "auto" and enhanced_redaction_model is None
+        ):
+            # Use legacy redaction system
+            classifier_service = get_classifier_service()
+            result = classifier_service.redact_sensitive_info(request.text)
+
+            # Convert to enhanced response format
+            detections = [
+                Detection(
+                    type=d["type"], original=d["original"], placeholder=d["placeholder"]
+                )
+                for d in result.detections
+            ]
+
+            response_data = RedactResponse(
+                session_id=session_id,
+                original_text=result.original_text,
+                redacted_text=result.redacted_text,
+                detections=detections,
+                total_redacted=result.total_redacted,
+                detection_summary=result.detection_summary,
+                success=True,
+                sensitivity_level=request.sensitivity_level,
+                method_used="legacy",
+                confidence_scores=None,
+                entities_found=None,
+            )
+
+        else:
+            # Use enhanced redaction model
+            if enhanced_redaction_model is None:
+                raise HTTPException(
+                    status_code=503,
+                    detail="Enhanced redaction model is not available. Use method='legacy' for basic redaction.",
+                )
+
+            # Redact with enhanced model
+            enhanced_result = enhanced_redaction_model.redact_text(
+                request.text, sensitivity_level=request.sensitivity_level
+            )
+
+            # Convert enhanced result to API format
+            detections = []
+            detection_summary = {}
+
+            for entity_detection in enhanced_result.detections:
+                # Generate appropriate placeholder
+                placeholder = f"[{entity_detection.label}]"
+
+                detection = Detection(
+                    type=entity_detection.label,
+                    original=entity_detection.text,
+                    placeholder=placeholder,
+                )
+                detections.append(detection)
+
+                # Update summary
+                det_type = detection.type
+                detection_summary[det_type] = detection_summary.get(det_type, 0) + 1
+
+            response_data = RedactResponse(
+                session_id=session_id,
+                original_text=request.text,
+                redacted_text=enhanced_result.redacted_text,
+                detections=detections,
+                total_redacted=len(detections),
+                detection_summary=detection_summary,
+                success=True,
+                sensitivity_level=request.sensitivity_level,
+                method_used="enhanced",
+                confidence_scores={"overall": enhanced_result.confidence},
+                entities_found=[
+                    detection.label for detection in enhanced_result.detections
+                ],
+            )
 
         # Log the redaction
-        mongodb_service = MongoDBService()
-        session_id = str(uuid.uuid4())
-
         mongodb_service.log_interaction(
             session_id=session_id,
             user_id=current_user["user_id"],
             action="text_redacted",
             details={
                 "text_length": len(request.text),
-                "total_redacted": result.total_redacted,
-                "detection_types": list(result.detection_summary.keys()),
-                "detections": result.detections,
+                "total_redacted": response_data.total_redacted,
+                "detection_types": list(response_data.detection_summary.keys()),
+                "sensitivity_level": request.sensitivity_level,
+                "method_used": response_data.method_used,
                 "endpoint": "/redact",
             },
         )
 
-        # Convert detections to Pydantic models
-        detections = [
-            Detection(
-                type=d["type"], original=d["original"], placeholder=d["placeholder"]
-            )
-            for d in result.detections
-        ]
+        return response_data
 
-        return RedactResponse(
-            session_id=session_id,
-            original_text=result.original_text,
-            redacted_text=result.redacted_text,
-            detections=detections,
-            total_redacted=result.total_redacted,
-            detection_summary=result.detection_summary,
-            success=True,
-        )
-
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error redacting text: {str(e)}")
 
