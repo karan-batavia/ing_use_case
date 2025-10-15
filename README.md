@@ -2,6 +2,8 @@
 
 A comprehensive text processing and audit system for sensitive data redaction, AI-powered predictions, and secure de-scrubbing capabilities.
 
+**For the ML model, look at the ML_setup_01 branch.**
+
 ## 🚀 Quick Start
 
 ### Prerequisites
